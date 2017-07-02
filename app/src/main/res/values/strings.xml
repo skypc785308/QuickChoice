@@ -1,3 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <resources>
     <string name="app_name">QuickChoice</string>
+    <string name="id">帳號：</string>
+    <string name="password">密碼：</string>
 </resources>
