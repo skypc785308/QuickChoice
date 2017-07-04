@@ -1,0 +1,56 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.mis.ncyu.quickchoice.BlankFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="173dp">
+
+            <Button
+                android:id="@+id/my_cardbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="171dp"
+                android:layout_weight="1"
+                android:text="@string/mycard" />
+
+            <Button
+                android:id="@+id/newsbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="171dp"
+                android:layout_weight="1"
+                android:text="@string/news" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/historybtn"
+                android:layout_width="wrap_content"
+                android:layout_height="171dp"
+                android:layout_weight="1"
+                android:text="@string/history" />
+
+            <Button
+                android:id="@+id/dobtn"
+                android:layout_width="wrap_content"
+                android:layout_height="171dp"
+                android:layout_weight="1"
+                android:text="@string/dothing" />
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>
