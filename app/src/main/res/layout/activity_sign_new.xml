@@ -23,12 +23,12 @@
         android:inputType="textEmailAddress"
         android:text="電子信箱"
         android:layout_marginTop="24dp"
-        app:layout_constraintTop_toBottomOf="@+id/user_"
+        app:layout_constraintTop_toBottomOf="@+id/user"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toLeftOf="@+id/guideline" />
 
     <EditText
-        android:id="@+id/user_"
+        android:id="@+id/user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -46,8 +46,8 @@
         android:inputType="textPassword"
         app:layout_constraintRight_toLeftOf="@+id/guideline"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintTop_toBottomOf="@+id/editText7" />
+        android:layout_marginTop="17dp"
+        app:layout_constraintTop_toBottomOf="@+id/user_id" />
 
     <TextView
         android:id="@+id/textView"
@@ -101,11 +101,11 @@
         android:orientation="horizontal" />
 
     <EditText
-        android:id="@+id/editText7"
+        android:id="@+id/user_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="31dp"
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintRight_toLeftOf="@+id/guideline"
