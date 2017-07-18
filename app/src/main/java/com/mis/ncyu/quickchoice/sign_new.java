@@ -42,7 +42,7 @@ public class sign_new extends AppCompatActivity implements View.OnClickListener,
         postData.put("username", username.getText().toString());
         postData.put("useremail", useremail.getText().toString());
         PostResponseAsyncTask task = new PostResponseAsyncTask(this,postData);
-        task.execute("http://192.168.1.143/connectdb/test.php");
+        task.execute("http://10.3.204.7/connectdb/test.php");
 
 
     }

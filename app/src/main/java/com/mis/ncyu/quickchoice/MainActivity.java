@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         postData.put("txtUsername", etUsername.getText().toString());
         postData.put("txtPassword", etPassword.getText().toString() );
         PostResponseAsyncTask task = new PostResponseAsyncTask(this,postData);
-        task.execute("http://192.168.1.143/connectdb/connow.php");
+        task.execute("http://10.3.204.7/connectdb/connow.php");
 
     }
     @Override
