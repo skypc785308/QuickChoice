@@ -21,13 +21,16 @@ import java.util.Map;
 public class Logined_menu extends AppCompatActivity {
 
     private GridView gridView;
+    //載入圖瑱
     private int[] image = {
             R.drawable.mycard, R.drawable.news, R.drawable.history,
             R.drawable.recommend, R.drawable.mushroom
     };
+    //設定圖片名子
     private String[] imgText = {
             "我的信用卡", "最新優惠", "歷史紀錄" , "立即推薦", "測試用"
     };
+    private String username;
 
 
     @Override
@@ -58,6 +61,9 @@ public class Logined_menu extends AppCompatActivity {
                     case 0:
                         Intent intent = new Intent();
                         intent.setClass(Logined_menu.this, My_card.class);
+                        Bundle context = new Bundle();
+                        context.putString("user_name", username);
+                        intent.putExtras(context);
                         startActivity(intent);
                         break;
                     case 1:
@@ -68,6 +74,11 @@ public class Logined_menu extends AppCompatActivity {
                         Intent intent2 = new Intent();
                         intent2.setClass(Logined_menu.this, connectdb.class);
                         startActivity(intent2);
+                        break;
+                    case 4:
+                        Intent intent3 = new Intent();
+                        intent3.setClass(Logined_menu.this, Add_new_card.class);
+                        startActivity(intent3);
                         break;
                 }
 
@@ -85,12 +96,11 @@ public class Logined_menu extends AppCompatActivity {
     }
 
     public  void getlogin_name(){
-        String userid;
         Bundle context = this.getIntent().getExtras();
         if (context != null) {
-            userid = context.getString("帳號");
+            username = context.getString("user_name");
             TextView output = (TextView) findViewById(R.id.textView8);
-            output.setText(userid);
+            output.setText(username);
         }
     }
 }

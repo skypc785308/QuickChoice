@@ -25,10 +25,10 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="34dp"
         android:layout_marginLeft="62dp"
-        android:text="無"
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/textView2" />
+        app:layout_constraintLeft_toRightOf="@+id/textView2"
+        tools:text="admin" />
 
     <GridView
         android:id="@+id/main_page_gridview"

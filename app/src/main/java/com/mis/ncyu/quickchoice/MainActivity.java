@@ -30,23 +30,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button signup_button = (Button)findViewById(R.id.button4);
         signup_button.setOnClickListener(signuplisten);
 
+
     }
     View.OnClickListener signuplisten = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             Intent intent2 = new Intent(MainActivity.this, sign_new.class);
             startActivity(intent2);
+            //到註冊頁面的按鈕
         }
     };
 
     @Override
     public void onClick(View v){
+        //實作按下登入畫面的動作
         HashMap postData = new HashMap();
         postData.put("mobile", "android");
         postData.put("txtUsername", etUsername.getText().toString());
-        postData.put("txtPassword", etPassword.getText().toString() );
+        postData.put("txtPassword", etPassword.getText().toString());
+        //將要傳送的資料用post打包好
         PostResponseAsyncTask task = new PostResponseAsyncTask(this,postData);
-        task.execute("http://10.3.204.7/connectdb/connow.php");
+        task.execute("http://192.168.1.143/connectdb/connow.php");
 
     }
     @Override
@@ -59,10 +63,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void processFinish(String result) {
         if(result.equals("success")){
+            //顯示登入成功
             Toast.makeText(this, result, Toast.LENGTH_LONG).show();
             Intent intent = new Intent(MainActivity.this, Logined_menu.class);
             Bundle context = new Bundle();
-            context.putString("帳號", etUsername.getText().toString());
+            context.putString("user_name", etUsername.getText().toString());
             intent.putExtras(context);
             startActivity(intent);
             finish();
@@ -72,7 +77,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-
+    //點擊進入'忘記密碼頁
+    public void gotoforget(View v){
+        Intent it =new Intent(this, ForgetActivity.class);
+        startActivity(it);
+    }
 
 
 }

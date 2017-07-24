@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mis.ncyu.quickchoice">
+
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- 加入AppController，讓app開機自動啟動AppController.class -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -32,7 +34,12 @@
         <activity
             android:name=".connectdb"
             android:label="資料庫連線測試" />
-        <activity android:name=".news"/>
+        <activity android:name=".news" />
+        <activity android:name=".Add_new_card" />
+        <activity android:name=".Chose_card_type" />
+        <activity android:name=".key_in_card" />
+        <activity android:name=".ForgetActivity" />
+        <activity android:name=".content_my_card"></activity>
     </application>
 
 </manifest>
