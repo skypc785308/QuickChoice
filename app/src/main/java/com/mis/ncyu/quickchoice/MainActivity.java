@@ -10,8 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.kosalgeek.asynctask.AsyncResponse;
-import com.kosalgeek.asynctask.PostResponseAsyncTask;
+
+import com.kosalgeek.genasync12.AsyncResponse;
+import com.kosalgeek.genasync12.PostResponseAsyncTask;
 
 import java.util.HashMap;
 
@@ -28,18 +29,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button login_button = (Button)findViewById(R.id.button3);
         login_button.setOnClickListener(this);
         Button signup_button = (Button)findViewById(R.id.button4);
-        signup_button.setOnClickListener(signuplisten);
-
-
+        signup_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, sign_new.class));
+                //到註冊頁面的按鈕
+            }
+        });
     }
-    View.OnClickListener signuplisten = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Intent intent2 = new Intent(MainActivity.this, sign_new.class);
-            startActivity(intent2);
-            //到註冊頁面的按鈕
-        }
-    };
 
     @Override
     public void onClick(View v){
@@ -49,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         postData.put("txtUsername", etUsername.getText().toString());
         postData.put("txtPassword", etPassword.getText().toString());
         //將要傳送的資料用post打包好
-        PostResponseAsyncTask task = new PostResponseAsyncTask(this,postData);
+        PostResponseAsyncTask task = new PostResponseAsyncTask(this,postData,this);
         task.execute("http://192.168.1.143/connectdb/connow.php");
 
     }
@@ -64,8 +61,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void processFinish(String result) {
         if(result.equals("success")){
             //顯示登入成功
-            Toast.makeText(this, result, Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(MainActivity.this, Logined_menu.class);
+            Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainActivity.this, new_home2.class);
             Bundle context = new Bundle();
             context.putString("user_name", etUsername.getText().toString());
             intent.putExtras(context);
@@ -79,8 +76,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //點擊進入'忘記密碼頁
     public void gotoforget(View v){
-        Intent it =new Intent(this, ForgetActivity.class);
-        startActivity(it);
+        startActivity(new Intent(this, ForgetActivity.class));
     }
 
 

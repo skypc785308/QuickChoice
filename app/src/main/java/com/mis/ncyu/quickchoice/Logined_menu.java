@@ -71,14 +71,11 @@ public class Logined_menu extends AppCompatActivity {
                     case 2:
                         break;
                     case 3:
-                        Intent intent2 = new Intent();
-                        intent2.setClass(Logined_menu.this, connectdb.class);
-                        startActivity(intent2);
                         break;
                     case 4:
-                        Intent intent3 = new Intent();
-                        intent3.setClass(Logined_menu.this, Add_new_card.class);
-                        startActivity(intent3);
+                        Intent intent2 = new Intent();
+                        intent2.setClass(Logined_menu.this, new_home2.class);
+                        startActivity(intent2);
                         break;
                 }
 

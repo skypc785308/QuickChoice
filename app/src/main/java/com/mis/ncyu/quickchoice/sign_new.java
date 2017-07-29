@@ -1,23 +1,22 @@
 package com.mis.ncyu.quickchoice;
 
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.kosalgeek.asynctask.AsyncResponse;
-import com.kosalgeek.asynctask.PostResponseAsyncTask;
+
+import com.kosalgeek.genasync12.AsyncResponse;
+import com.kosalgeek.genasync12.PostResponseAsyncTask;
 
 import java.util.HashMap;
 
 
-public class sign_new extends AppCompatActivity implements View.OnClickListener, AsyncResponse   {
+public class sign_new extends AppCompatActivity implements View.OnClickListener{
 
     EditText userid, userpw, username, useremail;
 
@@ -41,20 +40,17 @@ public class sign_new extends AppCompatActivity implements View.OnClickListener,
         postData.put("userpw", userpw.getText().toString());
         postData.put("username", username.getText().toString());
         postData.put("useremail", useremail.getText().toString());
-        PostResponseAsyncTask task = new PostResponseAsyncTask(this,postData);
+        PostResponseAsyncTask task = new PostResponseAsyncTask(sign_new.this,postData ,new AsyncResponse() {
+            @Override
+            public void processFinish(String s) {
+                if (s.equals("success")) {
+                    Toast.makeText(sign_new.this, "註冊成功", Toast.LENGTH_LONG).show();
+                    finish();
+                } else {
+                    Toast.makeText(sign_new.this, "註冊失敗", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
         task.execute("http://192.168.1.143/connectdb/test.php");
-
-
-    }
-
-    @Override
-    public void processFinish(String result) {
-        if(result.equals("success")){
-            Toast.makeText(this, "註冊成功", Toast.LENGTH_LONG).show();
-            finish();
-        }
-        else {
-            Toast.makeText(this, "註冊失敗", Toast.LENGTH_LONG).show();
-        }
     }
 }

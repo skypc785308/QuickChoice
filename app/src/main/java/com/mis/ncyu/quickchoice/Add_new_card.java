@@ -30,10 +30,16 @@ public class Add_new_card extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        get_user_id();
-        getAsynHttp();
         setContentView(R.layout.activity_add_new_card);
+        get_user_id();
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getAsynHttp();
+    }
+
     public  String get_user_id(){
         Bundle context = this.getIntent().getExtras();
         if (context != null) {

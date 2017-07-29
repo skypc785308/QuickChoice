@@ -9,12 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -34,6 +29,7 @@ public class key_in_card extends AppCompatActivity implements View.OnClickListen
     private String card;
     private String username;
     private String state;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +44,6 @@ public class key_in_card extends AppCompatActivity implements View.OnClickListen
         @Override
         public void onClick(View view) {
             EditText maxcost = (EditText) findViewById(R.id.max_cost);
-            TextView output = (TextView) findViewById(R.id.textView8);
             OkHttpClient mOkHttpClient=new OkHttpClient();
             RequestBody formBody = new FormBody.Builder()
                     .add("maxcost",maxcost.getText().toString())
@@ -102,7 +97,7 @@ public class key_in_card extends AppCompatActivity implements View.OnClickListen
         EditText setbankname = (EditText) findViewById(R.id.bank);
         setbankid.setText(card);
         setbankname.setText(bank_name);
-        return card_id;
+        return card;
     }
 
     DatePickerDialog.OnDateSetListener datepicker = new DatePickerDialog.OnDateSetListener()

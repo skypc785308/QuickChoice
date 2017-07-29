@@ -42,14 +42,12 @@ public class Chose_card_type extends AppCompatActivity {
     }
     public  String get_bank_id(){
         String bank_id = null;
-        String bank_name = null;
         Bundle context = this.getIntent().getExtras();
         if (context != null) {
             bank_id = context.getString("bankid");
-            bank_name = context.getString("bankname");
+            bankname = context.getString("bankname");
             username = context.getString("user_name");
         }
-        bankname = bank_name;
         return bank_id;
     }
 
