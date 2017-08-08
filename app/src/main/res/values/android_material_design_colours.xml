@@ -94,7 +94,7 @@ http://www.google.com/design/spec/style/color.html#color-ui-color-palette -->
     <color name="md_blue_600">#1E88E5</color>
     <color name="md_blue_700">#1976D2</color>
     <color name="md_blue_800">#1565C0</color>
-    <color name="md_blue_900">#0D47A1</color>
+    <color name="md_blue_900">#0d47a1</color>
     <color name="md_blue_A100">#82B1FF</color>
     <color name="md_blue_A200">#448AFF</color>
     <color name="md_blue_A400">#2979FF</color>
@@ -153,7 +153,7 @@ http://www.google.com/design/spec/style/color.html#color-ui-color-palette -->
     <color name="md_green_100">#C8E6C9</color>
     <color name="md_green_200">#A5D6A7</color>
     <color name="md_green_300">#81C784</color>
-    <color name="md_green_400">#66BB6A</color>
+    <color name="md_green_400">#66bb6a</color>
     <color name="md_green_500">#4CAF50</color>
     <color name="md_green_600">#43A047</color>
     <color name="md_green_700">#388E3C</color>
@@ -175,7 +175,7 @@ http://www.google.com/design/spec/style/color.html#color-ui-color-palette -->
     <color name="md_light_green_700">#689F38</color>
     <color name="md_light_green_800">#558B2F</color>
     <color name="md_light_green_900">#33691E</color>
-    <color name="md_light_green_A100">#CCFF90</color>
+    <color name="md_light_green_A100">#d4ccff90</color>
     <color name="md_light_green_A200">#B2FF59</color>
     <color name="md_light_green_A400">#76FF03</color>
     <color name="md_light_green_A700">#64DD17</color>

@@ -50,7 +50,7 @@ public class Add_new_card extends AppCompatActivity {
     private void getAsynHttp() {
         OkHttpClient mOkHttpClient=new OkHttpClient();
         Request request = new Request.Builder()
-                .url("http://192.168.1.143/connectdb/get_card.php")
+                .url("http://35.194.203.57/connectdb/get_card.php")
                 .build();
         Call call = mOkHttpClient.newCall(request);
         call.enqueue(new Callback() {

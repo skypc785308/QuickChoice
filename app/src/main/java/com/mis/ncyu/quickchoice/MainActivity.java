@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         postData.put("txtPassword", etPassword.getText().toString());
         //將要傳送的資料用post打包好
         PostResponseAsyncTask task = new PostResponseAsyncTask(this,postData,this);
-        task.execute("http://192.168.1.143/connectdb/connow.php");
+        task.execute("http://35.194.203.57/connectdb/connow.php");
 
     }
     @Override

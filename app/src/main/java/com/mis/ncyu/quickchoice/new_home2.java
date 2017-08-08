@@ -54,7 +54,7 @@ public class new_home2 extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
-        adapter.addFragment(new tab1_fragment(), "立即推薦");
+        adapter.addFragment(new Recommend(), "立即推薦");
         adapter.addFragment(new mycard_fragment(), "我的信用卡");
         adapter.addFragment(new tab1_fragment(), "歷史紀錄");
         adapter.addFragment(new tab1_fragment(), "最新優惠");
@@ -73,12 +73,7 @@ public class new_home2 extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
         return super.onOptionsItemSelected(item);
     }
 }

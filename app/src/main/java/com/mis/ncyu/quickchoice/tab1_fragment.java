@@ -1,5 +1,6 @@
 package com.mis.ncyu.quickchoice;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -30,6 +31,7 @@ public class tab1_fragment extends Fragment {
         @Override
         public void onClick(View view) {
             Toast.makeText(getActivity(),"你已按下",Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(getActivity(),compute_recommend.class));
         }
     };
 }

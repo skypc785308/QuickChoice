@@ -51,6 +51,6 @@ public class sign_new extends AppCompatActivity implements View.OnClickListener{
                 }
             }
         });
-        task.execute("http://192.168.1.143/connectdb/test.php");
+        task.execute("http://35.194.203.57/connectdb/test.php");
     }
 }

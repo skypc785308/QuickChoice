@@ -65,7 +65,7 @@ public class My_card extends AppCompatActivity {
                 .add("userid",userid)
                 .build();
         Request request = new Request.Builder()
-                .url("http://192.168.1.143/connectdb/get_my_card.php")
+                .url("http://35.194.203.57/connectdb/get_my_card.php")
                 .post(formBody)
                 .build();
         Call call = mOkHttpClient.newCall(request);

@@ -52,7 +52,7 @@ public class key_in_card extends AppCompatActivity implements View.OnClickListen
                     .add("date",etBirthday.getText().toString())
                     .build();
             okhttp3.Request request = new okhttp3.Request.Builder()
-                    .url("http://192.168.1.143/connectdb/add_new_card.php")
+                    .url("http://35.194.203.57/connectdb/add_new_card.php")
                     .post(formBody)
                     .build();
             Call call = mOkHttpClient.newCall(request);
@@ -70,7 +70,7 @@ public class key_in_card extends AppCompatActivity implements View.OnClickListen
                             if (state=="success"){
                                 Toast.makeText(key_in_card.this, "新增成功", Toast.LENGTH_SHORT).show();
                             }
-                            Intent intent = new Intent(key_in_card.this, Logined_menu.class);
+                            Intent intent = new Intent(key_in_card.this, new_home2.class);
                             Bundle context = new Bundle();
                             context.putString("user_name", username);
                             intent.putExtras(context);

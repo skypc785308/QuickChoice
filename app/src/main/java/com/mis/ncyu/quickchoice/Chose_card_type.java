@@ -79,7 +79,7 @@ public class Chose_card_type extends AppCompatActivity {
                 .add("bankid",bankid)
                 .build();
         okhttp3.Request request = new okhttp3.Request.Builder()
-                .url("http://192.168.1.143/connectdb/get_card_list.php")
+                .url("http://35.194.203.57/connectdb/get_card_list.php")
                 .post(formBody)
                 .build();
         Call call = mOkHttpClient.newCall(request);

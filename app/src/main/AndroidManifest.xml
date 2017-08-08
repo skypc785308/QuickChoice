@@ -4,7 +4,14 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <!-- 加入AppController，讓app開機自動啟動AppController.class -->
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the 'MyLocation' functionality. 
+    -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -23,23 +30,53 @@
             android:name=".MainActivity"
             android:label="登入" />
         <activity
-            android:name=".Logined_menu"
-            android:label="主畫面" />
-        <activity
             android:name=".sign_new"
             android:label="註冊" />
         <activity
             android:name=".My_card"
             android:label="@string/mycard" />
-        <activity
-            android:name=".connectdb"
-            android:label="資料庫連線測試" />
         <activity android:name=".news" />
-        <activity android:name=".Add_new_card" />
-        <activity android:name=".Chose_card_type" />
-        <activity android:name=".key_in_card" />
-        <activity android:name=".ForgetActivity" />
-        <activity android:name=".content_my_card"></activity>
+        <activity
+            android:name=".Add_new_card"
+            android:label="選擇銀行" />
+        <activity
+            android:name=".Chose_card_type"
+            android:label="選擇卡片類型" />
+        <activity
+            android:name=".key_in_card"
+            android:label="輸入卡片資訊" />
+        <activity
+            android:name=".ForgetActivity"
+            android:label="忘記密碼" />
+        <activity
+            android:name=".content_my_card"
+            android:label="卡片資訊" />
+        <activity
+            android:name=".new_home2"
+            android:label="主畫面"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".MapsActivity"
+            android:label="@string/title_activity_maps" />
+        <activity
+            android:name=".Start_recommend"
+            android:label="推薦結果" />
+        <activity android:name=".Choice_recommend_type" />
+        <activity
+            android:name=".compute_recommend"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

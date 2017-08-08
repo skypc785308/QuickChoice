@@ -104,7 +104,7 @@ public class mycard_fragment extends Fragment {
     }
 
     private void http(){
-        String url = "http://192.168.1.143/connectdb/get_my_card.php";
+        String url = "http://35.194.203.57/connectdb/get_my_card.php";
         HashMap postData = new HashMap();
         postData.put("userid",username);
         PostResponseAsyncTask readTask = new PostResponseAsyncTask(getActivity(), postData, new AsyncResponse() {
