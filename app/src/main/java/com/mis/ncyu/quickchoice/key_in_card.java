@@ -2,6 +2,7 @@ package com.mis.ncyu.quickchoice;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +17,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+import io.card.payment.CardIOActivity;
+import io.card.payment.CardType;
+import io.card.payment.CreditCard;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -24,11 +28,14 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class key_in_card extends AppCompatActivity implements View.OnClickListener {
-    private EditText etBirthday = null;
+    private EditText etBirthday;
+    private EditText card_number;
+    private EditText expir;
     private Calendar m_Calendar = Calendar.getInstance();
     private String card;
     private String username;
     private String state;
+    int MY_SCAN_REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +43,13 @@ public class key_in_card extends AppCompatActivity implements View.OnClickListen
         setContentView(R.layout.activity_key_in_card);
         card = get_context();
         etBirthday = (EditText) findViewById(R.id.date);
+        card_number = (EditText) findViewById(R.id.card_number);
+        expir = (EditText) findViewById(R.id.expir);
         etBirthday.setOnClickListener(this);
+
         Button ok = (Button)findViewById(R.id.okbtn);
         ok.setOnClickListener(signuplisten);
+        onScanPress();
     }
     View.OnClickListener signuplisten = new View.OnClickListener() {
         @Override
@@ -50,6 +61,8 @@ public class key_in_card extends AppCompatActivity implements View.OnClickListen
                     .add("userid",username)
                     .add("cardid",card)
                     .add("date",etBirthday.getText().toString())
+                    .add("card_number",card_number.getText().toString())
+                    .add("expir",expir.getText().toString())
                     .build();
             okhttp3.Request request = new okhttp3.Request.Builder()
                     .url("http://35.194.203.57/connectdb/add_new_card.php")
@@ -81,6 +94,66 @@ public class key_in_card extends AppCompatActivity implements View.OnClickListen
             });
         }
     };
+
+    public void onScanPress() {
+        Intent scanIntent = new Intent(key_in_card.this, CardIOActivity.class);
+
+        // customize these values to suit your needs.
+        scanIntent.putExtra(CardIOActivity.EXTRA_REQUIRE_EXPIRY, true); // default: false
+        scanIntent.putExtra(CardIOActivity.EXTRA_REQUIRE_CVV, false); // default: false
+        scanIntent.putExtra(CardIOActivity.EXTRA_REQUIRE_POSTAL_CODE, false); // default: false
+        scanIntent.putExtra(CardIOActivity.EXTRA_USE_PAYPAL_ACTIONBAR_ICON, true); // default: false
+        scanIntent.putExtra(CardIOActivity.EXTRA_KEEP_APPLICATION_THEME, true); // default: false
+        scanIntent.putExtra(CardIOActivity.EXTRA_RETURN_CARD_IMAGE, true); // default: false
+        scanIntent.putExtra(CardIOActivity.EXTRA_LANGUAGE_OR_LOCALE,"zh-Hant_TW");
+        // MY_SCAN_REQUEST_CODE is arbitrary and is only used within this activity.
+        startActivityForResult(scanIntent, MY_SCAN_REQUEST_CODE);
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == MY_SCAN_REQUEST_CODE) {
+            Bitmap cardTypeImage = null;
+            String resultDisplayStr;
+            String expirdate="";
+            String getcard_number="";
+            if (data != null && data.hasExtra(CardIOActivity.EXTRA_SCAN_RESULT)) {
+                CreditCard scanResult = data.getParcelableExtra(CardIOActivity.EXTRA_SCAN_RESULT);
+
+                // Never log a raw card number. Avoid displaying it, but if necessary use getFormattedCardNumber()
+                resultDisplayStr = "Card Number: " + scanResult.getRedactedCardNumber() + "\n";
+                getcard_number = scanResult.getRedactedCardNumber();
+                CardType cardType = scanResult.getCardType();
+                cardTypeImage = cardType.imageBitmap(this);
+
+                // Do something with the raw number, e.g.:
+                // myService.setCardNumber( scanResult.cardNumber );
+
+                if (scanResult.isExpiryValid()) {
+                    expirdate= scanResult.expiryMonth + "/" + scanResult.expiryYear;
+
+                }
+
+                if (scanResult.cvv != null) {
+                    // Never log or display a CVV
+                    resultDisplayStr += "CVV has " + scanResult.cvv.length() + " digits.\n";
+                }
+
+                if (scanResult.postalCode != null) {
+                    resultDisplayStr += "Postal Code: " + scanResult.postalCode + "\n";
+                }
+            }
+            else {
+                resultDisplayStr = "Scan was canceled.";
+            }
+            // do something with resultDisplayStr, maybe display it in a textView
+            expir.setText(expirdate);
+            card_number.setText(getcard_number);
+        }
+        // else handle other activity results
+    }
+
 
     public String get_context(){
         String card_id = null;

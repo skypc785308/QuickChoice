@@ -11,7 +11,7 @@ public class welcome_view extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_view);
-        handler.postDelayed(runnable,1750);
+        handler.postDelayed(runnable,2000);
     }
     Handler handler = new Handler();
     Runnable runnable = new Runnable() {

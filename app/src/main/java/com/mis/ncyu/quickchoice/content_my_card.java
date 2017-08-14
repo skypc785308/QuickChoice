@@ -16,7 +16,7 @@ import java.util.HashMap;
 public class content_my_card extends AppCompatActivity {
     private String username;
     private String cardname;
-     private TextView bank_name,card_name,date,max_cost;
+     private TextView bank_name,card_name,date,max_cost,card_number,expirdate;
 
 
     @Override
@@ -28,7 +28,8 @@ public class content_my_card extends AppCompatActivity {
         card_name = (TextView)findViewById(R.id.card_name);
         date = (TextView)findViewById(R.id.date);
         max_cost = (TextView)findViewById(R.id.max_cost);
-
+        card_number = (TextView)findViewById(R.id.card_number);
+        expirdate = (TextView)findViewById(R.id.expirdate);
     }
 
     @Override
@@ -59,6 +60,8 @@ public class content_my_card extends AppCompatActivity {
                     card_name.setText(data.getString("card_id"));
                     date.setText(data.getString("date"));
                     max_cost.setText(data.getString("max_cost"));
+                    card_number.setText(data.getString("card_number"));
+                    expirdate.setText(data.getString("expir"));
                 }catch (JSONException e) {
                     e.printStackTrace();
                 }

@@ -10,11 +10,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.model.LatLng;
+
+import java.util.ArrayList;
+
 public class new_home2 extends AppCompatActivity {
 
     private SectionsPageAdapter mSectionsPageAdapter;
     private ViewPager mViewPager;
     private String loginame;
+    ArrayList<LatLng> LatLngpos;
+    ArrayList<String> pos_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
