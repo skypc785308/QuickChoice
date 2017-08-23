@@ -62,7 +62,7 @@ public class new_home2 extends AppCompatActivity {
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
         adapter.addFragment(new Recommend(), "立即推薦");
         adapter.addFragment(new mycard_fragment(), "我的信用卡");
-        adapter.addFragment(new tab1_fragment(), "歷史紀錄");
+        adapter.addFragment(new history_fragment(), "歷史紀錄");
         adapter.addFragment(new tab1_fragment(), "最新優惠");
         viewPager.setAdapter(adapter);
     }

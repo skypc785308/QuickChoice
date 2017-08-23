@@ -12,7 +12,7 @@ public class result_type {
     private Boolean chk = Boolean.FALSE;
     public result_type(){}
     public void compute_key(){
-           this.key =Integer.parseInt(this.keyword.replace("%",""));
+           this.key =Integer.parseInt(this.keyword.replace("元／點",""));
     }
 
     public Boolean getChk() {
@@ -53,6 +53,7 @@ public class result_type {
     }
 
     public void setName(String name) {
+
         this.name = name;
     }
 }

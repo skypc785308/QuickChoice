@@ -96,20 +96,16 @@
             android:label="@string/title_activity_maps" />
         <activity
             android:name=".Start_recommend"
-            android:label="推薦結果"
-            android:parentActivityName=".new_home2">
-
-            <!-- Parent activity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.mis.ncyu.quickchoice.new_home2" />
-        </activity>
+            android:label="推薦結果"/>
         <activity android:name=".Choice_recommend_type" />
         <activity
             android:name=".compute_recommend"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".get_pos" />
-        <activity android:name=".compute_get_map_json"></activity>
+        <activity android:name=".compute_get_map_json" />
+        <activity
+            android:name=".key_in_recommend"
+            android:label="輸入推薦資料"/>
     </application>
 
 </manifest>

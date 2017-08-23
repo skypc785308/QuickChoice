@@ -60,7 +60,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        String [] position = {"家樂福","新光三越","大遠百","秀泰廣場","陶板屋","UNIQLO","NET","星巴克","野宴","逐鹿炭火"};
+
         get_position();
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -70,18 +70,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         mapFragment= (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(map);
-        if (pos == null){
-            for(int i=0;i<position.length;i++){
-                httpall(position[i]);
-                if(i==position.length-1){
-                    mapFragment.getMapAsync(this);
-                }
-            }
-        }
-        else{
-            httpall(pos);
-            mapFragment.getMapAsync(this);
-        }
+
     }
 
     public void get_position(){
@@ -203,7 +192,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         Log.e("seeeeee2222", String.valueOf(Thread.currentThread().getId()));
+        String [] position = {"家樂福","新光三越","大遠百","秀泰廣場","陶板屋","UNIQLO","NET","星巴克","野宴","逐鹿炭火"};
         mMap = googleMap;
+        if (pos == null){
+            for(int i=0;i<position.length;i++){
+                httpall(position[i]);
+            }
+        }
+        else{
+            httpall(pos);
+        }
 
 
         //Initialize Google Play Services

@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ListView;
 
 import com.kosalgeek.genasync12.AsyncResponse;
@@ -53,7 +52,7 @@ public class compute_money extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.compute_money,container,false);
+        View view = inflater.inflate(R.layout.fragment_compute_money,container,false);
         listV=(ListView)view.findViewById(R.id.show_money_list);
         card_list = new ArrayList<card_datatype>();
         http();
@@ -68,11 +67,10 @@ public class compute_money extends Fragment {
                     mresult_types[j] = t;
                 }
         }
-        Integer va = Integer.parseInt(cash);
         for (Integer i=index-1;i>=0;i--){
             Integer r = index-i;
             Integer value = mresult_types[i].getKey();
-            card_list.add(new card_datatype(r.toString(),mresult_types[i].getName(),mresult_types[i].getKeyword(),value*va));
+            card_list.add(new card_datatype(r.toString(),mresult_types[i].getName(),mresult_types[i].getKeyword(),value));
         }
         showdata();
         return Boolean.TRUE;
@@ -102,7 +100,7 @@ public class compute_money extends Fragment {
             @Override
             public void processFinish(String s) {
                 Log.e("ewewe",s);
-                if(s.isEmpty()){
+                if(s.equals("{\"data\":null}")){
                     shownodata();
                 }
                 else {

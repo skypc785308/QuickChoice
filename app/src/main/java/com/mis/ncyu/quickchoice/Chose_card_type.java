@@ -31,7 +31,6 @@ public class Chose_card_type extends AppCompatActivity {
 
     private String[] card_data;
     private String[] card_id;
-    private String[] offer_context;
     private String bankname;
     private String username;
     @Override
@@ -94,13 +93,11 @@ public class Chose_card_type extends AppCompatActivity {
                     JSONObject init_title = new JSONObject(response.body().string());
                     JSONArray data = init_title.getJSONArray("data");
                     card_data = new String[data.length()];
-                    offer_context = new String[data.length()];
                     card_id = new String[data.length()];
                     for (int i = 0; i < data.length(); i++) {
                         JSONObject jasondata = data.getJSONObject(i);
                         card_data[i] = jasondata.getString("name");
                         card_id[i] = jasondata.getString("id");
-                        offer_context[i] = jasondata.getString("offer_context");
                     }
                 }catch (JSONException e) {
                     e.printStackTrace();
