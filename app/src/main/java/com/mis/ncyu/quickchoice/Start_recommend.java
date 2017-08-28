@@ -105,7 +105,7 @@ public class Start_recommend extends AppCompatActivity {
                             String card =jasondata.getString("card_id");
                             mresult_types[i] = new result_type();
                             mresult_types[i].setName(card);
-                            mresult_types[i].setKeyword(jasondata.getString("key_word"));
+                            mresult_types[i].setKeyword(jasondata.getString("key_word"),"");
                             Log.e("ewewe",mresult_types[i].getKeyword());
                         }
                     }catch (JSONException e) {

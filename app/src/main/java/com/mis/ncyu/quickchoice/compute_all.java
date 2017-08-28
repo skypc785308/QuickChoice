@@ -1,7 +1,7 @@
 package com.mis.ncyu.quickchoice;
 
-
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +20,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Created by UserMe on 2017/8/6.
+ */
 
 public class compute_all extends Fragment {
 
@@ -27,44 +30,47 @@ public class compute_all extends Fragment {
     private String perfer;
     private String pos;
     private ListView listV;
+    private Integer sum;
+    private String cash;
+
     List<card_datatype> card_list;
     result_type[] mresult_types;
     private mylistadapter adapter;
 
-    public compute_all() {}
-
-
+    public compute_all() {
+    }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         username =((compute_recommend)getActivity()).put_user_name();
         perfer = ((compute_recommend)getActivity()).put_perfer();
         pos = ((compute_recommend)getActivity()).put_pos();
+        sum = ((compute_recommend)getActivity()).put_sum();
+        cash = ((compute_recommend)getActivity()).put_cash();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_compute_all,container,false);
-        listV=(ListView)view.findViewById(R.id.show_all_list);
+        listV=(ListView)view.findViewById(R.id.show_money_list);
         card_list = new ArrayList<card_datatype>();
         http();
         return view;
     }
-
-
     public Boolean compute(int index){
-        for (int i=0;i<index;i++){
-            for (int j = 0; j < index-1; j++)
+        for (int i=0;i<index;i++) {
+            for (int j = 0; j < index - 1; j++)
                 if (mresult_types[j].getKey() > mresult_types[j + 1].getKey()) {
                     result_type t = mresult_types[j + 1];
                     mresult_types[j + 1] = mresult_types[j];
-                    mresult_types[j]=t;
+                    mresult_types[j] = t;
                 }
         }
         for (Integer i=index-1;i>=0;i--){
             Integer r = index-i;
-            card_list.add(new card_datatype(r.toString(),mresult_types[i].getName(),mresult_types[i].getKeyword(),r));
+            Integer value = mresult_types[i].getKey();
+            card_list.add(new card_datatype(r.toString(),mresult_types[i].getName(),mresult_types[i].getKeyword(),value));
         }
         showdata();
         return Boolean.TRUE;
@@ -76,7 +82,7 @@ public class compute_all extends Fragment {
     }
 
     public void shownodata(){
-        card_list.add(new card_datatype("none","沒有卡片啦~","快去新增!!",123456789));
+        card_list.add(new card_datatype("none","沒有卡片啦~","快去新增!!",12345679));
         adapter = new mylistadapter(getActivity(),card_list);
         listV.setAdapter(adapter);
     }
@@ -109,7 +115,7 @@ public class compute_all extends Fragment {
                             String card =jasondata.getString("card_id");
                             mresult_types[i] = new result_type();
                             mresult_types[i].setName(card);
-                            mresult_types[i].setKeyword(jasondata.getString("key_word"));
+                            mresult_types[i].setKeyword(jasondata.getString("key_word"),"");
                             Log.e("ewewe",mresult_types[i].getKeyword());
                         }
                     }catch (JSONException e) {
@@ -121,5 +127,4 @@ public class compute_all extends Fragment {
         });
         readTask.execute(url);
     }
-
 }

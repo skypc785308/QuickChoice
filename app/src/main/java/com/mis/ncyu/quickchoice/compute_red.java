@@ -40,12 +40,21 @@ public class compute_red extends Fragment {
     private mylistadapter adapter;
     private result_type[] mresult_types;
     private int index = 0;
+     int times = 0;
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         username =((compute_recommend)getActivity()).put_user_name();
         perfer = ((compute_recommend)getActivity()).put_perfer();
         pos = ((compute_recommend)getActivity()).put_pos();
+    }
+
+    @Override
+    public void onStart() {
+        times++;
+        Log.e("wwwwww",String.valueOf(times));
+        super.onStart();
+
     }
 
     @Nullable
@@ -131,7 +140,7 @@ public class compute_red extends Fragment {
                             Pattern p = Pattern.compile("\\s*|\t|\r|\n");
                             Matcher m = p.matcher(keyword);
                             String clean = m.replaceAll("");
-                            mresult_types[i].setKeyword(clean);
+                            mresult_types[i].setKeyword(clean,"元／點");
                         }
                     }catch (JSONException e) {
                         e.printStackTrace();

@@ -19,6 +19,7 @@
             android:id="@+id/bank_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
             android:text="TextView"
             android:textSize="30sp"
             android:textStyle="bold" />
@@ -27,12 +28,15 @@
             android:id="@+id/card_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="10dp"
             android:text="TextView"
             android:textSize="24sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <TextView
@@ -40,6 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.63"
+                android:paddingLeft="10dp"
                 android:text="每月結帳日："
                 android:textSize="18sp" />
 
@@ -55,6 +60,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <TextView
@@ -62,6 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.77"
+                android:paddingLeft="10dp"
                 android:text="每月額度："
                 android:textSize="18sp" />
 
@@ -77,6 +84,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <TextView
@@ -84,6 +92,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.94"
+                android:paddingLeft="10dp"
                 android:text="卡號："
                 android:textSize="18sp" />
 
@@ -99,6 +108,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <TextView
@@ -106,6 +116,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.94"
+                android:paddingLeft="10dp"
                 android:text="到期日："
                 android:textSize="18sp" />
 

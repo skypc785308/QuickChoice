@@ -29,11 +29,11 @@ public class new_home2 extends AppCompatActivity {
         setContentView(R.layout.activity_new_home2);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         // App Logo
-        toolbar.setLogo(R.drawable.cat);
+        toolbar.setLogo(R.mipmap.ic_launcher);
         // Title
         toolbar.setTitle(loginame);
         // Sub Title
-        toolbar.setSubtitle("Sub title");
+        toolbar.setSubtitle("子標題");
         setSupportActionBar(toolbar);
 
 

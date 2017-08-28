@@ -116,15 +116,11 @@ public class Recommend extends Fragment implements GoogleApiClient.ConnectionCal
     @Override
     public void onResume() {
         super.onResume();
-
         map.onResume();
     }
     @Override
     public void onPause() {
         map.onPause();
-        if (mGoogleApiClient != null) {
-            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
-        }
         super.onPause();
     }
     @Override
@@ -155,13 +151,7 @@ public class Recommend extends Fragment implements GoogleApiClient.ConnectionCal
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 啟動地圖元件用的Intent物件
-                Intent intentMap = new Intent(getActivity(), MapsActivity.class);
-                Bundle context = new Bundle();
-                context.putString("user_name", username);
-                intentMap.putExtras(context);
-                // 啟動地圖元件
-                startActivity(intentMap);
+                startActivity(new Intent(getActivity(),news.class));
             }
         });
 

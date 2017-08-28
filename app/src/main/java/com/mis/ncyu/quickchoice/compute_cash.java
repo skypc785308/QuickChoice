@@ -132,7 +132,7 @@ public class compute_cash extends Fragment {
                             Pattern p = Pattern.compile("\\s*|\t|\r|\n");
                             Matcher m = p.matcher(keyword);
                             String clean = m.replaceAll("");
-                            mresult_types[i].setKeyword(clean.replace("%",""));
+                            mresult_types[i].setKeyword(clean,"%");
                         }
                     }catch (JSONException e) {
                         e.printStackTrace();

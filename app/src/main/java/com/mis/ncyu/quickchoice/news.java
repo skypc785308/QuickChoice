@@ -1,136 +1,126 @@
 package com.mis.ncyu.quickchoice;
 
-import android.Manifest;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
+
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.PlaceLikelihood;
-import com.google.android.gms.location.places.PlaceLikelihoodBuffer;
-import com.google.android.gms.location.places.Places;
-import com.google.android.gms.location.places.ui.PlacePicker;
+import com.kosalgeek.genasync12.AsyncResponse;
+import com.kosalgeek.genasync12.PostResponseAsyncTask;
 
-public class news extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-    GoogleApiClient mGoogleApiClient;
-    int PLACE_PICKER_REQUEST = 1;
-    TextView plcae;
+import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class news extends AppCompatActivity {
+
+    MyDBHelper helper;
+    SQLiteDatabase db;
+    Button up;
+    TextView text;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
-         plcae = (TextView) findViewById(R.id.place);
-        plcae.setOnClickListener(new View.OnClickListener() {
+        up = (Button)findViewById(R.id.button2);
+        text = (TextView)findViewById(R.id.textView23);
+        up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displayPlacePicker();
+                http();
+
             }
         });
-        mGoogleApiClient = new GoogleApiClient
-                .Builder(this)
-                .enableAutoManage(this, 0, this)
-                .addApi(Places.GEO_DATA_API)
-                .addApi(Places.PLACE_DETECTION_API)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .build();
-        guessCurrentPlace();
+
+//        for (int i=0;i<20;i++){
+//            TextView a = new TextView(this);
+//            a.setText("123");
+//            Button c = new Button(this);
+//            c.setHeight(30);
+//            c.setWidth(50);
+//            c.setText("安安");
+//            TextView b = new TextView(this);
+//            b.setHeight(20);
+//            b.setText(" ");
+//            ll.addView(a);
+//            ll.addView(c);
+//            ll.addView(b);
+//        }
+
+
+        helper = MyDBHelper.getInstance(this);
+        db = helper.getWritableDatabase();
+//        String a="";
+//        if (db.isOpen()){
+//            a="yes";
+//        }
+//        Log.e("ewewe",a);
+//        ContentValues cv = new ContentValues();
+//        cv.put("discount_limit","123");
+//        cv.put("point_limit","456");
+//        cv.put("change_percent","12%");
+//        String [] clom = {"_id","discount_limit","point_limit","change_percent"};
+//        long id = db.insert("total_change",null,cv);
+//        Log.e("ewewe",String.valueOf(id));
+//        Cursor c = db.rawQuery("SELECT * FROM total_change",null);
+//        String g;
+//        String str="";
+//        c.moveToFirst();
+//        for (int i=0;i<c.getCount();i++){
+//            str+=c.getString(3);
+//            c.moveToNext();
+//
+//        }Log.e("ewewe",str);
+//
+//        db.close();
+
 
     }
-
-    private void guessCurrentPlace() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-
-        }
-        PendingResult<PlaceLikelihoodBuffer> result = Places.PlaceDetectionApi
-                .getCurrentPlace(mGoogleApiClient, null);
-        result.setResultCallback(new ResultCallback<PlaceLikelihoodBuffer>() {
+    private void http(){
+        String url = "http://35.194.203.57/connectdb/get_chang.php";
+        PostResponseAsyncTask readTask = new PostResponseAsyncTask(news.this, new AsyncResponse() {
             @Override
-            public void onResult(PlaceLikelihoodBuffer likelyPlaces) {
-                for (PlaceLikelihood placeLikelihood : likelyPlaces) {
-                    Log.i("dddd", String.format("Place '%s' has likelihood: %g",
-                            placeLikelihood.getPlace().getName(),
-                            placeLikelihood.getLikelihood()));
+            public void processFinish(String s) {
+                try{
+                    JSONObject init_title = new JSONObject(s);
+                    JSONArray data = init_title.getJSONArray("data");
+                    for (int i = 0; i < data.length(); i++) {
+                        JSONObject jasondata = data.getJSONObject(i);
+                        String bank =jasondata.getString("bank");
+                        String discount_limit = jasondata.getString("discount_limit");
+                        String point_limit = jasondata.getString("point_limit");
+                        String change_percent = jasondata.getString("change_percent");
+                        change_percent = change_percent.replace("1000點=元","");
+                        Log.e("比例",change_percent);
+                        ContentValues cv = new ContentValues();
+                        cv.put("bank",bank);
+                        cv.put("discont_limit",discount_limit);
+                        cv.put("point_limit",point_limit);
+                        cv.put("change_percent",change_percent);
+                        long id = db.insert("total_change",null,cv);
+                        Log.e("id",String.valueOf(id));
+                    }
+                }catch (JSONException e) {
+                    e.printStackTrace();
                 }
-                likelyPlaces.release();
+                Cursor c = db.rawQuery("SELECT * FROM total_change",null);
+                text.setText("有"+String.valueOf(c.getCount())+"資料");
+                c.close();
+                db.close();
             }
         });
-    }
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == PLACE_PICKER_REQUEST) {
-            if (resultCode == RESULT_OK) {
-                Place place = PlacePicker.getPlace(data, this);
-                String toastMsg = String.format("Place: %s", place.getName());
-                Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
-            }
-        }
+        readTask.execute(url);
     }
 
-    private void displayPlacePicker() {
-        if( mGoogleApiClient == null || !mGoogleApiClient.isConnected() )
-            return;
-
-        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
-
-        try {
-            startActivityForResult( builder.build( this ), PLACE_PICKER_REQUEST );
-        } catch ( GooglePlayServicesRepairableException e ) {
-            Log.d( "PlacesAPI Demo", "GooglePlayServicesRepairableException thrown" );
-        } catch ( GooglePlayServicesNotAvailableException e ) {
-            Log.d( "PlacesAPI Demo", "GooglePlayServicesNotAvailableException thrown" );
-        }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if( mGoogleApiClient != null )
-            mGoogleApiClient.connect();
-    }
-
-    @Override
-    protected void onStop() {
-        if( mGoogleApiClient != null && mGoogleApiClient.isConnected() ) {
-            mGoogleApiClient.disconnect();
-        }
-        super.onStop();
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        connectionResult.getErrorCode();
-    }
-
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
-
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
 }

@@ -86,7 +86,7 @@ public class compute_recommend extends AppCompatActivity {
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
         adapter.addFragment(new tab1_fragment(), "綜合優惠排序");
         adapter.addFragment(new compute_cash(), "現金優惠");
-        adapter.addFragment(new tab1_fragment(), "加油");
+        adapter.addFragment(new compute_oil(), "加油");
         adapter.addFragment(new compute_red(), "紅利積點");
         adapter.addFragment(new tab1_fragment(), "里程");
         viewPager.setAdapter(adapter);

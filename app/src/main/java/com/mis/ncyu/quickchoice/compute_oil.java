@@ -1,7 +1,7 @@
 package com.mis.ncyu.quickchoice;
 
+
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,58 +19,54 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-/**
- * Created by UserMe on 2017/8/6.
- */
 
-public class compute_money extends Fragment {
+public class compute_oil extends Fragment {
 
     private String username;
     private String perfer;
     private String pos;
     private ListView listV;
-    private Integer sum;
-    private String cash;
-
     List<card_datatype> card_list;
     result_type[] mresult_types;
     private mylistadapter adapter;
 
-    public compute_money() {
-    }
+    public compute_oil() {}
+
+
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         username =((compute_recommend)getActivity()).put_user_name();
         perfer = ((compute_recommend)getActivity()).put_perfer();
         pos = ((compute_recommend)getActivity()).put_pos();
-        sum = ((compute_recommend)getActivity()).put_sum();
-        cash = ((compute_recommend)getActivity()).put_cash();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_compute_money,container,false);
-        listV=(ListView)view.findViewById(R.id.show_money_list);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_compute_oil,container,false);
+        listV=(ListView)view.findViewById(R.id.show_all_list);
         card_list = new ArrayList<card_datatype>();
         http();
         return view;
     }
+
+
     public Boolean compute(int index){
-        for (int i=0;i<index;i++) {
-            for (int j = 0; j < index - 1; j++)
+        for (int i=0;i<index;i++){
+            for (int j = 0; j < index-1; j++)
                 if (mresult_types[j].getKey() > mresult_types[j + 1].getKey()) {
                     result_type t = mresult_types[j + 1];
                     mresult_types[j + 1] = mresult_types[j];
-                    mresult_types[j] = t;
+                    mresult_types[j]=t;
                 }
         }
         for (Integer i=index-1;i>=0;i--){
             Integer r = index-i;
-            Integer value = mresult_types[i].getKey();
-            card_list.add(new card_datatype(r.toString(),mresult_types[i].getName(),mresult_types[i].getKeyword(),value));
+            card_list.add(new card_datatype(r.toString(),mresult_types[i].getName(),mresult_types[i].getKeyword(),r));
         }
         showdata();
         return Boolean.TRUE;
@@ -82,13 +78,13 @@ public class compute_money extends Fragment {
     }
 
     public void shownodata(){
-        card_list.add(new card_datatype("none","沒有卡片啦~","快去新增!!",12345679));
+        card_list.add(new card_datatype("none","沒有卡片啦~","快去新增!!",123456789));
         adapter = new mylistadapter(getActivity(),card_list);
         listV.setAdapter(adapter);
     }
 
     private void http(){
-        String url = "http://35.194.203.57/connectdb/recommend.php";
+        String url = "http://35.194.203.57/connectdb/oil_compute.php";
         HashMap postData = new HashMap();
         postData.put("userid",username);
         postData.put("pos",pos);
@@ -112,10 +108,14 @@ public class compute_money extends Fragment {
                         mresult_types = new result_type[index];
                         for (int i = 0; i < data.length(); i++) {
                             JSONObject jasondata = data.getJSONObject(i);
-                            String card =jasondata.getString("card_id");
+                            String card =jasondata.getString("card_name");
+                            String keyword =jasondata.getString("card_offer");
+                            Pattern p = Pattern.compile("\\s*|\t|\r|\n");
+                            Matcher m = p.matcher(keyword);
+                            String clean = m.replaceAll("");
                             mresult_types[i] = new result_type();
                             mresult_types[i].setName(card);
-                            mresult_types[i].setKeyword(jasondata.getString("key_word"));
+                            mresult_types[i].setKeyword(clean,"元 / 公升");
                             Log.e("ewewe",mresult_types[i].getKeyword());
                         }
                     }catch (JSONException e) {
@@ -127,4 +127,5 @@ public class compute_money extends Fragment {
         });
         readTask.execute(url);
     }
+
 }

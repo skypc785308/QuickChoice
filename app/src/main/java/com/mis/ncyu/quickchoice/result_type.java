@@ -11,8 +11,8 @@ public class result_type {
     private Integer key;
     private Boolean chk = Boolean.FALSE;
     public result_type(){}
-    public void compute_key(){
-           this.key =Integer.parseInt(this.keyword.replace("元／點",""));
+    public void compute_key(String replace){
+           this.key =Integer.parseInt(this.keyword.replace(replace,""));
     }
 
     public Boolean getChk() {
@@ -47,9 +47,9 @@ public class result_type {
         this.key = key;
     }
 
-    public void setKeyword(String keyword) {
+    public void setKeyword(String keyword ,String replace) {
         this.keyword = keyword;
-        compute_key();
+        compute_key(replace);
     }
 
     public void setName(String name) {

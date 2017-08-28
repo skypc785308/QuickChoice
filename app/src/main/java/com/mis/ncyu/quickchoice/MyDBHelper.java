@@ -18,28 +18,25 @@ public class MyDBHelper extends SQLiteOpenHelper {
         return instance;
     }
 
-    public MyDBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+    private MyDBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE  TABLE bank.card " +
+        db.execSQL("CREATE  TABLE total_change " +
                 "(_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "bank_name VARCHAR(20), " +
-                "card_name VARCHAR(20))");
-        db.execSQL("CREATE  TABLE card.offer " +
-                "(_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "card_name VARCHAR(20),"+
-                "offer_type VARCHAR(20),"+
-                "key_value VARCHAR(20), " +
-                "coper_store VARCHAR(20), " +
-                "offer_context VARCHAR(100))");
+                "bank VARCHAR(20), " +
+                "discont_limit VARCHAR(20)," +
+                "point_limit VARCHAR(20)," +
+                "change_percent VARCHAR(20))");
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        final String DROP_TABLE = "DROP TABLE IF EXISTS total_change";
+        db.execSQL(DROP_TABLE);
+        onCreate(db);
     }
 }
