@@ -30,6 +30,14 @@ public class MyDBHelper extends SQLiteOpenHelper {
                 "discont_limit VARCHAR(20)," +
                 "point_limit VARCHAR(20)," +
                 "change_percent VARCHAR(20))");
+        db.execSQL("CREATE  TABLE login " +
+                "(_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "user_id VARCHAR(20), " +
+                "login_date DATETIME, "+
+                "cash INTEGER,"+
+                "oil INTEGER,"+
+                "red INTEGER,"+
+                "plane INTEGER)");
 
     }
 

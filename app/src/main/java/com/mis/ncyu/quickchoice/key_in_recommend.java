@@ -68,10 +68,9 @@ public class key_in_recommend extends AppCompatActivity {
                 if (s.equals("success")){
                     Toast.makeText(key_in_recommend.this, s, Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(key_in_recommend.this, new_home2.class);
-                    Bundle context = new Bundle();
-                    context.putString("user_name", user_name);
-                    intent.putExtras(context);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//它可以关掉所要到的界面中间的activity
                     startActivity(intent);
+                    finish();
                 }
                 else {
                     Toast.makeText(key_in_recommend.this, s, Toast.LENGTH_LONG).show();

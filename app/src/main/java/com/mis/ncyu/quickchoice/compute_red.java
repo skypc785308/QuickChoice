@@ -4,14 +4,17 @@ package com.mis.ncyu.quickchoice;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.kosalgeek.genasync12.AsyncResponse;
 import com.kosalgeek.genasync12.PostResponseAsyncTask;
@@ -30,7 +33,7 @@ import java.util.regex.Pattern;
  * Created by UserMe on 2017/8/19.
  */
 
-public class compute_red extends Fragment {
+public class compute_red extends Fragment  {
     public compute_red() {}
     private String username;
     private String perfer;
@@ -40,21 +43,15 @@ public class compute_red extends Fragment {
     private mylistadapter adapter;
     private result_type[] mresult_types;
     private int index = 0;
-     int times = 0;
+    SwipeRefreshLayout mSwipeRefreshLayout;
+    int times = 0;
+
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         username =((compute_recommend)getActivity()).put_user_name();
-        perfer = ((compute_recommend)getActivity()).put_perfer();
         pos = ((compute_recommend)getActivity()).put_pos();
-    }
-
-    @Override
-    public void onStart() {
-        times++;
-        Log.e("wwwwww",String.valueOf(times));
-        super.onStart();
-
     }
 
     @Nullable
@@ -62,12 +59,18 @@ public class compute_red extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_compute_red,container,false);
         listV=(ListView)view.findViewById(R.id.show_money_list);
-        card_list = new ArrayList<card_datatype>();
-        http();
+
+        if (mresult_types == null){
+            card_list = new ArrayList<card_datatype>();
+            http();
+        }
+        else {
+            showdata();
+        }
         return view;
     }
     public void shownodata(){
-        card_list.add(new card_datatype("none","沒有卡片啦~","快去新增!!",12345679));
+        card_list.add(new card_datatype("none","沒有卡片啦~","快去新增!!",0.12345679));
         adapter = new mylistadapter(getActivity(),card_list);
         listV.setAdapter(adapter);
     }
@@ -83,7 +86,7 @@ public class compute_red extends Fragment {
         }
         for (Integer i=index-1;i>=0;i--){
             Integer r = index-i;
-            Integer value = mresult_types[i].getKey();
+            Double value = mresult_types[i].getKey();
             card_list.add(new card_datatype(r.toString(),mresult_types[i].getName(),mresult_types[i].getKeyword(),value));
         }
         showdata();
@@ -114,10 +117,6 @@ public class compute_red extends Fragment {
         HashMap postData = new HashMap();
         postData.put("userid",username);
         postData.put("pos",pos);
-        postData.put("perfer",perfer);
-        Log.e("ewewe",username);
-        Log.e("ewewe",pos);
-        Log.e("ewewe",perfer);
         PostResponseAsyncTask readTask = new PostResponseAsyncTask(getActivity(), postData, new AsyncResponse() {
             @Override
             public void processFinish(String s) {

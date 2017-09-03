@@ -58,7 +58,7 @@ public class Start_recommend extends AppCompatActivity {
                }
        }
         for (Integer i=index-1;i>=0;i--){
-            Integer r = index-i;
+            Double r = Double.valueOf(index-i);
             card_list.add(new card_datatype(r.toString(),mresult_types[i].getName(),mresult_types[i].getKeyword(),r));
         }
         showdata();
@@ -72,7 +72,7 @@ public class Start_recommend extends AppCompatActivity {
     }
 
     public void shownodata(){
-        card_list.add(new card_datatype("none","沒有卡片啦~","快去新增!!",123456789));
+        card_list.add(new card_datatype("none","沒有卡片啦~","快去新增!!",0.123456789));
         adapter = new mylistadapter(Start_recommend.this,card_list);
         listV.setAdapter(adapter);
     }

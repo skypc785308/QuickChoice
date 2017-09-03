@@ -3,11 +3,13 @@ package com.mis.ncyu.quickchoice;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,6 +47,7 @@ public class mycard_fragment extends Fragment {
     private String[] max_cost;
     private String[] countdate;
     ListView showcards;
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     public void onAttach(Context context) {
@@ -62,7 +65,30 @@ public class mycard_fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_my_card,container,false);
         showcards = (ListView) view.findViewById(R.id.my_card_list);
-        http();
+        mSwipeRefreshLayout =(SwipeRefreshLayout) view.findViewById(R.id.id_swipe_refresh_first);
+        mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                }, 3000);
+
+            }
+        });
+        if (listviewdata == null){
+            http();
+        }
+        else {
+            showdata();
+        }
+
         FloatingActionButton fab = (FloatingActionButton)view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

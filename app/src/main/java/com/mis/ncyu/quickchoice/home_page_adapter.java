@@ -10,22 +10,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by User on 2/28/2017.
+ * Created by UserMe on 2017/9/3.
  */
 
-public class SectionsPageAdapter extends FragmentPagerAdapter {
-
+public class home_page_adapter extends FragmentPagerAdapter {
     private final List<Fragment> mFragmentList = new ArrayList<>();
     private final List<String> mFragmentTitleList = new ArrayList<>();
     private Fragment tmp = new Fragment();
-    static int[] times ;
 
     public void addFragment(Fragment fragment, String title) {
         mFragmentList.add(fragment);
         mFragmentTitleList.add(title);
     }
 
-    public SectionsPageAdapter(FragmentManager fm) {
+    public home_page_adapter(FragmentManager fm) {
         super(fm);
     }
 
@@ -43,20 +41,4 @@ public class SectionsPageAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return mFragmentList.size();
     }
-
-    @Override
-    public void setPrimaryItem(ViewGroup container, int position, Object object) {
-        Fragment now  = (Fragment)object;
-        if (tmp != now){
-            Log.e("切換後的",String.valueOf(position));
-            tmp = now;
-            if((position-1) != -1 && times != null){
-                times[position-1] += 1;
-                Log.e("次數",String.valueOf(times[position-1]));
-            }
-
-        }
-        super.setPrimaryItem(container, position, object);
-    }
 }
-

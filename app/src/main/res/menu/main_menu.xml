@@ -3,14 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/top_menu"
+        android:id="@+id/about"
         android:icon="@mipmap/ic_launcher_round"
-        android:title="設定一"
-        app:showAsAction="ifRoom|withText" />
+        android:title="關於" />
     <item
-        android:id="@+id/top_2"
-        android:title="設定二" />
+        android:id="@+id/weight"
+        android:title="優惠權重" />
     <item
-        android:id="@+id/top_3"
-        android:title="設定三" />
+        android:id="@+id/log_out"
+        android:title="登出" />
 </menu>

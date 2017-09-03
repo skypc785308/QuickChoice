@@ -57,6 +57,7 @@ public class content_my_card extends AppCompatActivity {
                 Log.e("data",s);
                 try{
                     JSONObject data = new JSONObject(s);
+                    bank_name.setText(data.getString("name"));
                     card_name.setText(data.getString("card_id"));
                     date.setText(data.getString("date"));
                     max_cost.setText(data.getString("max_cost"));

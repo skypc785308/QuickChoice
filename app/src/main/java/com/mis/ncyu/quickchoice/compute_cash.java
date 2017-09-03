@@ -45,7 +45,6 @@ public class compute_cash extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         username =((compute_recommend)getActivity()).put_user_name();
-        perfer = ((compute_recommend)getActivity()).put_perfer();
         pos = ((compute_recommend)getActivity()).put_pos();
     }
 
@@ -59,7 +58,7 @@ public class compute_cash extends Fragment {
         return view;
     }
     public void shownodata(){
-        card_list.add(new card_datatype("none","沒有卡片啦~","快去新增!!",12345679));
+        card_list.add(new card_datatype("none","沒有卡片啦~","快去新增!!",0.12345679));
         adapter = new mylistadapter(getActivity(),card_list);
         listV.setAdapter(adapter);
     }
@@ -75,7 +74,7 @@ public class compute_cash extends Fragment {
         }
         for (Integer i=index-1;i>=0;i--){
             Integer r = index-i;
-            Integer value = mresult_types[i].getKey();
+            Double value = mresult_types[i].getKey();
             card_list.add(new card_datatype(r.toString(),mresult_types[i].getName(),mresult_types[i].getKeyword(),value));
         }
         showdata();
@@ -106,10 +105,6 @@ public class compute_cash extends Fragment {
         HashMap postData = new HashMap();
         postData.put("userid",username);
         postData.put("pos",pos);
-        postData.put("perfer",perfer);
-        Log.e("ewewe",username);
-        Log.e("ewewe",pos);
-        Log.e("ewewe",perfer);
         PostResponseAsyncTask readTask = new PostResponseAsyncTask(getActivity(), postData, new AsyncResponse() {
             @Override
             public void processFinish(String s) {

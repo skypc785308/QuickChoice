@@ -96,7 +96,7 @@
             android:label="@string/title_activity_maps" />
         <activity
             android:name=".Start_recommend"
-            android:label="推薦結果"/>
+            android:label="推薦結果" />
         <activity android:name=".Choice_recommend_type" />
         <activity
             android:name=".compute_recommend"
@@ -105,7 +105,8 @@
         <activity android:name=".compute_get_map_json" />
         <activity
             android:name=".key_in_recommend"
-            android:label="輸入推薦資料"/>
+            android:label="輸入推薦資料" />
+        <activity android:name=".compute_wating"></activity>
     </application>
 
 </manifest>

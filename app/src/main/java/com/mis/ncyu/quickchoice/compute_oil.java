@@ -41,16 +41,18 @@ public class compute_oil extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         username =((compute_recommend)getActivity()).put_user_name();
-        perfer = ((compute_recommend)getActivity()).put_perfer();
+
         pos = ((compute_recommend)getActivity()).put_pos();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+        Log.e("oil","oil");
         View view = inflater.inflate(R.layout.fragment_compute_oil,container,false);
         listV=(ListView)view.findViewById(R.id.show_all_list);
         card_list = new ArrayList<card_datatype>();
-        http();
+
+
         return view;
     }
 
@@ -66,7 +68,7 @@ public class compute_oil extends Fragment {
         }
         for (Integer i=index-1;i>=0;i--){
             Integer r = index-i;
-            card_list.add(new card_datatype(r.toString(),mresult_types[i].getName(),mresult_types[i].getKeyword(),r));
+            card_list.add(new card_datatype(r.toString(),mresult_types[i].getName(),mresult_types[i].getKeyword(),0.123));
         }
         showdata();
         return Boolean.TRUE;
@@ -78,7 +80,7 @@ public class compute_oil extends Fragment {
     }
 
     public void shownodata(){
-        card_list.add(new card_datatype("none","沒有卡片啦~","快去新增!!",123456789));
+        card_list.add(new card_datatype("none","沒有卡片啦~","快去新增!!",0.123456789));
         adapter = new mylistadapter(getActivity(),card_list);
         listV.setAdapter(adapter);
     }
@@ -88,41 +90,37 @@ public class compute_oil extends Fragment {
         HashMap postData = new HashMap();
         postData.put("userid",username);
         postData.put("pos",pos);
-        postData.put("perfer",perfer);
-        Log.e("ewewe",username);
-        Log.e("ewewe",pos);
-        Log.e("ewewe",perfer);
         PostResponseAsyncTask readTask = new PostResponseAsyncTask(getActivity(), postData, new AsyncResponse() {
             @Override
             public void processFinish(String s) {
                 Log.e("ewewe",s);
-                if(s.equals("{\"data\":null}")){
-                    shownodata();
-                }
-                else {
-                    int index = 0;
-                    try{
-                        JSONObject init_title = new JSONObject(s);
-                        JSONArray data = init_title.getJSONArray("data");
-                        index = data.length();
-                        mresult_types = new result_type[index];
-                        for (int i = 0; i < data.length(); i++) {
-                            JSONObject jasondata = data.getJSONObject(i);
-                            String card =jasondata.getString("card_name");
-                            String keyword =jasondata.getString("card_offer");
-                            Pattern p = Pattern.compile("\\s*|\t|\r|\n");
-                            Matcher m = p.matcher(keyword);
-                            String clean = m.replaceAll("");
-                            mresult_types[i] = new result_type();
-                            mresult_types[i].setName(card);
-                            mresult_types[i].setKeyword(clean,"元 / 公升");
-                            Log.e("ewewe",mresult_types[i].getKeyword());
-                        }
-                    }catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    compute(index);
-                }
+//                if(s.equals("{\"data\":null}")){
+//                    shownodata();
+//                }
+//                else {
+//                    int index = 0;
+//                    try{
+//                        JSONObject init_title = new JSONObject(s);
+//                        JSONArray data = init_title.getJSONArray("data");
+//                        index = data.length();
+//                        mresult_types = new result_type[index];
+//                        for (int i = 0; i < data.length(); i++) {
+//                            JSONObject jasondata = data.getJSONObject(i);
+//                            String card =jasondata.getString("card_name");
+//                            String keyword =jasondata.getString("card_offer");
+//                            Pattern p = Pattern.compile("\\s*|\t|\r|\n");
+//                            Matcher m = p.matcher(keyword);
+//                            String clean = m.replaceAll("");
+//                            mresult_types[i] = new result_type();
+//                            mresult_types[i].setName(card);
+//                            mresult_types[i].setKeyword(clean,"元 / 公升");
+//                            Log.e("ewewe",mresult_types[i].getKeyword());
+//                        }
+//                    }catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                    compute(index);
+//                }
             }
         });
         readTask.execute(url);

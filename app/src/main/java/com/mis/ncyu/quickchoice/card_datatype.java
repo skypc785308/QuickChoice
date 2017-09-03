@@ -9,16 +9,26 @@ import android.util.Log;
 public class card_datatype {
 
     private String no;
+    private String bank;
     private String name;
     private String key;
-    private Integer value;
+    private Double value;
 
-    public card_datatype(String no,String name,String key,Integer value) {
-        this.no = no;
+    public card_datatype(String bank,String name,String key,Double value) {
+        this.bank = bank;
         this.name = name;
         this.key = key;
         this.value = value;
     }
+
+    public String getBank() {
+        return bank;
+    }
+
+    public void setBank(String bank) {
+        this.bank = bank;
+    }
+
     public String getno(){
         return no;
     }
@@ -38,11 +48,11 @@ public class card_datatype {
         this.key = time;
     }
 
-    public void setValue(Integer value) {
+    public void setValue(Double value) {
         this.value = value;
     }
 
-    public Integer getValue() {
+    public Double getValue() {
         return value;
     }
 }

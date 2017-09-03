@@ -131,7 +131,9 @@ public class Recommend extends Fragment implements GoogleApiClient.ConnectionCal
     @Override
     public void onDestroy() {
         map.onDestroy();
-        mGoogleApiClient.disconnect();
+        if (mGoogleApiClient != null){
+            mGoogleApiClient.disconnect();
+        }
         filterText.removeTextChangedListener(filterTextWatcher);
         super.onDestroy();
 
@@ -223,7 +225,7 @@ public class Recommend extends Fragment implements GoogleApiClient.ConnectionCal
     }
     public void httpall(String position){
         StringBuilder sb = new StringBuilder("https://maps.googleapis.com/maps/api/place/textsearch/json?");
-        sb.append("query=" + position+ "+在+" +area );
+        sb.append("query=" + position+ "+in+" +area );
         sb.append("&key=AIzaSyBmQhDajl0S9NJtvaidNY_nxNOp0sbe-EQ");
         String url = sb.toString();
         PostResponseAsyncTask readTask = new PostResponseAsyncTask(getActivity(), new AsyncResponse() {
@@ -429,10 +431,29 @@ public class Recommend extends Fragment implements GoogleApiClient.ConnectionCal
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-                Intent intent = new Intent(getActivity(), Choice_recommend_type.class);
+                Intent intent = new Intent(getActivity(), compute_recommend.class);
                 Bundle context = new Bundle();
                 context.putString("user_name", username);
-                context.putString("pos", marker.getTitle());
+
+                LatLng poss = marker.getPosition();
+                int idx = LatLngpos.indexOf(poss);
+                String now_pos = "";
+                for (int i=0;i<record_count.size();i++){
+                    if (i == 0){
+                        if (idx<record_count.get(i)){
+                            now_pos = pos[i];
+                        }
+                    }
+                    else {
+                        if (idx<record_count.get(i) && idx >=record_count.get(i-1)){
+                            now_pos = pos[i];
+                        }
+
+                    }
+
+                }
+                context.putString("pos", now_pos);
+                Toast.makeText(getActivity(), "所在地點："+now_pos, Toast.LENGTH_SHORT).show();
                 intent.putExtras(context);
                 startActivity(intent);
             }

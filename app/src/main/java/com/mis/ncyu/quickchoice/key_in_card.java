@@ -84,10 +84,9 @@ public class key_in_card extends AppCompatActivity implements View.OnClickListen
                                 Toast.makeText(key_in_card.this, "新增成功", Toast.LENGTH_SHORT).show();
                             }
                             Intent intent = new Intent(key_in_card.this, new_home2.class);
-                            Bundle context = new Bundle();
-                            context.putString("user_name", username);
-                            intent.putExtras(context);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//它可以关掉所要到的界面中间的activity
                             startActivity(intent);
+                            finish();
                         }
                     });
                 }
