@@ -13,12 +13,21 @@ public class card_datatype {
     private String name;
     private String key;
     private Double value;
+    private String store;
 
     public card_datatype(String bank,String name,String key,Double value) {
         this.bank = bank;
         this.name = name;
         this.key = key;
         this.value = value;
+    }
+
+    public void setStore(String store) {
+        this.store = store;
+    }
+
+    public String getStore() {
+        return store;
     }
 
     public String getBank() {

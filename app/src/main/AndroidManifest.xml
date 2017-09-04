@@ -106,7 +106,8 @@
         <activity
             android:name=".key_in_recommend"
             android:label="輸入推薦資料" />
-        <activity android:name=".compute_wating"></activity>
+        <activity android:name=".compute_wating" />
+        <activity android:name=".content_result"></activity>
     </application>
 
 </manifest>

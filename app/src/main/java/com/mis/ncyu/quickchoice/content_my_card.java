@@ -26,8 +26,8 @@ public class content_my_card extends AppCompatActivity {
         setContentView(R.layout.activity_content_my_card);
         bank_name = (TextView)findViewById(R.id.bank_name);
         card_name = (TextView)findViewById(R.id.card_name);
-        date = (TextView)findViewById(R.id.date);
-        max_cost = (TextView)findViewById(R.id.max_cost);
+        date = (TextView)findViewById(R.id.type);
+        max_cost = (TextView)findViewById(R.id.key_word);
         card_number = (TextView)findViewById(R.id.card_number);
         expirdate = (TextView)findViewById(R.id.expirdate);
     }

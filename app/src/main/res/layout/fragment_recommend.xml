@@ -8,7 +8,7 @@
     <com.google.android.gms.maps.MapView
         android:id="@+id/map"
         android:layout_width="0dp"
-        android:layout_height="269dp"
+        android:layout_height="220dp"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -16,18 +16,21 @@
 
     <Button
         android:id="@+id/recommend_btn"
-        android:layout_width="129dp"
+        android:layout_width="128dp"
         android:layout_height="48dp"
+        android:layout_marginTop="220dp"
+        android:background="@color/md_blue_200"
         android:text="開啟google map"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/map" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/searchbox"
+        android:layout_marginLeft="8dp" />
 
     <EditText
         android:id="@+id/searchbox"
-        android:layout_width="255dp"
-        android:layout_height="43dp"
+        android:layout_width="236dp"
+        android:layout_height="46dp"
         android:ems="10"
         android:hint="搜尋你所在的商家"
         android:inputType="textPersonName"
@@ -35,17 +38,17 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/map" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="221dp" />
 
     <ListView
         android:id="@+id/findpos"
-        android:layout_width="match_parent"
-        android:layout_height="199dp"
+        android:layout_width="0dp"
+        android:layout_height="293dp"
         android:fadingEdge="vertical"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchbox" />
-
 
 </android.support.constraint.ConstraintLayout>

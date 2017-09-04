@@ -36,16 +36,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:paddingLeft="15dp"
+                android:paddingLeft="25dp"
                 android:text="帳號："
-                android:textColor="@color/common_google_signin_btn_text_dark_focused"
-                android:textSize="31sp" />
+                android:textColor="@color/md_black_1000"
+                android:textSize="25sp" />
 
             <EditText
                 android:id="@+id/edit_id"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginRight="20dp"
+                android:layout_height="37dp"
+                android:layout_marginRight="30dp"
                 android:layout_weight="1"
                 android:background="@color/colorAccent"
                 android:ems="10"
@@ -66,16 +66,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:paddingLeft="15dp"
+                android:paddingLeft="25dp"
                 android:text="密碼："
-                android:textColor="@color/common_google_signin_btn_text_dark_focused"
-                android:textSize="31sp" />
+                android:textColor="@color/md_black_1000"
+                android:textSize="25sp" />
 
             <EditText
                 android:id="@+id/edit_password"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginRight="20dp"
+                android:layout_height="37dp"
+                android:layout_marginRight="30dp"
                 android:layout_weight="1"
                 android:background="@color/colorAccent"
                 android:ems="10"
@@ -97,7 +97,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:layout_marginTop="18dp"
-                android:background="@android:color/holo_blue_light"
+                android:background="@color/md_blue_200"
                 android:text="登入"
                 android:textSize="22sp"
                 tools:layout_editor_absoluteX="99dp"
@@ -108,7 +108,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:layout_marginTop="23dp"
-                android:background="?attr/colorButtonNormal"
+                android:background="@color/md_grey_400"
                 android:text="註冊"
                 android:textSize="22sp" />
 

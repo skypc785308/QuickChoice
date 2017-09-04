@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,28 +43,42 @@ public class compute_cash extends Fragment {
     private mylistadapter adapter;
     private result_type[] mresult_types;
     private int index = 0;
+    private List<Total_data> data;
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         username =((compute_recommend)getActivity()).put_user_name();
         pos = ((compute_recommend)getActivity()).put_pos();
+        data = ((compute_recommend)getActivity()).put_data();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_compute_red,container,false);
-        listV=(ListView)view.findViewById(R.id.show_money_list);
-        card_list = new ArrayList<card_datatype>();
-        http();
+        View view = inflater.inflate(R.layout.fragment_compute_cash,container,false);
+        get_wanted_data();
+        RecycleAdapter myAdapter = new RecycleAdapter(card_list);
+        RecyclerView mList = (RecyclerView) view.findViewById(R.id.list_view);
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mList.setLayoutManager(layoutManager);
+        mList.setAdapter(myAdapter);
         return view;
     }
-    public void shownodata(){
-        card_list.add(new card_datatype("none","沒有卡片啦~","快去新增!!",0.12345679));
-        adapter = new mylistadapter(getActivity(),card_list);
-        listV.setAdapter(adapter);
+    public void get_wanted_data(){
+        card_list = new ArrayList<>();
+        for (int i=0;i<data.size();i++){
+            Total_data row = data.get(i);
+            String card = row.getCard_name();
+            String bank = row.getCard_bank();
+            String cash = row.getBuy();
+            String clean = cash.replaceAll("%","");
+            if (clean.equals("null")){
+                clean="0.0";
+            }
+            card_list.add(new card_datatype(bank,card,cash,Double.valueOf(clean)));
+        }
     }
-
     public Boolean compute(int index){
         for (int i=0;i<index;i++) {
             for (int j = 0; j < index - 1; j++)
@@ -77,65 +93,7 @@ public class compute_cash extends Fragment {
             Double value = mresult_types[i].getKey();
             card_list.add(new card_datatype(r.toString(),mresult_types[i].getName(),mresult_types[i].getKeyword(),value));
         }
-        showdata();
         return Boolean.TRUE;
     }
 
-    public void showdata(){
-        adapter = new mylistadapter(getActivity(),card_list);
-        listV.setAdapter(adapter);
-        listV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getActivity(), key_in_recommend.class);
-                Bundle context = new Bundle();
-                context.putString("card_name", mresult_types[index-1-i].getName());
-                context.putString("user_name", username);
-                context.putString("pos", pos);
-                context.putString("type", "red");
-                intent.putExtras(context);
-                startActivity(intent);
-
-            }
-        });
-    }
-
-    private void http(){
-        String url = "http://35.194.203.57/connectdb/cash_compute.php";
-        HashMap postData = new HashMap();
-        postData.put("userid",username);
-        postData.put("pos",pos);
-        PostResponseAsyncTask readTask = new PostResponseAsyncTask(getActivity(), postData, new AsyncResponse() {
-            @Override
-            public void processFinish(String s) {
-                Log.e("ewewe",s);
-                if(s.equals("{\"data\":null}")){
-                    shownodata();
-                }
-                else {
-                    try{
-                        JSONObject init_title = new JSONObject(s);
-                        JSONArray data = init_title.getJSONArray("data");
-                        index = data.length();
-                        mresult_types = new result_type[index];
-                        for (int i = 0; i < data.length(); i++) {
-                            JSONObject jasondata = data.getJSONObject(i);
-                            String card =jasondata.getString("card_name");
-                            mresult_types[i] = new result_type();
-                            mresult_types[i].setName(card);
-                            String keyword = jasondata.getString("card_domestic");
-                            Pattern p = Pattern.compile("\\s*|\t|\r|\n");
-                            Matcher m = p.matcher(keyword);
-                            String clean = m.replaceAll("");
-                            mresult_types[i].setKeyword(clean,"%");
-                        }
-                    }catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    compute(index);
-                }
-            }
-        });
-        readTask.execute(url);
-    }
 }

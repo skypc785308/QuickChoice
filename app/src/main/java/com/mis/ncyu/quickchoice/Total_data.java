@@ -11,6 +11,7 @@ public class Total_data {
     private String buy;
     private String red;
     private String cash,movie,oil_cash,card_offer,plane,store;
+    private int times = 0;
     public Total_data(String card_name,String card_bank,String buy,String red,String cash,String movie,
                       String oil_cash,String card_offer,String plane,String store){
         this.card_name = card_name;
@@ -25,6 +26,14 @@ public class Total_data {
         this.store = store;
 
 
+    }
+
+    public int getTimes() {
+        return times;
+    }
+
+    public void setTimes(int times) {
+        this.times = times;
     }
 
     public String getStore() {

@@ -32,16 +32,16 @@
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:paddingRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="30dp"
                 android:text="帳號："
                 android:textSize="22sp" />
 
             <EditText
                 android:id="@+id/user_id"
-                android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                android:layout_weight="1"
+                android:layout_width="260dp"
+                android:layout_height="37dp"
                 android:background="@color/colorAccent"
                 android:ems="10"
                 android:inputType="textPersonName" />
@@ -58,16 +58,16 @@
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:paddingRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="30dp"
                 android:text="密碼："
                 android:textSize="22sp" />
 
             <EditText
                 android:id="@+id/user_password"
-                android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                android:layout_weight="1"
+                android:layout_width="260dp"
+                android:layout_height="37dp"
                 android:background="@color/colorAccent"
                 android:ems="10"
                 android:inputType="textPassword" />
@@ -87,16 +87,16 @@
                 android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:paddingRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="30dp"
                 android:text="姓名："
                 android:textSize="22sp" />
 
             <EditText
                 android:id="@+id/user"
-                android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                android:layout_weight="1"
+                android:layout_width="260dp"
+                android:layout_height="37dp"
                 android:background="@color/colorAccent"
                 android:ems="10"
                 android:inputType="textPersonName" />
@@ -116,16 +116,16 @@
                 android:id="@+id/textView7"
                 android:layout_width="10dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.11"
-                android:paddingLeft="10dp"
+                android:layout_weight="1"
+                android:paddingLeft="25dp"
                 android:text="E-mail："
                 android:textSize="22sp" />
 
             <EditText
                 android:id="@+id/user_email"
                 android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                android:layout_weight="1.00"
+                android:layout_height="37dp"
+                android:layout_weight="0.33"
                 android:background="@color/colorAccent"
                 android:ems="10"
                 android:inputType="textEmailAddress" />

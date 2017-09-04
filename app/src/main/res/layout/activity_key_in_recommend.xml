@@ -10,10 +10,10 @@
         android:layout_width="368dp"
         android:layout_height="495dp"
         android:orientation="vertical"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <EditText
             android:id="@+id/card_name"
@@ -24,6 +24,7 @@
             android:ems="10"
             android:hint="選擇的卡片"
             android:inputType="textPersonName"
+            android:textSize="20sp"
             app:layout_constraintHorizontal_bias="0.502"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -38,6 +39,7 @@
             android:ems="10"
             android:hint="所在地點"
             android:inputType="textPersonName"
+            android:textSize="20sp"
             app:layout_constraintHorizontal_bias="0.502"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -52,6 +54,7 @@
             android:ems="10"
             android:hint="花費金額"
             android:inputType="textPersonName"
+            android:textSize="20sp"
             app:layout_constraintHorizontal_bias="0.502"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -62,7 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="150dp"
-            android:background="@android:color/holo_blue_light"
+            android:background="@color/md_blue_200"
             android:text="確定"
             android:textSize="22sp"
             app:layout_constraintHorizontal_bias="0.503"

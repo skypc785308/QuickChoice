@@ -42,7 +42,7 @@ public class key_in_card extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_key_in_card);
         card = get_context();
-        etBirthday = (EditText) findViewById(R.id.date);
+        etBirthday = (EditText) findViewById(R.id.type);
         card_number = (EditText) findViewById(R.id.card_number);
         expir = (EditText) findViewById(R.id.expir);
         etBirthday.setOnClickListener(this);
@@ -54,7 +54,7 @@ public class key_in_card extends AppCompatActivity implements View.OnClickListen
     View.OnClickListener signuplisten = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            EditText maxcost = (EditText) findViewById(R.id.max_cost);
+            EditText maxcost = (EditText) findViewById(R.id.key_word);
             OkHttpClient mOkHttpClient=new OkHttpClient();
             RequestBody formBody = new FormBody.Builder()
                     .add("maxcost",maxcost.getText().toString())
