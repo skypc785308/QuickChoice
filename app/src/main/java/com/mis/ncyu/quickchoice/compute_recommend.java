@@ -32,6 +32,7 @@ public class compute_recommend extends AppCompatActivity {
     private Integer sum;
     private List<Total_data> mTotal_data;
     TabLayout tabLayout;
+    int cash,oil,red,plane,movie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,7 @@ public class compute_recommend extends AppCompatActivity {
         http();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
         toolbar.setTitle("推薦結果");
+        toolbar.setSubtitle("pos");
         setSupportActionBar(toolbar);
 
         mViewPager = (ViewPager) findViewById(R.id.container2);
@@ -82,17 +84,19 @@ public class compute_recommend extends AppCompatActivity {
         if (c.getCount()>0) {
             c.moveToFirst();
             String login_id = c.getString(1);
-            int cash = c.getInt(c.getColumnIndex("cash"));
-            int oil = c.getInt(c.getColumnIndex("oil"));
-            int red = c.getInt(c.getColumnIndex("red"));
-            int plane = c.getInt(c.getColumnIndex("plane"));
+            cash = c.getInt(c.getColumnIndex("cash"));
+            oil = c.getInt(c.getColumnIndex("oil"));
+            red = c.getInt(c.getColumnIndex("red"));
+            plane = c.getInt(c.getColumnIndex("plane"));
+            movie = c.getInt(c.getColumnIndex("movie"));
             Log.e("times1",String.valueOf(cash));
             Log.e("times2",String.valueOf(oil));
             Log.e("times3",String.valueOf(red));
             Log.e("times4",String.valueOf(plane));
+            Log.e("times5",String.valueOf(movie));
             c.close();
             db.close();
-            SectionsPageAdapter.times = new int[]{cash,oil,red,plane};
+            SectionsPageAdapter.times = new int[]{cash,oil,red,plane,movie};
         }
     }
     public void update(){
@@ -106,10 +110,12 @@ public class compute_recommend extends AppCompatActivity {
         String b =String.valueOf(data[1]);
         String c =String.valueOf(data[2]);
         String d =String.valueOf(data[3]);
+        String e =String.valueOf(data[3]);
         Log.e("times1",a);
         Log.e("times2",b);
         Log.e("times3",c);
         Log.e("times4",d);
+        Log.e("times5",e);
         values.put("cash", a);
         values.put("oil", b);
         values.put("red", c);
@@ -162,7 +168,8 @@ public class compute_recommend extends AppCompatActivity {
         mSectionsPageAdapter.addFragment(new tab1_fragment(), "現金優惠");
         mSectionsPageAdapter.addFragment(new tab1_fragment(), "加油");
         mSectionsPageAdapter.addFragment(new tab1_fragment(), "紅利積點");
-        mSectionsPageAdapter.addFragment(new tab1_fragment(), "里程");
+        mSectionsPageAdapter.addFragment(new tab1_fragment(), "旅遊");
+        mSectionsPageAdapter.addFragment(new tab1_fragment(), "電影");
         viewPager.setAdapter(mSectionsPageAdapter);
     }
 }

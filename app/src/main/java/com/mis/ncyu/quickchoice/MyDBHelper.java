@@ -37,7 +37,8 @@ public class MyDBHelper extends SQLiteOpenHelper {
                 "cash INTEGER,"+
                 "oil INTEGER,"+
                 "red INTEGER,"+
-                "plane INTEGER)");
+                "plane INTEGER," +
+                "movie INTEGER)");
 
     }
 

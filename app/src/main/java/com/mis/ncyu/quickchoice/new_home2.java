@@ -119,13 +119,6 @@ public class new_home2 extends AppCompatActivity {
                 })
                 .build();
     }
-
-    public  void getlogin_name(){
-        Bundle context = this.getIntent().getExtras();
-        if (context != null) {
-            loginame = context.getString("user_name");
-        }
-    }
     public String put_login_name()
     {
         return this.loginame;
