@@ -67,9 +67,7 @@ public class new_home2 extends AppCompatActivity {
         // App Logo
         toolbar.setLogo(R.mipmap.ic_launcher);
         // Title
-        toolbar.setTitle(loginame);
-        // Sub Title
-        toolbar.setSubtitle("子標題");
+        toolbar.setTitle("QuickChoice");
         setSupportActionBar(toolbar);
 
 
@@ -91,7 +89,7 @@ public class new_home2 extends AppCompatActivity {
                 .withActivity(this)
                 .withHeaderBackground(R.drawable.back)
                 .addProfiles(
-                        new ProfileDrawerItem().withName("Mike Penz").withEmail("mikepenz@gmail.com").withIcon(getResources().getDrawable(R.drawable.butterfly))
+                        new ProfileDrawerItem().withName(loginame).withEmail("mikepenz@gmail.com").withIcon(getResources().getDrawable(R.drawable.butterfly))
                 )
                 .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
                     @Override
