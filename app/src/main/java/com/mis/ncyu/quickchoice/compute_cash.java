@@ -22,6 +22,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -77,6 +78,13 @@ public class compute_cash extends Fragment {
                 clean="0.0";
             }
             card_list.add(new card_datatype(bank,card,cash,Double.valueOf(clean)));
+        }
+        for(int i=0;i<card_list.size();i++){
+            for(int j=0;j<card_list.size()-1;j++){
+                if (card_list.get(j).getValue() < card_list.get(j+1).getValue()){
+                    Collections.swap(card_list,j,j+1);
+                }
+            }
         }
     }
     public Boolean compute(int index){

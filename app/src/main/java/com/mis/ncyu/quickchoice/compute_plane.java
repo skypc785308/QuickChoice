@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -65,6 +66,13 @@ public class compute_plane extends Fragment {
                 value="0.0";
             }
             card_list.add(new card_datatype(bank,card,clean,Double.valueOf(value)));
+        }
+        for(int i=0;i<card_list.size();i++){
+            for(int j=0;j<card_list.size()-1;j++){
+                if (card_list.get(j).getValue() < card_list.get(j+1).getValue()){
+                    Collections.swap(card_list,j,j+1);
+                }
+            }
         }
     }
 }
