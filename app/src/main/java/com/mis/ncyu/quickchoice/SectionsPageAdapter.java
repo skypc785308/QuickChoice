@@ -57,9 +57,9 @@ public class SectionsPageAdapter extends FragmentPagerAdapter {
         if (tmp != now){
             Log.e("切換後的",String.valueOf(position));
             tmp = now;
-            if(position !=0 && timess != null){
-                timess[position-1] +=1;
-                Log.e("值：",String.valueOf(timess[position-1]));
+            if(position !=0 && position !=1 && timess != null){
+                timess[position-2] +=1;
+                Log.e("值：",String.valueOf(timess[position-2]));
                 compute_recommend.fragment_pos=position;
             }
 

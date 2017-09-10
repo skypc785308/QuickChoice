@@ -53,6 +53,7 @@ public class history_fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_history,container,false);
         showhistory=(ListView) view.findViewById(R.id.history_list);
+        list = new ArrayList<>();
         http();
         return view;
     }

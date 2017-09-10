@@ -14,6 +14,7 @@ import android.util.Log;
 
 import com.kosalgeek.genasync12.AsyncResponse;
 import com.kosalgeek.genasync12.PostResponseAsyncTask;
+import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,7 +32,8 @@ public class compute_recommend extends AppCompatActivity {
     public static String pos;
     private Integer sum;
     public static List<Total_data> mTotal_data;
-    TabLayout tabLayout;
+    public static List<card_datatype> card_history;
+    SmartTabLayout tabLayout;
     int cash,oil,red,plane,movie;
     public static int fragment_pos = 0;
     public static int[] timess;
@@ -48,8 +50,9 @@ public class compute_recommend extends AppCompatActivity {
         setSupportActionBar(toolbar);
         mViewPager = (ViewPager) findViewById(R.id.container2);
 
-        tabLayout = (TabLayout) findViewById(R.id.tabs2);
+        tabLayout = (SmartTabLayout) findViewById(R.id.tab2);
         http();
+
 
     }
     public String put_user_name()
@@ -62,6 +65,9 @@ public class compute_recommend extends AppCompatActivity {
     }
     public List<Total_data> put_data(){
         return this.mTotal_data;
+    }
+    public List<card_datatype> put_histpry(){
+        return this.card_history;
     }
 
     @Override
@@ -158,7 +164,7 @@ public class compute_recommend extends AppCompatActivity {
                         mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
                         // Set up the ViewPager with the sections adapter.
                         setupViewPager(mViewPager);
-                        tabLayout.setupWithViewPager(mViewPager);
+                        tabLayout.setViewPager(mViewPager);
                     }catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -168,7 +174,10 @@ public class compute_recommend extends AppCompatActivity {
     }
 
 
+
+
     private void setupViewPager(ViewPager viewPager) {
+        mSectionsPageAdapter.addFragment(new compute_history(), "本月已刷卡金額");
         mSectionsPageAdapter.addFragment(new compute_all(), "綜合優惠排序");
         mSectionsPageAdapter.addFragment(new compute_cash(), "現金回饋");
         mSectionsPageAdapter.addFragment(new compute_oil(), "加油");

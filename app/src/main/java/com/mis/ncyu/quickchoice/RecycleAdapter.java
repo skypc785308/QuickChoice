@@ -18,9 +18,10 @@ import java.util.List;
 
 public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHolder> {
     private List<card_datatype> card_list;
+    private int rank_id = 1;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView bank,card_name,key_word,compute_value,total;
+        public TextView bank,card_name,key_word,rank,rank_name;
         public CardView cardView;
 
         public ViewHolder(View v) {
@@ -28,9 +29,9 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
             bank = (TextView) v.findViewById(R.id.card_bank);
             card_name = (TextView) v.findViewById(R.id.card_name);
             key_word =  (TextView) v.findViewById(R.id.keyword);
-            compute_value =  (TextView) v.findViewById(R.id.value);
+            rank =  (TextView) v.findViewById(R.id.rank);
             cardView = (CardView) v.findViewById(R.id.card_view);
-            total = (TextView) v.findViewById(R.id.total);
+            rank_name = (TextView) v.findViewById(R.id.textView9);
             v.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(), content_result.class);
@@ -38,7 +39,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
                     TextView bank = (TextView) v.findViewById(R.id.card_bank);
                     TextView card_name = (TextView) v.findViewById(R.id.card_name);
                     TextView key_word =  (TextView) v.findViewById(R.id.keyword);
-                    TextView compute_value =  (TextView) v.findViewById(R.id.value);
+                    TextView compute_value =  (TextView) v.findViewById(R.id.rank);
                     context.putString("card",card_name.getText().toString());
                     context.putString("bank",bank.getText().toString());
                     context.putString("key_word",key_word.getText().toString());
@@ -65,12 +66,16 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         holder.bank.setText(row.getBank());
         holder.card_name.setText(row.getname());
         holder.key_word.setText(row.getkey());
-        holder.compute_value.setText(String.valueOf(row.getValue()));
+        holder.rank.setText(String.valueOf(rank_id));
         if (row.getStore() !=null ){
-            holder.total.setText("在"+row.getStore()+"有合作優惠");
+            holder.rank_name.setText("在"+row.getStore()+"有合作優惠");
             holder.cardView.setBackgroundColor(Color.CYAN);
             row.setStore(null);
         }
+        if (row.getValue()!=0.0){
+            rank_id++;
+        }
+
 
     }
     @Override

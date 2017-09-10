@@ -8,12 +8,6 @@
     android:fitsSystemWindows="true"
     tools:context="com.mis.ncyu.quickchoice.compute_recommend">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/container2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar2"
         android:layout_width="match_parent"
@@ -24,18 +18,29 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar2"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
         </android.support.v7.widget.Toolbar>
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tabs2"
+        <com.ogaclejapan.smarttablayout.SmartTabLayout
+            android:id="@+id/tab2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="50dp"
+            app:stl_indicatorColor="@color/blue_button"
+            app:stl_defaultTabTextColor="@color/md_white_1000"
+            app:stl_indicatorThickness="3dp"
+            app:stl_defaultTabTextMinWidth="140dp"
+            app:stl_defaultTabTextSize="20dp"/>
 
     </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/container2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </android.support.design.widget.CoordinatorLayout>

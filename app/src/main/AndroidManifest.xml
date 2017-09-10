@@ -101,12 +101,13 @@
         <activity
             android:name=".compute_recommend"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".get_pos" />
-        <activity android:name=".compute_get_map_json" />
+        <!--<activity android:name=".get_pos" />-->
+        <!--<activity android:name=".compute_get_map_json" />-->
         <activity
             android:name=".key_in_recommend"
-            android:label="輸入推薦資料" />
-        <activity android:name=".compute_wating" />
+            android:label="輸入推薦資料">
+        </activity>
+        <!--<activity android:name=".compute_wating" />-->
         <activity android:name=".content_result"></activity>
     </application>
 

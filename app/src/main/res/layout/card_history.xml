@@ -24,53 +24,22 @@
             android:weightSum="1">
 
             <TextView
-                android:id="@+id/card_bank"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="信用卡銀行"
-                android:textSize="20sp" />
-
-            <TextView
                 android:id="@+id/card_name"
-                android:layout_width="wrap_content"
+                android:layout_width="252dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.99"
                 android:gravity="center"
                 android:text="信用卡名稱"
                 android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/keyword"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="關鍵數值"
+                android:text="總和"
                 android:textSize="20sp" />
 
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="名次："
-                android:textAlignment="center"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/rank"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="18sp" />
         </LinearLayout>
 
 
