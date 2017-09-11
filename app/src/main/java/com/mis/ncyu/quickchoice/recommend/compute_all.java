@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,6 +61,26 @@ public class compute_all extends Fragment {
         mList.setLayoutManager(layoutManager);
         mList.setAdapter(myAdapter);
         return view;
+    }
+    public Double compute(int x){
+        Double compute = 0.0;
+        Double y = Double.valueOf(x);
+
+        if (x<=20){
+            compute = y/10;
+        }
+        else if (x<=60){
+            compute = y/8;
+        }
+        else if (x<=100){
+            compute = y/7;
+        }
+        else if (x>100){
+            compute = y/6;
+        }
+
+
+        return compute;
     }
     public void get_wanted_data(){
         card_list = new ArrayList<>();
@@ -122,10 +143,15 @@ public class compute_all extends Fragment {
             }
             int[] typetimes = new int[compute_recommend.timess.length];
             for(int j=0;j<compute_recommend.timess.length;j++){
-                typetimes[j]=compute_recommend.timess[j]*compute_recommend.timess[j]/50;
+                typetimes[j]=compute_recommend.timess[j]*compute_recommend.timess[j];
             }
-            Double sum = Double.valueOf(buy)*typetimes[0]+Double.valueOf(oil)*typetimes[1]+Double.valueOf(red)*typetimes[2]+
-                    Double.valueOf(plane)*typetimes[3]+Double.valueOf(movie)*typetimes[4];
+            Double compute_sum = compute(typetimes[0]) + compute(typetimes[1])+compute(typetimes[2])+compute(typetimes[3])+
+                    compute(typetimes[4]);
+
+            Double sum = Double.valueOf(buy)*compute(typetimes[0])+Double.valueOf(oil)*compute(typetimes[1])+Double.valueOf(red)*compute(typetimes[2])+
+                    Double.valueOf(plane)*compute(typetimes[3])+Double.valueOf(movie)*compute(typetimes[4]);
+            Log.e("times_sum" , String.valueOf(compute_sum));
+            sum = sum / compute_sum;
             card_datatype record=new card_datatype(bank,card,"計算結果",sum);
             if(!store.equals("null")){
                 record.setStore(store);

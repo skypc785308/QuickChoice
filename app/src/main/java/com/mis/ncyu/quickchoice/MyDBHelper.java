@@ -33,6 +33,7 @@ public class MyDBHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE  TABLE login " +
                 "(_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "user_id VARCHAR(20), " +
+                "email VARCHAR(40), " +
                 "login_date DATETIME, "+
                 "cash INTEGER,"+
                 "oil INTEGER,"+

@@ -109,7 +109,7 @@ public class history_fragment extends Fragment {
                         for (int i = 0; i < data.length(); i++) {
                             JSONObject jasondata = data.getJSONObject(i);
                             historydata[i] = jasondata.getString("card_name");
-                            positiondata[i] = jasondata.getString("position");
+                            positiondata[i] = jasondata.getString("create_date");
                             ids[i] = Integer.valueOf(jasondata.getString("id"));
                             HashMap<String , String> hashMap = new HashMap<>();
                             hashMap.put("title" , historydata[i]);

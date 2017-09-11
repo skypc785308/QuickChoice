@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
@@ -39,7 +40,7 @@ public class new_home2 extends AppCompatActivity {
 
     private home_page_adapter mSectionsPageAdapter;
     private ViewPager mViewPager;
-    private String loginame;
+    private String loginame,email;
     MyDBHelper helper;
     SQLiteDatabase db;
     ArrayList<LatLng> LatLngpos;
@@ -54,6 +55,7 @@ public class new_home2 extends AppCompatActivity {
         if (c.getCount()>0){
             c.moveToFirst();
             loginame = c.getString(1);
+            email = c.getString(2);
             c.close();
             db.close();
         }
@@ -81,14 +83,15 @@ public class new_home2 extends AppCompatActivity {
 
     }
     private void initDrawer() {
-        PrimaryDrawerItem item1 = new PrimaryDrawerItem().withName(R.string.app_name).withIcon(GoogleMaterial.Icon.gmd_wb_sunny);
-        SecondaryDrawerItem item2 = (SecondaryDrawerItem) new SecondaryDrawerItem().withName("會員資料").withIcon(FontAwesome.Icon.faw_github);
+        PrimaryDrawerItem item1 = new PrimaryDrawerItem().withName(R.string.app_name).withIcon(GoogleMaterial.Icon.gmd_credit_card);
+        PrimaryDrawerItem item2 = (PrimaryDrawerItem) new PrimaryDrawerItem().withName("會員資料").withIcon(FontAwesome.Icon.faw_user);
+        PrimaryDrawerItem item3 = (PrimaryDrawerItem) new PrimaryDrawerItem().withName("登出").withIcon(FontAwesome.Icon.faw_sign_out);
 
         AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
-                .withHeaderBackground(R.drawable.back)
+                .withHeaderBackground(R.drawable.ic_launcher_back)
                 .addProfiles(
-                        new ProfileDrawerItem().withName(loginame).withEmail("mikepenz@gmail.com").withIcon(getResources().getDrawable(R.drawable.butterfly))
+                        new ProfileDrawerItem().withName(loginame).withEmail(email).withIcon(getResources().getDrawable(R.drawable.butterfly))
                 )
                 .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
                     @Override
@@ -98,19 +101,41 @@ public class new_home2 extends AppCompatActivity {
                 })
                 .build();
         new DrawerBuilder()
-                .withActivity(this)
+                .withActivity(new_home2.this)
                 .withToolbar(toolbar)
                 .withAccountHeader(headerResult)
                 .addDrawerItems(
                         item1,
                         new DividerDrawerItem(),
                         item2,
-                        new SecondaryDrawerItem().withName(R.string.app_name)
+                        new DividerDrawerItem(),
+                        item3,
+                        new DividerDrawerItem(),
+                        new PrimaryDrawerItem().withName("關於").withIcon(GoogleMaterial.Icon.gmd_info)
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        // do something with the clicked item :D
+                        switch(position){
+                            case 1:
+                                break;
+                            case 3:
+                                break;
+                            case 5:
+                                db = helper.getWritableDatabase();
+                                db.delete("login",null, null);
+                                db.close();
+                                Intent intent = new Intent(new_home2.this, MainActivity.class);
+                                // 不再重新启动这个Activity的实例，而且这个Activity上方的所有Activity都将关闭，
+                                // 然后这个Intent会作为一个新的Intent投递到老的Activity（现在位于顶端）中。
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                                finish();
+                                break;
+                            case 7:
+                                showAboutDialog();
+                                break;
+                        }
                         return false;
                     }
                 })
@@ -130,44 +155,15 @@ public class new_home2 extends AppCompatActivity {
         viewPager.setAdapter(adapter);
 
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        switch (item.getItemId()) {
-            case R.id.about: showAboutDialog(); break;
-            case R.id.log_out:
-                db = helper.getWritableDatabase();
-                db.delete("login",null, null);
-                db.close();
-                Intent intent = new Intent(new_home2.this, MainActivity.class);
-                // 不再重新启动这个Activity的实例，而且这个Activity上方的所有Activity都将关闭，
-                // 然后这个Intent会作为一个新的Intent投递到老的Activity（现在位于顶端）中。
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                MainActivity.isFinish = true;
-                startActivity(intent);
-                finish();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     private void showAboutDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("關於我們");
         builder.setMessage("我們是畢業專題第10組");
         builder.setPositiveButton("確定",
                 new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {}
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
                 }
         );
         builder.show();

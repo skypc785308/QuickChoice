@@ -33,6 +33,7 @@ public class compute_recommend extends AppCompatActivity {
     private ViewPager mViewPager;
     private String username;
     public static String pos;
+    public Integer money;
     private Integer sum;
     public static List<Total_data> mTotal_data;
     public static List<card_datatype> card_history;
@@ -84,6 +85,7 @@ public class compute_recommend extends AppCompatActivity {
         if (context != null) {
             username = context.getString("user_name");
             pos = context.getString("pos");
+            money = Integer.valueOf(context.getString("money"));
         }
     }
     public void setup(){

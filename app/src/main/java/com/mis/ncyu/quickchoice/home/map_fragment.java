@@ -17,6 +17,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -87,6 +88,7 @@ public class map_fragment extends Fragment implements GoogleApiClient.Connection
     private MapView map;
     private GoogleMap mMap;
     private String area;
+    private String position;
     String[] pos = {"家樂福", "新光三越", "大遠百", "秀泰廣場", "陶板屋", "UNIQLO", "NET", "星巴克", "野宴", "逐鹿炭火"};
 
     public Boolean foreach_http(){
@@ -425,9 +427,7 @@ public class map_fragment extends Fragment implements GoogleApiClient.Connection
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-                Intent intent = new Intent(getActivity(), compute_recommend.class);
-                Bundle context = new Bundle();
-                context.putString("user_name", username);
+
 
                 LatLng poss = marker.getPosition();
                 int idx = LatLngpos.indexOf(poss);
@@ -446,10 +446,33 @@ public class map_fragment extends Fragment implements GoogleApiClient.Connection
                     }
 
                 }
-                context.putString("pos", now_pos);
-                Toast.makeText(getActivity(), "所在地點："+now_pos, Toast.LENGTH_SHORT).show();
-                intent.putExtras(context);
-                startActivity(intent);
+                position = now_pos;
+                final View item = LayoutInflater.from(getActivity()).inflate(R.layout.alertdialog_key_in_money, null);
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("請輸入花費的金額")
+                        .setView(item)
+                        .setPositiveButton("確定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                EditText editText = (EditText) item.findViewById(R.id.money_cost);
+                                String money = editText.getText().toString();
+                                if(TextUtils.isEmpty(money)){
+                                    Toast.makeText(getActivity(), "請輸入金額才能推薦", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Intent intent = new Intent(getActivity(), compute_recommend.class);
+                                    Bundle context = new Bundle();
+                                    context.putString("user_name", username);
+                                    context.putString("pos", position);
+                                    context.putString("money", money);
+                                    Toast.makeText(getActivity(), "所在地點："+position, Toast.LENGTH_SHORT).show();
+                                    intent.putExtras(context);
+                                    startActivity(intent);
+
+                                }
+                            }
+                        })
+                        .show();
+
             }
         });
     }

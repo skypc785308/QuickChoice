@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,12 +18,14 @@ import com.mis.ncyu.quickchoice.MyDBHelper;
 import com.mis.ncyu.quickchoice.R;
 import com.mis.ncyu.quickchoice.home.new_home2;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, AsyncResponse {
 
-    public static boolean isFinish;
     EditText etUsername, etPassword;
     MyDBHelper helper;
     SQLiteDatabase db;
@@ -61,27 +64,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void processFinish(String result) {
-        if(result.equals("success")){
-            SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String date = sDateFormat.format(new java.util.Date());
-            helper = MyDBHelper.getInstance(this);
-            db = helper.getWritableDatabase();
-            ContentValues cv = new ContentValues();
-            cv.put("user_id",etUsername.getText().toString());
-            cv.put("login_date",date);
-            long id = db.insert("login",null,cv);
-            db.close();
-            //顯示登入成功
-            Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(MainActivity.this, new_home2.class);
-            Bundle context = new Bundle();
-            context.putString("user_name", etUsername.getText().toString());
-            intent.putExtras(context);
-            startActivity(intent);
-            finish();
+        Log.e("data",result);
+
+        if(result.equals("null")){
+            Toast.makeText(this, "登入失敗", Toast.LENGTH_LONG).show();
         }
         else {
-            Toast.makeText(this, result, Toast.LENGTH_LONG).show();
+            try{
+                JSONObject data = new JSONObject(result);
+                String user = data.getString("userID");
+                String email = data.getString("email");
+                SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String date = sDateFormat.format(new java.util.Date());
+                helper = MyDBHelper.getInstance(this);
+                db = helper.getWritableDatabase();
+                ContentValues cv = new ContentValues();
+                cv.put("user_id",user);
+                cv.put("login_date",date);
+                cv.put("email",email);
+                long id = db.insert("login",null,cv);
+                db.close();
+                //顯示登入成功
+                Toast.makeText(this, "success", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this, new_home2.class));
+                finish();
+            }catch (JSONException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 
