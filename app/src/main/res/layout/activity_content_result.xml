@@ -104,18 +104,19 @@
                 android:id="@+id/textView19"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.39"
+                android:layout_weight="0.24"
                 android:paddingLeft="10dp"
-                android:text="優惠內容："
+                android:text="計算結果："
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/card_number"
+                android:id="@+id/compute"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.90"
-                android:text="內容"
+                android:layout_weight="0.54"
+                android:text="TextView"
                 android:textSize="18sp" />
+
         </LinearLayout>
 
     </LinearLayout>

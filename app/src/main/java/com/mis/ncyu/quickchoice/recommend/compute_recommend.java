@@ -33,7 +33,7 @@ public class compute_recommend extends AppCompatActivity {
     private ViewPager mViewPager;
     private String username;
     public static String pos;
-    public Integer money;
+    public static  Integer money = 0;
     private Integer sum;
     public static List<Total_data> mTotal_data;
     public static List<card_datatype> card_history;

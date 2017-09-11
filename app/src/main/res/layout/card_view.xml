@@ -69,8 +69,14 @@
                 android:id="@+id/rank"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="1.17"
                 android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/value"
+                android:layout_width="71dp"
+                android:layout_height="wrap_content"
+                android:visibility="invisible" />
         </LinearLayout>
 
 

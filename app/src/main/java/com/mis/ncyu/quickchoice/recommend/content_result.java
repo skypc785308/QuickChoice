@@ -8,18 +8,23 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.kosalgeek.genasync12.AsyncResponse;
+import com.kosalgeek.genasync12.PostResponseAsyncTask;
 import com.mis.ncyu.quickchoice.MyDBHelper;
 import com.mis.ncyu.quickchoice.R;
 import com.mis.ncyu.quickchoice.Total_data;
+import com.mis.ncyu.quickchoice.home.new_home2;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class content_result extends AppCompatActivity {
 
     List<Total_data> mTotal_data;
-    TextView card,bank,type,key_word;
-    String card_name,bank_name,key;
+    TextView card,bank,type,key_word,compute;
+    String card_name,bank_name,key,value;
     Button submit;
 
     @Override
@@ -31,6 +36,7 @@ public class content_result extends AppCompatActivity {
         bank = (TextView)findViewById(R.id.bank_name);
         type = (TextView)findViewById(R.id.type);
         key_word = (TextView)findViewById(R.id.key_word);
+        compute = (TextView)findViewById(R.id.compute);
         submit = (Button)findViewById(R.id.submit);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,26 +54,34 @@ public class content_result extends AppCompatActivity {
                 else {
                     finish();
                 }
-                Intent intent = new Intent(content_result.this, key_in_recommend.class);
-                Bundle context = new Bundle();
-                context.putString("card_name",card_name);
-                context.putString("pos",compute_recommend.pos);
-                context.putString("user_name",loginame);
-                intent.putExtras(context);
-                v.getContext().startActivity(intent);
+
+                String url = "http://35.194.203.57/connectdb/add_recommend_record.php";
+                HashMap postData = new HashMap();
+                postData.put("userid",loginame);
+                postData.put("pos",compute_recommend.pos);
+                postData.put("card_name",card_name);
+                postData.put("cost_price",String.valueOf(compute_recommend.money));
+                PostResponseAsyncTask readTask = new PostResponseAsyncTask(content_result.this, postData, new AsyncResponse() {
+                    @Override
+                    public void processFinish(String s) {
+                        if (s.equals("success")){
+                            Toast.makeText(content_result.this, s, Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(content_result.this, new_home2.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//它可以关掉所要到的界面中间的activity
+                            startActivity(intent);
+                            finish();
+                        }
+                        else {
+                            Toast.makeText(content_result.this, s, Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+                readTask.execute(url);
             }
         });
         getcontent();
 
 
-    }
-    public void compute_times(){
-        for (int i=0;i<mTotal_data.size();i++){
-            Total_data row = mTotal_data.get(i);
-            if(row.getCard_name().equals(card_name)){
-                row.setTimes(row.getTimes()+1);
-            }
-        }
     }
 
     public void getcontent(){
@@ -76,25 +90,32 @@ public class content_result extends AppCompatActivity {
             card_name = context.getString("card");
             bank_name = context.getString("bank");
             key = context.getString("key_word");
+            value = context.getString("value");
         }
+        Double compute_value = compute_recommend.money*Double.valueOf(value)/100;
+        compute.setText(String.valueOf(compute_recommend.money) + "*" + value + "=" + String.valueOf(compute_value));
         String type ="";
         switch (compute_recommend.fragment_pos){
             case 0:
-                type="綜合優惠";
                 break;
             case 1:
-                type="現金回饋";
+                type="綜合優惠";
                 break;
             case 2:
-                type="加油";
+                type="現金回饋";
                 break;
             case 3:
-                type="紅利積點";
+                type="加油";
                 break;
             case 4:
-                type="旅遊";
+                type="紅利積點";
+                compute_value = compute_recommend.money/Double.valueOf(value);
+                compute.setText(String.valueOf(compute_recommend.money) + "/" + value + "=" + String.valueOf(compute_value));
                 break;
             case 5:
+                type="旅遊";
+                break;
+            case 6:
                 type="電影";
                 break;
         }
@@ -102,5 +123,7 @@ public class content_result extends AppCompatActivity {
         bank.setText(bank_name);
         card.setText(card_name);
         key_word.setText(key);
+
+
     }
 }

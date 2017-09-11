@@ -23,7 +23,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
     private int rank_id = 1;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView bank,card_name,key_word,rank,rank_name;
+        public TextView bank,card_name,key_word,rank,rank_name,value;
         public CardView cardView;
 
         public ViewHolder(View v) {
@@ -34,6 +34,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
             rank =  (TextView) v.findViewById(R.id.rank);
             cardView = (CardView) v.findViewById(R.id.card_view);
             rank_name = (TextView) v.findViewById(R.id.textView9);
+            value = (TextView) v.findViewById(R.id.value);
             v.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(), content_result.class);
@@ -41,10 +42,11 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
                     TextView bank = (TextView) v.findViewById(R.id.card_bank);
                     TextView card_name = (TextView) v.findViewById(R.id.card_name);
                     TextView key_word =  (TextView) v.findViewById(R.id.keyword);
-                    TextView compute_value =  (TextView) v.findViewById(R.id.rank);
+                    TextView value =  (TextView) v.findViewById(R.id.value);
                     context.putString("card",card_name.getText().toString());
                     context.putString("bank",bank.getText().toString());
                     context.putString("key_word",key_word.getText().toString());
+                    context.putString("value",value.getText().toString());
                     intent.putExtras(context);
                     v.getContext().startActivity(intent);
                 }
@@ -69,6 +71,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         holder.card_name.setText(row.getname());
         holder.key_word.setText(row.getkey());
         holder.rank.setText(String.valueOf(rank_id));
+        holder.value.setText(String.valueOf(row.getValue()));
         if (row.getStore() !=null ){
             holder.rank_name.setText("在"+row.getStore()+"有合作優惠");
             holder.cardView.setBackgroundColor(Color.CYAN);
