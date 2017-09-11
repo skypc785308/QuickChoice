@@ -1,4 +1,4 @@
-package com.mis.ncyu.quickchoice;
+package com.mis.ncyu.quickchoice.login;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;

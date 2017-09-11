@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.mis.ncyu.quickchoice.recommend.compute_recommend;
+
 public class Choice_recommend_type extends AppCompatActivity {
 
     private String username;

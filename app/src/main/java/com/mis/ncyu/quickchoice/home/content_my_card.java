@@ -1,4 +1,4 @@
-package com.mis.ncyu.quickchoice;
+package com.mis.ncyu.quickchoice.home;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.kosalgeek.genasync12.AsyncResponse;
 import com.kosalgeek.genasync12.PostResponseAsyncTask;
+import com.mis.ncyu.quickchoice.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,7 +17,7 @@ import java.util.HashMap;
 public class content_my_card extends AppCompatActivity {
     private String username;
     private String cardname;
-     private TextView bank_name,card_name,date,max_cost,card_number,expirdate;
+    private TextView bank_name,card_name,date,max_cost,card_number,expirdate;
 
 
     @Override
@@ -26,8 +27,8 @@ public class content_my_card extends AppCompatActivity {
         setContentView(R.layout.activity_content_my_card);
         bank_name = (TextView)findViewById(R.id.bank_name);
         card_name = (TextView)findViewById(R.id.card_name);
-        date = (TextView)findViewById(R.id.type);
-        max_cost = (TextView)findViewById(R.id.key_word);
+        date = (TextView)findViewById(R.id.date);
+        max_cost = (TextView)findViewById(R.id.max_cost);
         card_number = (TextView)findViewById(R.id.card_number);
         expirdate = (TextView)findViewById(R.id.expirdate);
     }

@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.mis.ncyu.quickchoice.recommend.content_result;
+
 import java.util.List;
 
 /**

@@ -1,11 +1,9 @@
-package com.mis.ncyu.quickchoice;
+package com.mis.ncyu.quickchoice.recommend;
 
 
 import android.content.ContentValues;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +12,11 @@ import android.util.Log;
 
 import com.kosalgeek.genasync12.AsyncResponse;
 import com.kosalgeek.genasync12.PostResponseAsyncTask;
+import com.mis.ncyu.quickchoice.MyDBHelper;
+import com.mis.ncyu.quickchoice.R;
+import com.mis.ncyu.quickchoice.SectionsPageAdapter;
+import com.mis.ncyu.quickchoice.Total_data;
+import com.mis.ncyu.quickchoice.card_datatype;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import org.json.JSONArray;

@@ -1,23 +1,17 @@
-package com.mis.ncyu.quickchoice;
+package com.mis.ncyu.quickchoice.home;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.design.widget.TabLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
@@ -32,6 +26,11 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+import com.mis.ncyu.quickchoice.login.MainActivity;
+import com.mis.ncyu.quickchoice.MyDBHelper;
+import com.mis.ncyu.quickchoice.R;
+import com.mis.ncyu.quickchoice.home_page_adapter;
+import com.mis.ncyu.quickchoice.tab1_fragment;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import java.util.ArrayList;
@@ -124,7 +123,7 @@ public class new_home2 extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         home_page_adapter adapter = new home_page_adapter(getSupportFragmentManager());
-        adapter.addFragment(new Recommend(), "立即推薦");
+        adapter.addFragment(new map_fragment(), "立即推薦");
         adapter.addFragment(new mycard_fragment(), "我的信用卡");
         adapter.addFragment(new history_fragment(), "歷史紀錄");
         adapter.addFragment(new tab1_fragment(), "最新優惠");

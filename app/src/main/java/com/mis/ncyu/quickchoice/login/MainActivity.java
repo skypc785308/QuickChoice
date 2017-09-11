@@ -1,15 +1,10 @@
-package com.mis.ncyu.quickchoice;
+package com.mis.ncyu.quickchoice.login;
 
-import android.app.AlertDialog;
 import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +13,9 @@ import android.widget.Toast;
 
 import com.kosalgeek.genasync12.AsyncResponse;
 import com.kosalgeek.genasync12.PostResponseAsyncTask;
+import com.mis.ncyu.quickchoice.MyDBHelper;
+import com.mis.ncyu.quickchoice.R;
+import com.mis.ncyu.quickchoice.home.new_home2;
 
 import java.text.SimpleDateFormat;
 import java.util.HashMap;

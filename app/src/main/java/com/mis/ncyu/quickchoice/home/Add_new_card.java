@@ -1,4 +1,4 @@
-package com.mis.ncyu.quickchoice;
+package com.mis.ncyu.quickchoice.home;
 
 import android.content.Intent;
 import android.os.Handler;
@@ -12,6 +12,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.mis.ncyu.quickchoice.Chose_card_type;
+import com.mis.ncyu.quickchoice.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;

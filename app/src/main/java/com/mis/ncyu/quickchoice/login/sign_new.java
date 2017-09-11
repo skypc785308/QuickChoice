@@ -1,4 +1,4 @@
-package com.mis.ncyu.quickchoice;
+package com.mis.ncyu.quickchoice.login;
 
 
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.kosalgeek.genasync12.AsyncResponse;
 import com.kosalgeek.genasync12.PostResponseAsyncTask;
+import com.mis.ncyu.quickchoice.R;
 
 import java.util.HashMap;
 

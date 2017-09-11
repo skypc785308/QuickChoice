@@ -1,16 +1,15 @@
-package com.mis.ncyu.quickchoice;
+package com.mis.ncyu.quickchoice.home;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -18,6 +17,8 @@ import android.widget.Toast;
 
 import com.kosalgeek.genasync12.AsyncResponse;
 import com.kosalgeek.genasync12.PostResponseAsyncTask;
+import com.mis.ncyu.quickchoice.R;
+import com.mis.ncyu.quickchoice.home.new_home2;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,6 +41,7 @@ public class history_fragment extends Fragment {
     List<HashMap<String , String>> list = new ArrayList<>();
     private String[] historydata;
     private String[] positiondata;
+    private Integer[] ids;
 
     @Override
     public void onAttach(Context context) {
@@ -62,6 +64,17 @@ public class history_fragment extends Fragment {
             ListAdapter adapter = new SimpleAdapter(getActivity(),list, android.R.layout.simple_list_item_2 ,new String[]{"title" , "text"} ,
                     new int[]{android.R.id.text1 , android.R.id.text2});
             showhistory.setAdapter(adapter);
+            showhistory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent3 = new Intent();
+                    intent3.setClass(getActivity(), content_history.class);
+                    Bundle context = new Bundle();
+                    context.putString("ids", String.valueOf(ids[position]));
+                    intent3.putExtras(context);
+                    startActivity(intent3);
+                }
+            });
         }
         else {
             HashMap<String , String> hashMap = new HashMap<>();
@@ -71,6 +84,7 @@ public class history_fragment extends Fragment {
             ListAdapter adapter = new SimpleAdapter(getActivity(),list, android.R.layout.simple_list_item_2 ,new String[]{"title" , "text"} ,
                     new int[]{android.R.id.text1 , android.R.id.text2});
             showhistory.setAdapter(adapter);
+
         }
 
     }
@@ -91,10 +105,12 @@ public class history_fragment extends Fragment {
                         JSONArray data = init_title.getJSONArray("data");
                         historydata = new String[data.length()];
                         positiondata = new String[data.length()];
+                        ids = new Integer[data.length()];
                         for (int i = 0; i < data.length(); i++) {
                             JSONObject jasondata = data.getJSONObject(i);
                             historydata[i] = jasondata.getString("card_name");
                             positiondata[i] = jasondata.getString("position");
+                            ids[i] = Integer.valueOf(jasondata.getString("id"));
                             HashMap<String , String> hashMap = new HashMap<>();
                             hashMap.put("title" , historydata[i]);
                             hashMap.put("text" , positiondata[i]);

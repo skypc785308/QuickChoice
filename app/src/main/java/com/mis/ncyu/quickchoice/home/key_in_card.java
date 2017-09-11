@@ -1,4 +1,4 @@
-package com.mis.ncyu.quickchoice;
+package com.mis.ncyu.quickchoice.home;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.mis.ncyu.quickchoice.R;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -42,7 +44,7 @@ public class key_in_card extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_key_in_card);
         card = get_context();
-        etBirthday = (EditText) findViewById(R.id.type);
+        etBirthday = (EditText) findViewById(R.id.date);
         card_number = (EditText) findViewById(R.id.card_number);
         expir = (EditText) findViewById(R.id.expir);
         etBirthday.setOnClickListener(this);
@@ -54,7 +56,7 @@ public class key_in_card extends AppCompatActivity implements View.OnClickListen
     View.OnClickListener signuplisten = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            EditText maxcost = (EditText) findViewById(R.id.key_word);
+            EditText maxcost = (EditText) findViewById(R.id.max_cost);
             OkHttpClient mOkHttpClient=new OkHttpClient();
             RequestBody formBody = new FormBody.Builder()
                     .add("maxcost",maxcost.getText().toString())
@@ -80,7 +82,7 @@ public class key_in_card extends AppCompatActivity implements View.OnClickListen
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if (state=="success"){
+                            if (state.equals("success")){
                                 Toast.makeText(key_in_card.this, "新增成功", Toast.LENGTH_SHORT).show();
                             }
                             Intent intent = new Intent(key_in_card.this, new_home2.class);

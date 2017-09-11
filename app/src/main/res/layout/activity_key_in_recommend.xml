@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.mis.ncyu.quickchoice.key_in_recommend">
+    tools:context="com.mis.ncyu.quickchoice.recommend.key_in_recommend">
 
     <LinearLayout
         android:layout_width="368dp"
@@ -46,7 +46,7 @@
             app:layout_constraintTop_toBottomOf="@+id/card_name" />
 
         <EditText
-            android:id="@+id/cost_price"
+            android:id="@+id/max_cost"
             android:layout_width="210dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="78dp"
@@ -71,7 +71,7 @@
             app:layout_constraintHorizontal_bias="0.503"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cost_price" />
+            app:layout_constraintTop_toBottomOf="@+id/max_cost" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

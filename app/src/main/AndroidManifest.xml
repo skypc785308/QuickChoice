@@ -40,7 +40,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".welcome_view">
+        <activity android:name=".login.welcome_view">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -48,32 +48,29 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".login.MainActivity"
             android:label="登入" />
         <activity
-            android:name=".sign_new"
+            android:name=".login.sign_new"
             android:label="註冊" />
-        <activity
-            android:name=".My_card"
-            android:label="@string/mycard" />
         <activity android:name=".news" />
         <activity
-            android:name=".Add_new_card"
+            android:name=".home.Add_new_card"
             android:label="選擇銀行" />
         <activity
             android:name=".Chose_card_type"
             android:label="選擇卡片類型" />
         <activity
-            android:name=".key_in_card"
+            android:name=".home.key_in_card"
             android:label="輸入卡片資訊" />
         <activity
-            android:name=".ForgetActivity"
+            android:name=".login.ForgetActivity"
             android:label="忘記密碼" />
         <activity
-            android:name=".content_my_card"
+            android:name=".home.content_my_card"
             android:label="卡片資訊" />
         <activity
-            android:name=".new_home2"
+            android:name=".home.new_home2"
             android:label="主畫面"
             android:theme="@style/AppTheme.NoActionBar" />
         <!--
@@ -91,24 +88,19 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity
-            android:name=".MapsActivity"
-            android:label="@string/title_activity_maps" />
-        <activity
-            android:name=".Start_recommend"
-            android:label="推薦結果" />
         <activity android:name=".Choice_recommend_type" />
         <activity
-            android:name=".compute_recommend"
+            android:name=".recommend.compute_recommend"
             android:theme="@style/AppTheme.NoActionBar" />
-        <!--<activity android:name=".get_pos" />-->
-        <!--<activity android:name=".compute_get_map_json" />-->
         <activity
-            android:name=".key_in_recommend"
-            android:label="輸入推薦資料">
-        </activity>
-        <!--<activity android:name=".compute_wating" />-->
-        <activity android:name=".content_result"></activity>
+            android:name=".recommend.key_in_recommend"
+            android:label="輸入推薦資料"/>
+        <activity
+            android:name=".recommend.content_result"
+            android:label="推薦內容"/>
+        <activity
+            android:name=".home.content_history"
+            android:label="歷史內容"/>
     </application>
 
 </manifest>

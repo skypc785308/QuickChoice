@@ -1,4 +1,4 @@
-package com.mis.ncyu.quickchoice;
+package com.mis.ncyu.quickchoice.recommend;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -8,6 +8,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.mis.ncyu.quickchoice.MyDBHelper;
+import com.mis.ncyu.quickchoice.R;
+import com.mis.ncyu.quickchoice.Total_data;
 
 import java.util.List;
 

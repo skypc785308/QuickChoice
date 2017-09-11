@@ -1,6 +1,5 @@
-package com.mis.ncyu.quickchoice;
+package com.mis.ncyu.quickchoice.recommend;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,6 +12,9 @@ import android.view.ViewGroup;
 
 import com.kosalgeek.genasync12.AsyncResponse;
 import com.kosalgeek.genasync12.PostResponseAsyncTask;
+import com.mis.ncyu.quickchoice.R;
+import com.mis.ncyu.quickchoice.RecycleHistoryAdapter;
+import com.mis.ncyu.quickchoice.card_datatype;
 
 import org.json.JSONArray;
 import org.json.JSONException;

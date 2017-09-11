@@ -1,7 +1,5 @@
 package com.mis.ncyu.quickchoice;
 
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +11,8 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+
+import com.mis.ncyu.quickchoice.home.key_in_card;
 
 import org.json.JSONArray;
 import org.json.JSONException;

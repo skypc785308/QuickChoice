@@ -6,10 +6,12 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
 import android.view.ViewGroup;
 
+import com.mis.ncyu.quickchoice.recommend.compute_recommend;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.mis.ncyu.quickchoice.compute_recommend.timess;
+import static com.mis.ncyu.quickchoice.recommend.compute_recommend.timess;
 
 /**
  * Created by User on 2/28/2017.

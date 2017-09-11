@@ -1,9 +1,8 @@
-package com.mis.ncyu.quickchoice;
+package com.mis.ncyu.quickchoice.recommend;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,14 +10,10 @@ import android.widget.Toast;
 
 import com.kosalgeek.genasync12.AsyncResponse;
 import com.kosalgeek.genasync12.PostResponseAsyncTask;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.mis.ncyu.quickchoice.R;
+import com.mis.ncyu.quickchoice.home.new_home2;
 
 import java.util.HashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class key_in_recommend extends AppCompatActivity {
 
@@ -33,7 +28,7 @@ public class key_in_recommend extends AppCompatActivity {
         setContentView(R.layout.activity_key_in_recommend);
         card_name = (EditText)findViewById(R.id.card_name);
         position = (EditText)findViewById(R.id.position_name);
-        cost_price = (EditText)findViewById(R.id.cost_price);
+        cost_price = (EditText)findViewById(R.id.max_cost);
         submit = (Button)findViewById(R.id.submit);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override

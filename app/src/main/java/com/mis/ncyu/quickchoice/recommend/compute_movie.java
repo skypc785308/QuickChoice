@@ -1,4 +1,4 @@
-package com.mis.ncyu.quickchoice;
+package com.mis.ncyu.quickchoice.recommend;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,6 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.mis.ncyu.quickchoice.R;
+import com.mis.ncyu.quickchoice.RecycleAdapter;
+import com.mis.ncyu.quickchoice.Total_data;
+import com.mis.ncyu.quickchoice.card_datatype;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,8 +25,9 @@ import java.util.regex.Pattern;
  * Created by UserMe on 2017/9/4.
  */
 
-public class compute_plane extends Fragment {
-    public compute_plane(){}
+public class compute_movie extends Fragment {
+
+    public compute_movie(){}
 
     private String username;
     private String pos;
@@ -57,11 +63,11 @@ public class compute_plane extends Fragment {
             Total_data row = data.get(i);
             String card = row.getCard_name();
             String bank = row.getCard_bank();
-            String plane = row.getPlane();
+            String movie = row.getMovie();
             Pattern p = Pattern.compile("\\s*|\t|\r|\n");
-            Matcher m = p.matcher(plane);
+            Matcher m = p.matcher(movie);
             String clean = m.replaceAll("");
-            String value = clean.replaceAll("元 / 哩","");
+            String value = clean.replaceAll("折","");
             if (value.equals("null")){
                 value="0.0";
             }

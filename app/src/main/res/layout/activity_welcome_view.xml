@@ -5,6 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/back"
-    tools:context="com.mis.ncyu.quickchoice.welcome_view">
+    tools:context="com.mis.ncyu.quickchoice.login.welcome_view">
 
 </android.support.constraint.ConstraintLayout>

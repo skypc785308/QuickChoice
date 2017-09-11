@@ -1,26 +1,22 @@
-package com.mis.ncyu.quickchoice;
+package com.mis.ncyu.quickchoice.recommend;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.kosalgeek.genasync12.AsyncResponse;
-import com.kosalgeek.genasync12.PostResponseAsyncTask;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.mis.ncyu.quickchoice.R;
+import com.mis.ncyu.quickchoice.RecycleAdapter;
+import com.mis.ncyu.quickchoice.Total_data;
+import com.mis.ncyu.quickchoice.card_datatype;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -39,7 +35,6 @@ public class compute_all extends Fragment {
     private String cash;
 
     List<card_datatype> card_list,ranking;
-    result_type[] mresult_types;
     private List<Total_data> data;
     int[] typetimes = new int[]{9,18,25,36,14};
     public compute_all() {
@@ -156,22 +151,4 @@ public class compute_all extends Fragment {
         }
 
     }
-
-    public Boolean compute(int index){
-        for (int i=0;i<index;i++) {
-            for (int j = 0; j < index - 1; j++)
-                if (mresult_types[j].getKey() > mresult_types[j + 1].getKey()) {
-                    result_type t = mresult_types[j + 1];
-                    mresult_types[j + 1] = mresult_types[j];
-                    mresult_types[j] = t;
-                }
-        }
-        for (Integer i=index-1;i>=0;i--){
-            Integer r = index-i;
-            Double value = mresult_types[i].getKey();
-            card_list.add(new card_datatype(r.toString(),mresult_types[i].getName(),mresult_types[i].getKeyword(),value));
-        }
-        return Boolean.TRUE;
-    }
-
 }
