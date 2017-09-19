@@ -60,7 +60,7 @@ public class RecycleHistoryAdapter extends RecyclerView.Adapter<RecycleHistoryAd
     public void onBindViewHolder(RecycleHistoryAdapter.ViewHolder holder, int position) {
         card_datatype row = card_list.get(position);
         holder.card_name.setText(row.getname());
-        holder.key_word.setText(String.valueOf(row.getValue()));
+        holder.key_word.setText(String.valueOf(Math.round(row.getValue()))+"元");
     }
     @Override
     public int getItemCount() {

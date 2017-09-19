@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class compute_recommend extends AppCompatActivity {
+public class compute_recommend extends AppCompatActivity  {
 
     private SectionsPageAdapter mSectionsPageAdapter;
     private ViewPager mViewPager;
@@ -41,23 +41,24 @@ public class compute_recommend extends AppCompatActivity {
     int cash,oil,red,plane,movie;
     public static int fragment_pos = 0;
     public static int[] timess;
+    Boolean finish = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compute_recommend);
+        mTotal_data = activity_recommend.mTotal_data;
         setup();
         get_name();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
         toolbar.setTitle("推薦結果");
         toolbar.setSubtitle(pos);
         setSupportActionBar(toolbar);
+        mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.container2);
-
+        setupViewPager(mViewPager);
         tabLayout = (SmartTabLayout) findViewById(R.id.tab2);
-        http();
-
-
+        tabLayout.setViewPager(mViewPager);
     }
     public String put_user_name()
     {
@@ -136,51 +137,6 @@ public class compute_recommend extends AppCompatActivity {
         db.update("login", values,null, null);
         db.close();
     }
-    private void http(){
-        String url = "http://35.194.203.57/connectdb/get_all_total.php";
-        HashMap postData = new HashMap();
-        postData.put("userid",username);
-        postData.put("pos",pos);
-        PostResponseAsyncTask readTask = new PostResponseAsyncTask(compute_recommend.this, postData, new AsyncResponse() {
-            @Override
-            public void processFinish(String s) {
-                Log.e("data_all",s);
-                mTotal_data = new ArrayList<>();
-                    try{
-                        JSONObject init_title = new JSONObject(s);
-                        JSONArray data = init_title.getJSONArray("data");
-                        for (int i = 0; i < data.length(); i++) {
-                            JSONObject jasondata = data.getJSONObject(i);
-                            String card = jasondata.getString("card_name");
-                            String bank = jasondata.getString("card_bank");
-                            String buy = jasondata.getString("buy");
-                            String red = jasondata.getString("red");
-                            String cash = jasondata.getString("cash");
-                            String movie = jasondata.getString("movie");
-                            String oil_cash = jasondata.getString("oil_cash");
-                            String card_offer = jasondata.getString("card_offer");
-                            String plane = jasondata.getString("plane");
-                            String store = jasondata.getString("store");
-                            if (!store.equals(pos)){
-                                store = "null";
-                            }
-                            mTotal_data.add(new Total_data(card,bank,buy,red,cash,movie,oil_cash,card_offer,plane,store));
-                        }
-                        mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
-                        // Set up the ViewPager with the sections adapter.
-                        setupViewPager(mViewPager);
-                        tabLayout.setViewPager(mViewPager);
-                    }catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-            }
-        });
-        readTask.execute(url);
-    }
-
-
-
-
     private void setupViewPager(ViewPager viewPager) {
         mSectionsPageAdapter.addFragment(new compute_history(), "本月已刷卡金額");
         mSectionsPageAdapter.addFragment(new compute_all(), "綜合優惠排序");

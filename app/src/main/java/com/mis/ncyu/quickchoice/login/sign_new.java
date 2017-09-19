@@ -1,6 +1,7 @@
 package com.mis.ncyu.quickchoice.login;
 
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -12,7 +13,19 @@ import android.widget.Toast;
 
 import com.kosalgeek.genasync12.AsyncResponse;
 import com.kosalgeek.genasync12.PostResponseAsyncTask;
+import com.mikepenz.fontawesome_typeface_library.FontAwesome;
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+import com.mikepenz.materialdrawer.AccountHeader;
+import com.mikepenz.materialdrawer.AccountHeaderBuilder;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.DividerDrawerItem;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.mis.ncyu.quickchoice.R;
+import com.mis.ncyu.quickchoice.home.new_home2;
 
 import java.util.HashMap;
 
@@ -32,6 +45,7 @@ public class sign_new extends AppCompatActivity implements View.OnClickListener{
         useremail = (EditText)findViewById(R.id.user_email);
         Button sign_up = (Button)findViewById(R.id.okbtn);
         sign_up.setOnClickListener(this);
+
     }
 
     @Override

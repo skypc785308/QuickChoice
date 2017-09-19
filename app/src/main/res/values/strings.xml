@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-    <string name="app_name">QuickChoice</string>
+    <string name="app_name">BestPay</string>
     <string name="id">帳號：</string>
     <string name="password">密碼：</string>
     <string name="mycard">我的信用卡</string>

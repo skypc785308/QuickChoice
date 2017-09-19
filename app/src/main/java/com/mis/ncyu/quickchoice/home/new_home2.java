@@ -31,10 +31,14 @@ import com.mis.ncyu.quickchoice.login.MainActivity;
 import com.mis.ncyu.quickchoice.MyDBHelper;
 import com.mis.ncyu.quickchoice.R;
 import com.mis.ncyu.quickchoice.home_page_adapter;
+import com.mis.ncyu.quickchoice.login.sign_new;
+import com.mis.ncyu.quickchoice.recommend.activity_recommend;
 import com.mis.ncyu.quickchoice.tab1_fragment;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import java.util.ArrayList;
+
+import static com.mis.ncyu.quickchoice.R.string.app_name;
 
 public class new_home2 extends AppCompatActivity {
 
@@ -47,6 +51,7 @@ public class new_home2 extends AppCompatActivity {
     ArrayList<String> pos_name;
     SmartTabLayout mTabLayout;
     Toolbar toolbar;
+    Drawer drawer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         helper = MyDBHelper.getInstance(new_home2.this);
@@ -68,7 +73,7 @@ public class new_home2 extends AppCompatActivity {
         // App Logo
         toolbar.setLogo(R.mipmap.ic_launcher);
         // Title
-        toolbar.setTitle("QuickChoice");
+        toolbar.setTitle(app_name);
         setSupportActionBar(toolbar);
 
 
@@ -83,7 +88,7 @@ public class new_home2 extends AppCompatActivity {
 
     }
     private void initDrawer() {
-        PrimaryDrawerItem item1 = new PrimaryDrawerItem().withName(R.string.app_name).withIcon(GoogleMaterial.Icon.gmd_credit_card);
+        PrimaryDrawerItem item1 = new PrimaryDrawerItem().withName(app_name).withIcon(GoogleMaterial.Icon.gmd_credit_card);
         PrimaryDrawerItem item2 = (PrimaryDrawerItem) new PrimaryDrawerItem().withName("會員資料").withIcon(FontAwesome.Icon.faw_user);
         PrimaryDrawerItem item3 = (PrimaryDrawerItem) new PrimaryDrawerItem().withName("登出").withIcon(FontAwesome.Icon.faw_sign_out);
 
@@ -100,7 +105,7 @@ public class new_home2 extends AppCompatActivity {
                     }
                 })
                 .build();
-        new DrawerBuilder()
+        drawer = new DrawerBuilder()
                 .withActivity(new_home2.this)
                 .withToolbar(toolbar)
                 .withAccountHeader(headerResult)
@@ -120,22 +125,29 @@ public class new_home2 extends AppCompatActivity {
                             case 1:
                                 break;
                             case 3:
+                                Intent intent = new Intent(new_home2.this, edit_user_data.class);
+                                Bundle context = new Bundle();
+                                context.putString("user_name", loginame);
+                                intent.putExtras(context);
+                                startActivity(intent);
                                 break;
                             case 5:
                                 db = helper.getWritableDatabase();
                                 db.delete("login",null, null);
                                 db.close();
-                                Intent intent = new Intent(new_home2.this, MainActivity.class);
+                                Intent intent2 = new Intent(new_home2.this, MainActivity.class);
                                 // 不再重新启动这个Activity的实例，而且这个Activity上方的所有Activity都将关闭，
                                 // 然后这个Intent会作为一个新的Intent投递到老的Activity（现在位于顶端）中。
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(intent);
+                                intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent2);
                                 finish();
                                 break;
                             case 7:
                                 showAboutDialog();
                                 break;
                         }
+
+                        drawer.closeDrawer();
                         return false;
                     }
                 })

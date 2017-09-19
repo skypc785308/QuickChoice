@@ -65,19 +65,19 @@ public class compute_all extends Fragment {
     public Double compute(int x){
         Double compute = 0.0;
         Double y = Double.valueOf(x);
-
-        if (x<=20){
-            compute = y/10;
-        }
-        else if (x<=60){
-            compute = y/8;
-        }
-        else if (x<=100){
-            compute = y/7;
-        }
-        else if (x>100){
-            compute = y/6;
-        }
+        compute =1/(1+300*Math.exp(-0.3*y));
+//        if (x<=20){
+//            compute = y/10;
+//        }
+//        else if (x<=60){
+//            compute = y/8;
+//        }
+//        else if (x<=100){
+//            compute = y/7;
+//        }
+//        else if (x>100){
+//            compute = y/6;
+//        }
 
 
         return compute;
@@ -141,9 +141,10 @@ public class compute_all extends Fragment {
                 String value = clean.replaceAll("元 / 哩","");
                 plane = value;
             }
+            double a =Math.exp(9);
             int[] typetimes = new int[compute_recommend.timess.length];
             for(int j=0;j<compute_recommend.timess.length;j++){
-                typetimes[j]=compute_recommend.timess[j]*compute_recommend.timess[j];
+                typetimes[j]=compute_recommend.timess[j];
             }
             Double compute_sum = compute(typetimes[0]) + compute(typetimes[1])+compute(typetimes[2])+compute(typetimes[3])+
                     compute(typetimes[4]);

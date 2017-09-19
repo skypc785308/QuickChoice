@@ -48,6 +48,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.kosalgeek.genasync12.AsyncResponse;
 import com.kosalgeek.genasync12.PostResponseAsyncTask;
 import com.mis.ncyu.quickchoice.R;
+import com.mis.ncyu.quickchoice.recommend.activity_recommend;
 import com.mis.ncyu.quickchoice.recommend.compute_recommend;
 import com.mis.ncyu.quickchoice.news;
 
@@ -156,7 +157,7 @@ public class map_fragment extends Fragment implements GoogleApiClient.Connection
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(),news.class));
+                startActivity(new Intent(getActivity(),activity_recommend.class));
             }
         });
 
@@ -459,7 +460,7 @@ public class map_fragment extends Fragment implements GoogleApiClient.Connection
                                 if(TextUtils.isEmpty(money)){
                                     Toast.makeText(getActivity(), "請輸入金額才能推薦", Toast.LENGTH_SHORT).show();
                                 } else {
-                                    Intent intent = new Intent(getActivity(), compute_recommend.class);
+                                    Intent intent = new Intent(getActivity(), activity_recommend.class);
                                     Bundle context = new Bundle();
                                     context.putString("user_name", username);
                                     context.putString("pos", position);
