@@ -57,6 +57,7 @@ public class key_in_recommend extends AppCompatActivity {
         postData.put("pos",pos);
         postData.put("card_name",card);
         postData.put("cost_price",cost_price.getText().toString());
+
         PostResponseAsyncTask readTask = new PostResponseAsyncTask(this, postData, new AsyncResponse() {
             @Override
             public void processFinish(String s) {
@@ -66,10 +67,12 @@ public class key_in_recommend extends AppCompatActivity {
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//它可以关掉所要到的界面中间的activity
                     startActivity(intent);
                     finish();
+
                 }
                 else {
                     Toast.makeText(key_in_recommend.this, s, Toast.LENGTH_LONG).show();
                 }
+
             }
         });
         readTask.execute(url);

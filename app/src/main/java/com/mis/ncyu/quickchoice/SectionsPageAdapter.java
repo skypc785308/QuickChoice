@@ -50,18 +50,18 @@ public class SectionsPageAdapter extends FragmentPagerAdapter {
     @Override
     public void setPrimaryItem(ViewGroup container, int position, Object object) {
         super.setPrimaryItem(container, position, object);
-        Log.e("times",String.valueOf(timess[0]));
-        Log.e("times",String.valueOf(timess[1]));
-        Log.e("times",String.valueOf(timess[2]));
-        Log.e("times",String.valueOf(timess[3]));
-        Log.e("times",String.valueOf(timess[4]));
+//        Log.e("times",String.valueOf(timess[0]));
+//        Log.e("times",String.valueOf(timess[1]));
+//        Log.e("times",String.valueOf(timess[2]));
+//        Log.e("times",String.valueOf(timess[3]));
+//        Log.e("times",String.valueOf(timess[4]));
         Fragment now  = (Fragment)object;
         if (tmp != now){
             Log.e("切換後的",String.valueOf(position));
             tmp = now;
-            if(position !=0 && position !=1 && timess != null){
-                timess[position-2] +=1;
-                Log.e("值：",String.valueOf(timess[position-2]));
+            if(position !=0 && timess != null){
+//                timess[position-2] +=1;
+//                Log.e("值：",String.valueOf(timess[position-2]));
                 compute_recommend.fragment_pos=position;
             }
 

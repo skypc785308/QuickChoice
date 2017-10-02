@@ -61,6 +61,7 @@ public class content_result extends AppCompatActivity {
                 postData.put("pos",compute_recommend.pos);
                 postData.put("card_name",card_name);
                 postData.put("cost_price",String.valueOf(compute_recommend.money));
+                postData.put("type",type.getText().toString());
                 PostResponseAsyncTask readTask = new PostResponseAsyncTask(content_result.this, postData, new AsyncResponse() {
                     @Override
                     public void processFinish(String s) {
@@ -69,11 +70,14 @@ public class content_result extends AppCompatActivity {
                             Intent intent = new Intent(content_result.this, new_home2.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//它可以关掉所要到的界面中间的activity
                             startActivity(intent);
-                            finish();
+
                         }
                         else {
                             Toast.makeText(content_result.this, s, Toast.LENGTH_LONG).show();
                         }
+                        Intent intent2 = content_result.this.getPackageManager().getLaunchIntentForPackage("com.google.android.apps.walletnfcrel");
+                        startActivity(intent2);
+                        finish();
                     }
                 });
                 readTask.execute(url);

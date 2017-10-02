@@ -163,7 +163,8 @@ public class new_home2 extends AppCompatActivity {
         adapter.addFragment(new map_fragment(), "立即推薦");
         adapter.addFragment(new mycard_fragment(), "我的信用卡");
         adapter.addFragment(new history_fragment(), "歷史紀錄");
-        adapter.addFragment(new tab1_fragment(), "最新優惠");
+        adapter.addFragment(new coperation(), "合作店家優惠");
+
         viewPager.setAdapter(adapter);
 
     }

@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -40,6 +42,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -48,6 +51,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.kosalgeek.genasync12.AsyncResponse;
 import com.kosalgeek.genasync12.PostResponseAsyncTask;
 import com.mis.ncyu.quickchoice.R;
+import com.mis.ncyu.quickchoice.hos_map;
 import com.mis.ncyu.quickchoice.recommend.activity_recommend;
 import com.mis.ncyu.quickchoice.recommend.compute_recommend;
 import com.mis.ncyu.quickchoice.news;
@@ -64,16 +68,12 @@ import java.util.Locale;
 public class map_fragment extends Fragment implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener, OnMapReadyCallback {
     public map_fragment() {}
-
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-
     private FusedLocationProviderClient mFusedLocationClient;
     // Google API用戶端物件
     private GoogleApiClient mGoogleApiClient;
-
     // Location請求物件
     private LocationRequest mLocationRequest;
-
     private Location mLastLocation;
     private Marker mCurrLocationMarker;
     Integer expush = 0;
@@ -116,6 +116,11 @@ public class map_fragment extends Fragment implements GoogleApiClient.Connection
                 .build();
         mGoogleApiClient.connect();
     }
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        map.onSaveInstanceState(outState);
+    }
 
     @Override
     public void onResume() {
@@ -157,7 +162,9 @@ public class map_fragment extends Fragment implements GoogleApiClient.Connection
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(),activity_recommend.class));
+//                Intent intent = getActivity().getPackageManager().getLaunchIntentForPackage("com.google.android.apps.walletnfcrel");
+//                startActivity(intent);
+                startActivity(new Intent(getActivity(),hos_map.class));
             }
         });
 
@@ -229,6 +236,7 @@ public class map_fragment extends Fragment implements GoogleApiClient.Connection
             @Override
             public void processFinish(String s) {
                 Log.e("seeeeee", String.valueOf(Thread.currentThread().getId()));
+                BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.placeholder);
                 try {
                     JSONObject init_title = new JSONObject(s);
                     JSONArray data = init_title.getJSONArray("results");
@@ -241,7 +249,8 @@ public class map_fragment extends Fragment implements GoogleApiClient.Connection
                         String name =  geometry.getString("name");
                         LatLng latLng = new LatLng(lat, lng);
                         LatLngpos.add(latLng);
-                        mMap.addMarker(new MarkerOptions().position(latLng).title(name));
+                        mMap.addMarker(new MarkerOptions().position(latLng).title(name)
+                                .icon(icon));
                         if (i==0){
                             count+=data.length();
                             record_count.add(count);

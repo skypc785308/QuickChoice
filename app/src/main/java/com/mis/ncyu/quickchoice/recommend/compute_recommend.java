@@ -48,7 +48,7 @@ public class compute_recommend extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compute_recommend);
         mTotal_data = activity_recommend.mTotal_data;
-        setup();
+
         get_name();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
         toolbar.setTitle("推薦結果");
@@ -77,7 +77,6 @@ public class compute_recommend extends AppCompatActivity  {
 
     @Override
     protected void onDestroy() {
-        update();
         super.onDestroy();
     }
 
