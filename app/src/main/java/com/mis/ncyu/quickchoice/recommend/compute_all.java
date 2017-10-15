@@ -152,10 +152,13 @@ public class compute_all extends Fragment {
             }
             // 算出來的都是分類的權重，但是排序卻是卡片，所以這個權重只能用在顯示所有項目的排序。
 
-            Double sum = Double.valueOf(buy) * compute(typetimes[0]) + Double.valueOf(oil) * compute(typetimes[1]) + Double.valueOf(red) * compute(typetimes[2]) +
-                    Double.valueOf(plane) * compute(typetimes[3]) + Double.valueOf(movie) * compute(typetimes[4]);
+            Double sum = Double.valueOf(buy) * compute(typetimes[0])*jaacrd_user_count[1] +
+                    Double.valueOf(oil) * compute(typetimes[1])*jaacrd_user_count[2] +
+                    Double.valueOf(red) * compute(typetimes[2])*jaacrd_user_count[3] +
+                    Double.valueOf(plane) * compute(typetimes[3])*jaacrd_user_count[4] +
+                    Double.valueOf(movie) * compute(typetimes[4])*jaacrd_user_count[5];
             Log.e("times_sum", String.valueOf(compute_sum));
-            sum = sum / compute_sum;
+            sum = sum / compute_sum / jccard_sum ;
             card_datatype record = new card_datatype(bank, card, "計算結果", sum);
             if (!store.equals("null")) {
                 record.setStore(store);

@@ -156,17 +156,17 @@ public class map_fragment extends Fragment implements GoogleApiClient.Connection
         map.getMapAsync(this);
 
         final ListView listpos = (ListView) view.findViewById(R.id.findpos);
-        btn = (Button)view.findViewById(R.id.recommend_btn);
+//        btn = (Button)view.findViewById(R.id.recommend_btn);
         filterText = (EditText) view.findViewById(R.id.searchbox);
 
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Intent intent = getActivity().getPackageManager().getLaunchIntentForPackage("com.google.android.apps.walletnfcrel");
-//                startActivity(intent);
-                startActivity(new Intent(getActivity(),hos_map.class));
-            }
-        });
+//        btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                Intent intent = getActivity().getPackageManager().getLaunchIntentForPackage("com.google.android.apps.walletnfcrel");
+////                startActivity(intent);
+//                startActivity(new Intent(getActivity(),hos_map.class));
+//            }
+//        });
 
         filterText.addTextChangedListener(filterTextWatcher);
         listpos.setTextFilterEnabled(true);
@@ -468,7 +468,10 @@ public class map_fragment extends Fragment implements GoogleApiClient.Connection
                                 String money = editText.getText().toString();
                                 if(TextUtils.isEmpty(money)){
                                     Toast.makeText(getActivity(), "請輸入金額才能推薦", Toast.LENGTH_SHORT).show();
-                                } else {
+                                } else if (mycard_fragment.card_count ==0) {
+                                    Toast.makeText(getActivity(), "請先新增卡片", Toast.LENGTH_SHORT).show();
+                                }
+                                else {
                                     Intent intent = new Intent(getActivity(), activity_recommend.class);
                                     Bundle context = new Bundle();
                                     context.putString("user_name", username);

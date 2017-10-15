@@ -38,6 +38,7 @@ public class mycard_fragment extends Fragment {
     private String[] countdate;
     ListView showcards;
     SwipeRefreshLayout mSwipeRefreshLayout;
+    static int card_count = 0;
 
     @Override
     public void onAttach(Context context) {
@@ -131,12 +132,14 @@ public class mycard_fragment extends Fragment {
                 }
                 else {
                     try{
+                        card_count +=0;
                         JSONObject init_title = new JSONObject(s);
                         JSONArray data = init_title.getJSONArray("data");
                         listviewdata = new String[data.length()];
                         max_cost = new String[data.length()];
                         countdate = new String[data.length()];
                         for (int i = 0; i < data.length(); i++) {
+                            card_count +=1;
                             JSONObject jasondata = data.getJSONObject(i);
                             listviewdata[i] = jasondata.getString("card_id");
                             max_cost[i] = jasondata.getString("max_cost");

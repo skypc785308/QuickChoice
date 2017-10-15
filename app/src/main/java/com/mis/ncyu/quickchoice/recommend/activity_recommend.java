@@ -94,6 +94,10 @@ public class activity_recommend extends AppCompatActivity {
         PostResponseAsyncTask readTask = new PostResponseAsyncTask(activity_recommend.this, postData, new AsyncResponse() {
             @Override
             public void processFinish(String s) {
+                if (s.equals("{\"data\":null}")){
+
+                }
+                else {
                     try{
                         JSONObject init_title = new JSONObject(s);
                         JSONArray data = init_title.getJSONArray("data");
@@ -103,25 +107,25 @@ public class activity_recommend extends AppCompatActivity {
                             JSONObject jasondata = data.getJSONObject(i);
                             historydata[i] = jasondata.getString("type");
                             historycount[i] = jasondata.getInt("times");
-                                switch (jasondata.getString("type")){
-                                    case "綜合優惠":
-                                        type_count[0] = jasondata.getInt("times");
-                                        break;
-                                    case "現金回饋":
-                                        type_count[1] = jasondata.getInt("times");
-                                        break;
-                                    case "加油":
-                                        type_count[2] = jasondata.getInt("times");
-                                        break;
-                                    case "紅利積點":
-                                        type_count[3] = jasondata.getInt("times");
-                                        break;
-                                    case "旅遊":
-                                        type_count[4] = jasondata.getInt("times");
-                                        break;
-                                    case "電影":
-                                        type_count[5] = jasondata.getInt("times");
-                                        break;
+                            switch (jasondata.getString("type")){
+                                case "綜合優惠":
+                                    type_count[0] = jasondata.getInt("times");
+                                    break;
+                                case "現金回饋":
+                                    type_count[1] = jasondata.getInt("times");
+                                    break;
+                                case "加油":
+                                    type_count[2] = jasondata.getInt("times");
+                                    break;
+                                case "紅利積點":
+                                    type_count[3] = jasondata.getInt("times");
+                                    break;
+                                case "旅遊":
+                                    type_count[4] = jasondata.getInt("times");
+                                    break;
+                                case "電影":
+                                    type_count[5] = jasondata.getInt("times");
+                                    break;
                             }
 
                             Log.e("555555555",historydata[i]+historycount[i]);
@@ -129,6 +133,8 @@ public class activity_recommend extends AppCompatActivity {
                     }catch (JSONException e) {
                         e.printStackTrace();
                     }
+                }
+
                 timess = type_count;
                 Log.e("綜合優惠",String.valueOf(timess[0]));
                 Log.e("現金回饋",String.valueOf(timess[1]));

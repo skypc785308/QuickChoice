@@ -53,25 +53,31 @@ public class compute_history extends Fragment {
     private void getHistory(){
         String url = "http://35.194.203.57/connectdb/get_sum_history.php";
         HashMap postData = new HashMap();
+        Log.e("人",((compute_recommend)getActivity()).put_user_name());
         postData.put("userid",((compute_recommend)getActivity()).put_user_name());
         PostResponseAsyncTask readTask = new PostResponseAsyncTask(getActivity(), postData, new AsyncResponse() {
             @Override
             public void processFinish(String s) {
                 Log.e("data_history",s);
-                try{
-                    JSONObject init_title = new JSONObject(s);
-                    JSONArray data = init_title.getJSONArray("data");
-                    for (int i = 0; i < data.length(); i++) {
-                        JSONObject jasondata = data.getJSONObject(i);
-                        String card = jasondata.getString("card_id");
-                        String sum = jasondata.getString("total");
-                        if (sum.equals("null")){
-                            sum="0.0";
+                if (s.equals("{\"data\":null}")){
+
+                }
+                else {
+                    try{
+                        JSONObject init_title = new JSONObject(s);
+                        JSONArray data = init_title.getJSONArray("data");
+                        for (int i = 0; i < data.length(); i++) {
+                            JSONObject jasondata = data.getJSONObject(i);
+                            String card = jasondata.getString("card_id");
+                            String sum = jasondata.getString("total");
+                            if (sum.equals("null")){
+                                sum="0.0";
+                            }
+                            history.add(new card_datatype("",card,"",Double.valueOf(sum)));
                         }
-                        history.add(new card_datatype("",card,"",Double.valueOf(sum)));
+                    }catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                }catch (JSONException e) {
-                    e.printStackTrace();
                 }
                 RecycleHistoryAdapter myAdapter = new RecycleHistoryAdapter(history);
                 final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());

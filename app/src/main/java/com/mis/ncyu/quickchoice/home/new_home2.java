@@ -171,7 +171,7 @@ public class new_home2 extends AppCompatActivity {
     private void showAboutDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("關於我們");
-        builder.setMessage("我們是畢業專題第10組");
+        builder.setMessage("我們是畢業專題第4組");
         builder.setPositiveButton("確定",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {

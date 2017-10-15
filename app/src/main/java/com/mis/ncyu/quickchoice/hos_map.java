@@ -45,6 +45,78 @@ public class hos_map extends AppCompatActivity implements GoogleApiClient.Connec
     private LocationRequest mLocationRequest;
     private Marker mCurrLocationMarker;
     private String area;
+    private double [] lat={23.500706 ,
+            23.475749 ,
+            23.484122 ,
+            23.466393 ,
+            25.041620 ,
+            23.464348 ,
+            23.487250 ,
+            24.190000 ,
+            23.001602 ,
+            22.996354 ,
+            23.595964 ,
+            23.463065 ,
+            22.994849 ,
+            22.976973 ,
+            23.288919 ,
+            23.020784 ,
+            22.677537 ,
+            22.701404 ,
+            22.646002 ,
+            22.649665 ,
+            23.795646 ,
+            23.589780 ,
+            23.781549 ,
+            23.702121};
+    private double [] lng={120.451280 ,
+            120.467254 ,
+            120.461637 ,
+            120.423195 ,
+            121.517288 ,
+            120.234628 ,
+            120.506858 ,
+            120.606364 ,
+            120.217705 ,
+            120.208802 ,
+            120.457294 ,
+            120.286326 ,
+            120.198642 ,
+            120.242438 ,
+            120.325109 ,
+            120.221943 ,
+            120.322502 ,
+            120.290417 ,
+            120.309580 ,
+            120.356144 ,
+            120.218725 ,
+            120.307395 ,
+            120.441273 ,
+            120.545451};
+    private String [] hos_name={"嘉基" ,
+            " 財團法人天主教聖馬爾定醫院大雅院區" ,
+            "財團法人天主教聖馬爾定醫院民權院區" ,
+            "台中榮總嘉義分院" ,
+            "台大醫院神經部" ,
+            "嘉義縣朴子市朴子醫" ,
+            "台中榮總嘉義分院灣橋分院 精神科" ,
+            "臺中榮民總醫院精神部" ,
+            "成大醫院" ,
+            "衛生福利部台南醫院" ,
+            "佛教慈濟醫療財團法人大林慈濟醫院 失智症中心" ,
+            "長庚醫療財團法人嘉義長庚紀念醫院 " ,
+            "郭綜合醫院 神經內科" ,
+            "衛生福利部嘉南療養院" ,
+            "柳營奇美醫院 神經內科" ,
+            "財團法人奇美醫院" ,
+            "高雄榮民總醫院" ,
+            "國軍高雄總醫院左營分院 神經內科" ,
+            "財團法人私立高雄醫學大學附設中和紀念醫院" ,
+            "財團法人長庚紀念醫院高雄分院" ,
+            "雲林長庚紀念醫院 神經內科" ,
+            "中國醫藥大學北港附設醫院" ,
+            "財團法人彰化基督教醫院雲林分院 失智症整合門診" ,
+            "國立成功大學醫學院附設醫院斗六分院 精神科",};
 
     @Override
     public void onResume() {
@@ -229,6 +301,11 @@ public class hos_map extends AppCompatActivity implements GoogleApiClient.Connec
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        for (int i=0;i<lat.length;i++){
+            LatLng latLng = new LatLng(lat[i], lng[i]);
+            mMap.addMarker(new MarkerOptions().position(latLng).title(hos_name[i]));
+        }
+
 
         //Initialize Google Play Services
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
