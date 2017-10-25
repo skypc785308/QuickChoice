@@ -159,7 +159,7 @@ public class compute_all extends Fragment {
                     Double.valueOf(movie) * compute(typetimes[4])*jaacrd_user_count[5];
             Log.e("times_sum", String.valueOf(compute_sum));
             sum = sum / compute_sum / jccard_sum ;
-            card_datatype record = new card_datatype(bank, card, "計算結果", sum);
+            card_datatype record = new card_datatype(bank, card, "", sum);
             if (!store.equals("null")) {
                 record.setStore(store);
             }

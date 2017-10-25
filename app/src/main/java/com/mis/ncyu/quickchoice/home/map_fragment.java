@@ -484,6 +484,12 @@ public class map_fragment extends Fragment implements GoogleApiClient.Connection
                                 }
                             }
                         })
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
                         .show();
 
             }

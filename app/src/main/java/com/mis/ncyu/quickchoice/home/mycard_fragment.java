@@ -1,6 +1,8 @@
 package com.mis.ncyu.quickchoice.home;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,11 +19,13 @@ import android.widget.*;
 import com.kosalgeek.genasync12.AsyncResponse;
 import com.kosalgeek.genasync12.PostResponseAsyncTask;
 import com.mis.ncyu.quickchoice.R;
+import com.mis.ncyu.quickchoice.mylistadapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -37,8 +41,10 @@ public class mycard_fragment extends Fragment {
     private String[] max_cost;
     private String[] countdate;
     ListView showcards;
+    ArrayList<String> mylistdata;
     SwipeRefreshLayout mSwipeRefreshLayout;
     static int card_count = 0;
+    mylistadapter mylistadapter;
 
     @Override
     public void onAttach(Context context) {
@@ -64,20 +70,15 @@ public class mycard_fragment extends Fragment {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mSwipeRefreshLayout.setRefreshing(false);
-                    }
-                }, 4000);
+                http(true);
 
             }
         });
         if (listviewdata == null){
-            http();
+            http(false);
         }
         else {
-            showdata();
+            showdata(false);
         }
 
         FloatingActionButton fab = (FloatingActionButton)view.findViewById(R.id.fab);
@@ -90,16 +91,53 @@ public class mycard_fragment extends Fragment {
                 context.putString("user_name", username);
                 intent3.putExtras(context);
                 startActivity(intent3);
-                Toast.makeText(getActivity(), "新增卡片", Toast.LENGTH_LONG).show();
+
             }
         });
         return view;
     }
 
-    public void showdata(){
+    public void showdata(Boolean update){
         if (listviewdata != null){
-            ListAdapter adapter = new ArrayAdapter<>(getActivity() , android.R.layout.simple_list_item_1 ,listviewdata);
-            showcards.setAdapter(adapter);
+             mylistadapter = new mylistadapter(getActivity(),mylistdata);
+//            ListAdapter adapter = new ArrayAdapter<>(getActivity() , android.R.layout.simple_list_item_1 ,listviewdata);
+//            showcards.setAdapter(adapter);
+            showcards.setAdapter(mylistadapter);
+            showcards.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                    String card_name = mylistdata.get(position);
+                    new AlertDialog.Builder(getActivity())
+                            .setTitle("確定刪除嗎?")
+                            .setMessage("想要刪除" + card_name + " 嗎?")
+                            .setPositiveButton("是", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    String card_name = mylistdata.get(position);
+                                    mylistdata.remove(position);
+                                    if (mylistdata.isEmpty()){
+                                        String[] value ={"尚未加入信用卡"};
+                                        ListAdapter adapter = new ArrayAdapter<>(getActivity() , android.R.layout.simple_list_item_1 ,value);
+                                        showcards.setAdapter(adapter);
+                                    }
+                                    else {
+                                        showcards.setAdapter(mylistadapter);
+                                    }
+                                    delete_http(card_name);
+
+                                }
+                            })
+                            .setNegativeButton("否", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            })
+                            .show();
+
+                    return true;
+                }
+            });
             showcards.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -110,31 +148,55 @@ public class mycard_fragment extends Fragment {
                     intent.putExtras(context);
                     startActivity(intent);
 
+
                 }
             });
+
+            if (update){
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
         }
         else{
-            String[] value ={"空空如也"};
+            String[] value ={"尚未加入信用卡"};
             ListAdapter adapter = new ArrayAdapter<>(getActivity() , android.R.layout.simple_list_item_1 ,value);
             showcards.setAdapter(adapter);
         }
     }
+    private void delete_http(String card){
+        String url = "http://35.194.203.57/connectdb/delete_user_card.php";
+        HashMap postData = new HashMap();
+        postData.put("userid",username);
+        postData.put("card_id",card);
+        PostResponseAsyncTask readTask = new PostResponseAsyncTask(getActivity(), postData, new AsyncResponse() {
+            @Override
+            public void processFinish(String s) {
+                if(s.equals("success")){
+                    Toast.makeText(getActivity(), "刪除成功!", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(getActivity(), "刪除失敗!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        readTask.execute(url);
+    }
 
-    private void http(){
+    private void http(final Boolean update){
         String url = "http://35.194.203.57/connectdb/get_my_card.php";
         HashMap postData = new HashMap();
         postData.put("userid",username);
         PostResponseAsyncTask readTask = new PostResponseAsyncTask(getActivity(), postData, new AsyncResponse() {
             @Override
             public void processFinish(String s) {
-                if(s.isEmpty()){
-                    showdata();
+                if(s.equals("{\"data\":null}")){
+                    showdata(false);
                 }
                 else {
                     try{
-                        card_count +=0;
+                        card_count =0;
                         JSONObject init_title = new JSONObject(s);
                         JSONArray data = init_title.getJSONArray("data");
+                        mylistdata = new ArrayList<String>();
                         listviewdata = new String[data.length()];
                         max_cost = new String[data.length()];
                         countdate = new String[data.length()];
@@ -142,6 +204,7 @@ public class mycard_fragment extends Fragment {
                             card_count +=1;
                             JSONObject jasondata = data.getJSONObject(i);
                             listviewdata[i] = jasondata.getString("card_id");
+                            mylistdata.add(jasondata.getString("card_id"));
                             max_cost[i] = jasondata.getString("max_cost");
                             countdate[i] = jasondata.getString("date");
                             Log.e("data",listviewdata[i]);
@@ -149,7 +212,7 @@ public class mycard_fragment extends Fragment {
                     }catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    showdata();
+                    showdata(update);
                 }
             }
         });

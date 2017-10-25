@@ -1,10 +1,14 @@
 package com.mis.ncyu.quickchoice.recommend;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -26,6 +30,7 @@ public class content_result extends AppCompatActivity {
     TextView card,bank,type,key_word,compute;
     String card_name,bank_name,key,value;
     Button submit;
+    private PackageInfo packageInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,18 +71,42 @@ public class content_result extends AppCompatActivity {
                     @Override
                     public void processFinish(String s) {
                         if (s.equals("success")){
-                            Toast.makeText(content_result.this, s, Toast.LENGTH_LONG).show();
+
+
+
+                            Toast.makeText(content_result.this, s, Toast.LENGTH_SHORT).show();
+                            Intent[] intents = new Intent[2];
+                            Intent intent2 = content_result.this.getPackageManager().getLaunchIntentForPackage("com.google.android.apps.walletnfcrel");
                             Intent intent = new Intent(content_result.this, new_home2.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//它可以关掉所要到的界面中间的activity
-                            startActivity(intent);
+                            intents [0] = intent;
+                            intents [1] = intent2;
+                            //檢查是否有android pay
+                            try {
+                                packageInfo =  content_result.this.getPackageManager().getPackageInfo(
+                                        "com.google.android.apps.walletnfcrel", 0);
+
+                            } catch (PackageManager.NameNotFoundException e) {
+                                packageInfo = null;
+                                e.printStackTrace();
+                            }
+                            if(packageInfo ==null){
+                                Toast.makeText(content_result.this, "未偵測到android pay!，請至google play安裝", Toast.LENGTH_LONG).show();
+                                Uri uri = Uri.parse("market://details?id=com.google.android.apps.walletnfcrel");
+                                Intent intent_android_pay = new Intent(Intent.ACTION_VIEW, uri);
+                                intents [1] = intent_android_pay;
+                                System.out.println("not installed");
+                            }else{
+
+                            }
+                            startActivities(intents);
+                            finish();
 
                         }
                         else {
                             Toast.makeText(content_result.this, s, Toast.LENGTH_LONG).show();
                         }
-                        Intent intent2 = content_result.this.getPackageManager().getLaunchIntentForPackage("com.google.android.apps.walletnfcrel");
-                        startActivity(intent2);
-                        finish();
+
                     }
                 });
                 readTask.execute(url);

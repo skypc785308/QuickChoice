@@ -78,8 +78,8 @@ public class history_fragment extends Fragment {
         }
         else {
             HashMap<String , String> hashMap = new HashMap<>();
-            hashMap.put("title" , "沒有資料~");
-            hashMap.put("text" , "趕快去推薦~");
+            hashMap.put("title" , "沒有資料");
+            hashMap.put("text" , "尚未進行推薦");
             list.add(hashMap);
             ListAdapter adapter = new SimpleAdapter(getActivity(),list, android.R.layout.simple_list_item_2 ,new String[]{"title" , "text"} ,
                     new int[]{android.R.id.text1 , android.R.id.text2});

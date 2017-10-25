@@ -75,7 +75,7 @@ public class sign_new extends AppCompatActivity implements View.OnClickListener{
                     finish();
                 }
                 else if(s.equals("exist")){
-                    Toast.makeText(sign_new.this, "帳號已註冊過", Toast.LENGTH_LONG).show();
+                    Toast.makeText(sign_new.this, "此帳號已註冊過", Toast.LENGTH_LONG).show();
                 }
                 else {
                     Toast.makeText(sign_new.this, "註冊失敗", Toast.LENGTH_LONG).show();
