@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/ic_launcher_back"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.mis.ncyu.quickchoice.login.ForgetActivity">
@@ -29,6 +30,7 @@
                 android:layout_marginLeft="16dp"
                 android:gravity="center_horizontal"
                 android:paddingLeft="10dp"
+                android:textColor="@color/md_black_1000"
                 android:text="帳號："
                 android:textSize="25sp" />
 
@@ -55,6 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="23dp"
                 android:layout_weight="1"
+                android:textColor="@color/md_black_1000"
                 android:text="E-mail："
                 android:textSize="25sp" />
 

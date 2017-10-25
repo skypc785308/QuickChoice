@@ -103,7 +103,8 @@
             android:label="歷史內容" />
         <activity android:name=".home.edit_user_data" />
         <activity android:name=".recommend.activity_recommend" />
-        <activity android:name=".hos_map" />
+        <activity android:name=".hos_map"
+            android:label="鄰近醫院"/>
         <activity
             android:name=".home.context_coperation"
             android:label="優惠內容"
