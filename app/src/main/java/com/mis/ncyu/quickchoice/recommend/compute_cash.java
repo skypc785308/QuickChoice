@@ -68,6 +68,7 @@ public class compute_cash extends Fragment {
             String clean = cash.replaceAll("%","");
             if (clean.equals("null")){
                 clean="0.0";
+                cash="無";
             }
             card_list.add(new card_datatype(bank,card,cash,Double.valueOf(clean)));
         }

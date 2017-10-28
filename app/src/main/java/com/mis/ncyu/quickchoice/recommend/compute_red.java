@@ -78,6 +78,7 @@ public class compute_red extends Fragment  {
             String value = clean.replaceAll("元／點","");
             if (value.equals("null")){
                 value="0.0";
+                clean="無";
             }
             card_list.add(new card_datatype(bank,card,clean,Double.valueOf(value)));
         }

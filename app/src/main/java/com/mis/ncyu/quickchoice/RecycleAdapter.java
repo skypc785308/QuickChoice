@@ -75,7 +75,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         if (row.getStore() !=null ){
             holder.rank_name.setText("在"+row.getStore()+"有合作優惠");
             holder.cardView.setBackgroundColor(Color.CYAN);
-            row.setStore(null);
+
         }
         if (row.getValue()!=0.0){
             rank_id++;

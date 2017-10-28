@@ -23,6 +23,7 @@
             android:layout_marginTop="10dp"
             android:paddingLeft="10dp"
             android:text="TextView"
+            android:textColor="@color/md_black_1000"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -49,6 +50,7 @@
                 android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:layout_weight="1"
                 android:text="TextView"
                 android:textSize="20sp" />
@@ -75,6 +77,7 @@
                 android:id="@+id/cost_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:layout_weight="1"
                 android:text="TextView"
                 android:textSize="20sp" />
@@ -101,6 +104,7 @@
                 android:id="@+id/position"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:layout_weight="1.01"
                 android:text="TextView"
                 android:textSize="20sp" />

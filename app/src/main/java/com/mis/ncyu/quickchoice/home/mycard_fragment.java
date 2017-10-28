@@ -189,6 +189,7 @@ public class mycard_fragment extends Fragment {
             @Override
             public void processFinish(String s) {
                 if(s.equals("{\"data\":null}")){
+                    card_count =0;
                     showdata(false);
                 }
                 else {

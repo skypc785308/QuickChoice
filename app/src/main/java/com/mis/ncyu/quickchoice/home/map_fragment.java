@@ -470,6 +470,12 @@ public class map_fragment extends Fragment implements GoogleApiClient.Connection
                                     Toast.makeText(getActivity(), "請輸入金額才能推薦", Toast.LENGTH_SHORT).show();
                                 } else if (mycard_fragment.card_count ==0) {
                                     Toast.makeText(getActivity(), "請先新增卡片", Toast.LENGTH_SHORT).show();
+                                    Intent intent3 = new Intent();
+                                    intent3.setClass(getActivity(), Add_new_card.class);
+                                    Bundle context = new Bundle();
+                                    context.putString("user_name", username);
+                                    intent3.putExtras(context);
+                                    startActivity(intent3);
                                 }
                                 else {
                                     Intent intent = new Intent(getActivity(), activity_recommend.class);

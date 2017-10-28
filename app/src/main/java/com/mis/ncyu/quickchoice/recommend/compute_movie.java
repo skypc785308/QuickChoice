@@ -70,6 +70,7 @@ public class compute_movie extends Fragment {
             String value = clean.replaceAll("折","");
             if (value.equals("null")){
                 value="0.0";
+                clean="無";
             }
             card_list.add(new card_datatype(bank,card,clean,Double.valueOf(value)));
         }

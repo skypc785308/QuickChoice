@@ -21,6 +21,7 @@ import com.mis.ncyu.quickchoice.R;
 import com.mis.ncyu.quickchoice.Total_data;
 import com.mis.ncyu.quickchoice.home.new_home2;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 
@@ -139,6 +140,10 @@ public class content_result extends AppCompatActivity {
                 break;
             case 3:
                 type="加油";
+                Double est_value = compute_recommend.money/25.0;
+                compute_value = compute_recommend.money/(25 - Double.valueOf(value));
+                Double b = new BigDecimal(compute_value-est_value).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue();
+                compute.setText("相對於每公升油價25元，你可以多加"+ String.valueOf(b)+"公升的油!" );
                 break;
             case 4:
                 type="紅利積點";
@@ -147,6 +152,8 @@ public class content_result extends AppCompatActivity {
                 break;
             case 5:
                 type="旅遊";
+                compute_value = compute_recommend.money/Double.valueOf(value);
+                compute.setText(String.valueOf(compute_recommend.money) + "/" + value + "=" + String.valueOf(compute_value));
                 break;
             case 6:
                 type="電影";

@@ -64,9 +64,10 @@ public class compute_oil extends Fragment {
             Pattern p = Pattern.compile("\\s*|\t|\r|\n");
             Matcher m = p.matcher(offer);
             String clean = m.replaceAll("");
-            String value = clean.replaceAll("元 / 公升","");
+            String value = clean.replaceAll("元/公升","");
             if (value.equals("null")){
                 value="0.0";
+                clean="無";
             }
             card_list.add(new card_datatype(bank,card,clean,Double.valueOf(value)));
         }

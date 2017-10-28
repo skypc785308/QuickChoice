@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.content.Intent;
+import android.view.WindowManager;
 
 import com.mis.ncyu.quickchoice.MyDBHelper;
 import com.mis.ncyu.quickchoice.R;
@@ -17,7 +18,8 @@ public class welcome_view extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_view);
-        handler.postDelayed(runnable,2000);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        handler.postDelayed(runnable,3500);
     }
     Handler handler = new Handler();
     Runnable runnable = new Runnable() {

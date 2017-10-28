@@ -118,7 +118,7 @@ public class compute_all extends Fragment {
                 Pattern p = Pattern.compile("\\s*|\t|\r|\n");
                 Matcher m = p.matcher(oil);
                 String clean = m.replaceAll("");
-                String value = clean.replaceAll("元 / 公升", "");
+                String value = clean.replaceAll("元/公升", "");
                 oil = value;
             }
             if (red.equals("null")) {
@@ -136,7 +136,7 @@ public class compute_all extends Fragment {
                 Pattern p = Pattern.compile("\\s*|\t|\r|\n");
                 Matcher m = p.matcher(plane);
                 String clean = m.replaceAll("");
-                String value = clean.replaceAll("元 / 哩", "");
+                String value = clean.replaceAll("元/哩", "");
                 plane = value;
             }
             Double compute_sum = 0.0;
@@ -165,6 +165,7 @@ public class compute_all extends Fragment {
             }
             card_list.add(record);
         }
+
         for(int i=0;i<card_list.size();i++){
             card_datatype row = card_list.get(i);
             if(row.getStore() !=null){
@@ -180,7 +181,10 @@ public class compute_all extends Fragment {
         }
         for(int i=0;i<card_list.size();i++){
             card_datatype row = card_list.get(i);
-            ranking.add(row);
+            if (row.getStore() ==null) {
+                ranking.add(row);
+            }
+
         }
 
     }
