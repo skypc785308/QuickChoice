@@ -28,4 +28,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps">Map</string>
+
+    <string-array name="target">
+        <item>刷卡金額</item>
+        <item>紅利</item>
+    </string-array>
 </resources>

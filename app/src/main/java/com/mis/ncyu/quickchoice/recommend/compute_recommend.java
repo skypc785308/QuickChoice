@@ -15,6 +15,7 @@ import com.kosalgeek.genasync12.PostResponseAsyncTask;
 import com.mis.ncyu.quickchoice.MyDBHelper;
 import com.mis.ncyu.quickchoice.R;
 import com.mis.ncyu.quickchoice.SectionsPageAdapter;
+import com.mis.ncyu.quickchoice.StoreInfo;
 import com.mis.ncyu.quickchoice.Total_data;
 import com.mis.ncyu.quickchoice.card_datatype;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
@@ -43,11 +44,14 @@ public class compute_recommend extends AppCompatActivity  {
     public static int[] timess;
     Boolean finish = true;
 
+    public static List<StoreInfo> tmp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compute_recommend);
         mTotal_data = activity_recommend.mTotal_data;
+        tmp = activity_recommend.tmp;
 
         get_name();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
@@ -73,6 +77,9 @@ public class compute_recommend extends AppCompatActivity  {
     }
     public List<card_datatype> put_histpry(){
         return this.card_history;
+    }
+    public List<StoreInfo> send_store_info(){
+        return this.tmp;
     }
 
     @Override

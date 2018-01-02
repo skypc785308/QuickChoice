@@ -14,6 +14,19 @@ public class card_datatype {
     private String key;
     private Double value;
     private String store;
+    private int red_value;
+
+    public int getRed_value() {
+        return red_value;
+    }
+
+    public void setRed_value(int red_value) {
+        this.red_value = red_value;
+    }
+
+
+
+
 
     public card_datatype(String bank,String name,String key,Double value) {
         this.bank = bank;

@@ -9,11 +9,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.maps.model.LatLng;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
@@ -37,6 +43,7 @@ import com.mis.ncyu.quickchoice.tab1_fragment;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import java.util.ArrayList;
+import static android.content.ContentValues.TAG;
 
 import static com.mis.ncyu.quickchoice.R.string.app_name;
 
@@ -65,6 +72,8 @@ public class new_home2 extends AppCompatActivity {
             db.close();
         }
         else {
+            c.close();
+            db.close();
             finish();
         }
         super.onCreate(savedInstanceState);
@@ -86,11 +95,18 @@ public class new_home2 extends AppCompatActivity {
         mTabLayout.setViewPager(mViewPager);
         initDrawer();
 
+
+
+
+
     }
+
     private void initDrawer() {
         PrimaryDrawerItem item1 = new PrimaryDrawerItem().withName(app_name).withIcon(GoogleMaterial.Icon.gmd_credit_card);
         PrimaryDrawerItem item2 = (PrimaryDrawerItem) new PrimaryDrawerItem().withName("會員資料").withIcon(FontAwesome.Icon.faw_user);
         PrimaryDrawerItem item3 = (PrimaryDrawerItem) new PrimaryDrawerItem().withName("登出").withIcon(FontAwesome.Icon.faw_sign_out);
+        PrimaryDrawerItem item4 = (PrimaryDrawerItem) new PrimaryDrawerItem().withName("設定目標").withIcon(FontAwesome.Icon.faw_bullseye);
+
 
         AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
@@ -114,6 +130,8 @@ public class new_home2 extends AppCompatActivity {
                         new DividerDrawerItem(),
                         item2,
                         new DividerDrawerItem(),
+                        item4,
+                        new DividerDrawerItem(),
                         item3,
                         new DividerDrawerItem(),
                         new PrimaryDrawerItem().withName("關於").withIcon(GoogleMaterial.Icon.gmd_info)
@@ -132,6 +150,13 @@ public class new_home2 extends AppCompatActivity {
                                 startActivity(intent);
                                 break;
                             case 5:
+                                Intent intent3 = new Intent(new_home2.this, target_set.class);
+                                Bundle context2 = new Bundle();
+                                context2.putString("user_name", loginame);
+                                intent3.putExtras(context2);
+                                startActivity(intent3);
+                                break;
+                            case 7:
                                 db = helper.getWritableDatabase();
                                 db.delete("login",null, null);
                                 db.close();
@@ -142,7 +167,7 @@ public class new_home2 extends AppCompatActivity {
                                 startActivity(intent2);
                                 finish();
                                 break;
-                            case 7:
+                            case 9:
                                 showAboutDialog();
                                 break;
                         }

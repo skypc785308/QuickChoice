@@ -11,8 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.mis.ncyu.quickchoice.Levenshtein;
 import com.mis.ncyu.quickchoice.R;
 import com.mis.ncyu.quickchoice.RecycleAdapter;
+import com.mis.ncyu.quickchoice.StoreInfo;
 import com.mis.ncyu.quickchoice.Total_data;
 import com.mis.ncyu.quickchoice.card_datatype;
 
@@ -41,6 +43,9 @@ public class compute_all extends Fragment {
     List<card_datatype> card_list,ranking;
     private List<Total_data> data;
     int[] typetimes = new int[]{};
+
+    private List<StoreInfo> store_info;
+
     public compute_all() {
     }
 
@@ -50,6 +55,7 @@ public class compute_all extends Fragment {
         username =((compute_recommend)getActivity()).put_user_name();
         pos = ((compute_recommend)getActivity()).put_pos();
         data = ((compute_recommend)getActivity()).put_data();
+        store_info =  ((compute_recommend)getActivity()).send_store_info();
         get_wanted_data();
     }
 
@@ -164,6 +170,15 @@ public class compute_all extends Fragment {
                 record.setStore(store);
             }
             card_list.add(record);
+        }
+
+        for(StoreInfo json : store_info) {
+            Levenshtein lt = new Levenshtein();
+            if(lt.getSimilarityRatio(pos, json.getStoreName())>0.14){
+                card_datatype record = new card_datatype("優惠地點：", json.getStoreName(), "", 0.0);
+                ranking.add(record);
+            }
+
         }
 
         for(int i=0;i<card_list.size();i++){

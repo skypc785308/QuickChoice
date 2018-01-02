@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Address;
@@ -15,6 +16,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -26,18 +28,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.PlaceBuffer;
+import com.google.android.gms.location.places.Places;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -46,10 +58,14 @@ import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PointOfInterest;
 import com.kosalgeek.genasync12.AsyncResponse;
 import com.kosalgeek.genasync12.PostResponseAsyncTask;
+import com.mis.ncyu.quickchoice.Levenshtein;
 import com.mis.ncyu.quickchoice.R;
 import com.mis.ncyu.quickchoice.hos_map;
 import com.mis.ncyu.quickchoice.recommend.activity_recommend;
@@ -64,6 +80,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import static android.app.Activity.RESULT_CANCELED;
+import static android.app.Activity.RESULT_OK;
+import static android.content.ContentValues.TAG;
+import static java.util.Locale.TRADITIONAL_CHINESE;
 
 public class map_fragment extends Fragment implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener, OnMapReadyCallback {
@@ -83,21 +104,13 @@ public class map_fragment extends Fragment implements GoogleApiClient.Connection
     ArrayList<LatLng> LatLngpos;
     ArrayList<String> pos_name;
     private String username;
-    private Button btn;
-    ArrayAdapter adapter;
-    private EditText filterText = null;
     private MapView map;
     private GoogleMap mMap;
     private String area;
     private String position;
-    String[] pos = {"家樂福", "新光三越", "大遠百", "秀泰廣場", "陶板屋", "UNIQLO", "NET", "星巴克", "野宴", "逐鹿炭火"};
 
-    public Boolean foreach_http(){
-        for (int i = 0;i<pos.length;i++){
-            httpall(pos[i]);
-        }
-        return true;
-    }
+    private FloatingActionButton find_my_place;
+
 
     @Override
     public void onAttach(Context context) {
@@ -112,7 +125,9 @@ public class map_fragment extends Fragment implements GoogleApiClient.Connection
         mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
+                .addApi(Places.GEO_DATA_API)
                 .addApi(LocationServices.API)
+                .enableAutoManage(getActivity(), this)
                 .build();
         mGoogleApiClient.connect();
     }
@@ -129,8 +144,8 @@ public class map_fragment extends Fragment implements GoogleApiClient.Connection
     }
     @Override
     public void onPause() {
-        map.onPause();
         super.onPause();
+        map.onPause();
     }
     @Override
     public void onLowMemory() {
@@ -143,9 +158,7 @@ public class map_fragment extends Fragment implements GoogleApiClient.Connection
         if (mGoogleApiClient != null){
             mGoogleApiClient.disconnect();
         }
-        filterText.removeTextChangedListener(filterTextWatcher);
         super.onDestroy();
-
     }
 
     @Override
@@ -155,134 +168,47 @@ public class map_fragment extends Fragment implements GoogleApiClient.Connection
         map.onCreate(savedInstanceState);
         map.getMapAsync(this);
 
-        final ListView listpos = (ListView) view.findViewById(R.id.findpos);
-//        btn = (Button)view.findViewById(R.id.recommend_btn);
-        filterText = (EditText) view.findViewById(R.id.searchbox);
-
-//        btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-////                Intent intent = getActivity().getPackageManager().getLaunchIntentForPackage("com.google.android.apps.walletnfcrel");
-////                startActivity(intent);
-//                startActivity(new Intent(getActivity(),hos_map.class));
-//            }
-//        });
-
-        filterText.addTextChangedListener(filterTextWatcher);
-        listpos.setTextFilterEnabled(true);
-        adapter = new ArrayAdapter<>(getActivity() , android.R.layout.simple_list_item_1 ,pos);
-        listpos.setAdapter(adapter);
-        listpos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        find_my_place = (FloatingActionButton)view.findViewById(R.id.find_my_place);
+        find_my_place.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(expush==position){
-                    if(position==0){
-                        if(pushtimes>=record_count.get(0)){
-                            pushtimes = 0;
-                        }
-                        CameraPosition cameraPosition = new CameraPosition.Builder()
-                                .target(LatLngpos.get(pushtimes))    // Sets the center of the map to Mountain View
-                                .zoom(14)                   // Sets the zoom
-                                .tilt(30)                   // Sets the tilt of the camera to 30 degrees
-                                .build();                   // Creates a CameraPosition from the builder
-                        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-                        pushtimes++;
-                    }
-                    else{
-                        if(pushtimes>=(record_count.get(position)-record_count.get(position-1))){
-                            pushtimes = 0;
-                        }
-                        CameraPosition cameraPosition = new CameraPosition.Builder()
-                                .target(LatLngpos.get(record_count.get(position-1)+pushtimes))    // Sets the center of the map to Mountain View
-                                .zoom(14)                   // Sets the zoom
-                                .tilt(30)                   // Sets the tilt of the camera to 30 degrees
-                                .build();                   // Creates a CameraPosition from the builder
-                        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-                        pushtimes++;
-                    }
-                }
-                else {
-                    if(position==0){
-                        pushtimes = 0;
-                        CameraPosition cameraPosition = new CameraPosition.Builder()
-                                .target(LatLngpos.get(0))    // Sets the center of the map to Mountain View
-                                .zoom(14)                   // Sets the zoom
-                                .tilt(30)                   // Sets the tilt of the camera to 30 degrees
-                                .build();                   // Creates a CameraPosition from the builder
-                        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-                        expush = 0;
-                    }
-                    else{
-                        pushtimes = 0;
-                        CameraPosition cameraPosition = new CameraPosition.Builder()
-                                .target(LatLngpos.get(record_count.get(position-1)))    // Sets the center of the map to Mountain View
-                                .zoom(14)                   // Sets the zoom
-                                .tilt(30)                   // Sets the tilt of the camera to 30 degrees
-                                .build();                   // Creates a CameraPosition from the builder
-                        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-                        expush = position;
-                    }
+            public void onClick(View v) {
+                int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
+                try {
+                    Intent intent =
+                            new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY)
+                                    .setBoundsBias(new LatLngBounds(new LatLng(mLastLocation.getLatitude(),mLastLocation.getLongitude()),new LatLng(mLastLocation.getLatitude(),mLastLocation.getLongitude())))
+                                    .build(getActivity());
+                    startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
+                } catch (GooglePlayServicesRepairableException e) {
+                    // TODO: Handle the error.
+                } catch (GooglePlayServicesNotAvailableException e) {
+                    // TODO: Handle the error.
                 }
             }
         });
         return view;
     }
-    public void httpall(String position){
-        StringBuilder sb = new StringBuilder("https://maps.googleapis.com/maps/api/place/textsearch/json?");
-        sb.append("query=" + position+ "+in+" +area );
-        sb.append("&key=AIzaSyBmQhDajl0S9NJtvaidNY_nxNOp0sbe-EQ");
-        String url = sb.toString();
-        PostResponseAsyncTask readTask = new PostResponseAsyncTask(getActivity(), new AsyncResponse() {
-            @Override
-            public void processFinish(String s) {
-                Log.e("seeeeee", String.valueOf(Thread.currentThread().getId()));
-                BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.placeholder);
-                try {
-                    JSONObject init_title = new JSONObject(s);
-                    JSONArray data = init_title.getJSONArray("results");
-                    for(int i=0;i<data.length();i++){
-                        JSONObject geometry = (JSONObject)data.get(i);
-                        JSONObject pos = geometry.getJSONObject("geometry").getJSONObject("location");
-                        Double lat =(Double)pos.get("lat");
-                        Double lng =(Double)pos.get("lng");
-                        String iconurl =  geometry.getString("icon");
-                        String name =  geometry.getString("name");
-                        LatLng latLng = new LatLng(lat, lng);
-                        LatLngpos.add(latLng);
-                        mMap.addMarker(new MarkerOptions().position(latLng).title(name)
-                                .icon(icon));
-                        if (i==0){
-                            count+=data.length();
-                            record_count.add(count);
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
+        if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlaceAutocomplete.getPlace(getContext(), data);
+                Log.i(TAG, "Place: "+place.getName());
+
+                start_recommend(place.getName().toString());
+            } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
+                Status status = PlaceAutocomplete.getStatus(getContext(), data);
+                // TODO: Handle the error.
+                Log.i(TAG, status.getStatusMessage());
+
+            } else if (resultCode == RESULT_CANCELED) {
+                // The user canceled the operation.
             }
-        });
-        readTask.execute(url);
+        }
     }
-
-
-
-    private TextWatcher filterTextWatcher = new TextWatcher() {
-
-        public void afterTextChanged(Editable s) {
-        }
-
-        public void beforeTextChanged(CharSequence s, int start, int count,
-                                      int after) {
-        }
-
-        public void onTextChanged(CharSequence s, int start, int before,
-                                  int count) {
-            adapter.getFilter().filter(s);
-        }
-
-    };
-
-
 
     private void checkLocationPermission() {
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
@@ -389,10 +315,10 @@ public class map_fragment extends Fragment implements GoogleApiClient.Connection
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
-        markerOptions.title("啟動當前位置");
+        markerOptions.title("當前位置");
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
         mCurrLocationMarker = mMap.addMarker(markerOptions);
-        Geocoder geocoder = new Geocoder(getContext(), Locale.TRADITIONAL_CHINESE);
+        Geocoder geocoder = new Geocoder(getContext(), TRADITIONAL_CHINESE);
         try {
             List<Address> address = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
             area = address.get(0).getSubAdminArea();
@@ -400,30 +326,70 @@ public class map_fragment extends Fragment implements GoogleApiClient.Connection
             e.printStackTrace();
         }
         Toast.makeText(getActivity(), area, Toast.LENGTH_SHORT).show();
-        foreach_http();
 
         //move map camera
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(latLng)    // Sets the center of the map to Mountain View
-                .zoom(14)                   // Sets the zoom
-                .tilt(30)                   // Sets the tilt of the camera to 30 degrees
+                .zoom(18)                   // Sets the zoom
                 .build();                   // Creates a CameraPosition from the builder
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
         LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
     }
 
+    public void start_recommend(final String user_pos_name){
+        final View item = LayoutInflater.from(getActivity()).inflate(R.layout.alertdialog_key_in_money, null);
+        new AlertDialog.Builder(getActivity())
+                .setTitle("請輸入花費的金額")
+                .setView(item)
+                .setPositiveButton("確定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        EditText editText = (EditText) item.findViewById(R.id.money_cost);
+                        String money = editText.getText().toString();
+                        if(TextUtils.isEmpty(money)){
+                            Toast.makeText(getActivity(), "請輸入金額才能推薦", Toast.LENGTH_SHORT).show();
+                        } else if (mycard_fragment.card_count == 0) {
+                            Toast.makeText(getActivity(), "請先新增卡片", Toast.LENGTH_SHORT).show();
+                            Intent intent3 = new Intent();
+                            intent3.setClass(getActivity(), Add_new_card.class);
+                            Bundle context = new Bundle();
+                            context.putString("user_name", username);
+                            intent3.putExtras(context);
+                            startActivity(intent3);
+                        }
+                        else {
+                            Intent intent = new Intent(getActivity(), activity_recommend.class);
+                            Bundle context = new Bundle();
+                            context.putString("user_name", username);
+                            context.putString("pos", user_pos_name);
+                            context.putString("money", money);
+                            Toast.makeText(getActivity(), "所在地點："+ user_pos_name, Toast.LENGTH_SHORT).show();
+                            intent.putExtras(context);
+                            startActivity(intent);
+                        }
+                    }
+                })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .show();
+    }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
         //Initialize Google Play Services
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ActivityCompat.checkSelfPermission(getContext(),
                     Manifest.permission.ACCESS_FINE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED) {
                 //Location Permission already granted
-                buildGoogleApiClient();
+                if (mGoogleApiClient == null) {
+                    buildGoogleApiClient();
+                }
                 mMap.setMyLocationEnabled(true);
             } else {
                 //Request Location Permission
@@ -434,96 +400,33 @@ public class map_fragment extends Fragment implements GoogleApiClient.Connection
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
         }
-        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+
+        // 點選地圖搜尋點時動作
+        mMap.setOnPoiClickListener(new GoogleMap.OnPoiClickListener() {
             @Override
-            public void onInfoWindowClick(Marker marker) {
+            public void onPoiClick(PointOfInterest poi) {
+                Toast.makeText(getActivity(), "Clicked: " +
+                        poi.name + "\nPlace ID:" + poi.placeId +
+                        "\nLatitude:" + poi.latLng.latitude +
+                        " Longitude:" + poi.latLng.longitude, Toast.LENGTH_SHORT).show();
 
-
-                LatLng poss = marker.getPosition();
-                int idx = LatLngpos.indexOf(poss);
-                String now_pos = "";
-                for (int i=0;i<record_count.size();i++){
-                    if (i == 0){
-                        if (idx<record_count.get(i)){
-                            now_pos = pos[i];
-                        }
-                    }
-                    else {
-                        if (idx<record_count.get(i) && idx >=record_count.get(i-1)){
-                            now_pos = pos[i];
-                        }
-
-                    }
-
-                }
-                position = now_pos;
-                final View item = LayoutInflater.from(getActivity()).inflate(R.layout.alertdialog_key_in_money, null);
-                new AlertDialog.Builder(getActivity())
-                        .setTitle("請輸入花費的金額")
-                        .setView(item)
-                        .setPositiveButton("確定", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                EditText editText = (EditText) item.findViewById(R.id.money_cost);
-                                String money = editText.getText().toString();
-                                if(TextUtils.isEmpty(money)){
-                                    Toast.makeText(getActivity(), "請輸入金額才能推薦", Toast.LENGTH_SHORT).show();
-                                } else if (mycard_fragment.card_count ==0) {
-                                    Toast.makeText(getActivity(), "請先新增卡片", Toast.LENGTH_SHORT).show();
-                                    Intent intent3 = new Intent();
-                                    intent3.setClass(getActivity(), Add_new_card.class);
-                                    Bundle context = new Bundle();
-                                    context.putString("user_name", username);
-                                    intent3.putExtras(context);
-                                    startActivity(intent3);
-                                }
-                                else {
-                                    Intent intent = new Intent(getActivity(), activity_recommend.class);
-                                    Bundle context = new Bundle();
-                                    context.putString("user_name", username);
-                                    context.putString("pos", position);
-                                    context.putString("money", money);
-                                    Toast.makeText(getActivity(), "所在地點："+position, Toast.LENGTH_SHORT).show();
-                                    intent.putExtras(context);
-                                    startActivity(intent);
-
-                                }
-                            }
-                        })
-                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                            }
-                        })
-                        .show();
-
+                start_recommend(poi.name);
             }
         });
-    }
-    /**
-     * 逆地理编码 得到地址
-     * @param context
-     * @param latitude
-     * @param longitude
-     * @return
-     */
-    public static String getAddress(Context context, double latitude, double longitude) {
-        Geocoder geocoder = new Geocoder(context, Locale.getDefault());
-        try {
-            List<Address> address = geocoder.getFromLocation(latitude, longitude, 1);
-            Log.i("位置", "得到位置当前" + address + "'\n"
-                    + "经度：" + String.valueOf(address.get(0).getLongitude()) + "\n"
-                    + "纬度：" + String.valueOf(address.get(0).getLatitude()) + "\n"
-                    + "纬度：" + "国家：" + address.get(0).getCountryName() + "\n"
-                    + "城市：" + address.get(0).getLocality() + "\n"
-                    + "名称：" + address.get(0).getAddressLine(1) + "\n"
-                    + "街道：" + address.get(0).getAddressLine(0)
-            );
-            return address.get(0).getAddressLine(0) + "  " + address.get(0).getLocality() + " " + address.get(0).getCountryName();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "未知";
-        }
+        Toast.makeText(getActivity(), "提示：放大可以看見更多商家", Toast.LENGTH_SHORT).show();
+
+
+        // 客製化地圖
+//        try {
+//            boolean success = googleMap.setMapStyle(
+//                    MapStyleOptions.loadRawResourceStyle(
+//                            getActivity(), R.raw.map_style));
+//
+//            if (!success) {
+//                Log.e(TAG, "Style parsing failed.");
+//            }
+//        } catch (Resources.NotFoundException e) {
+//            Log.e(TAG, "Can't find style. Error: ", e);
+//        }
     }
 }

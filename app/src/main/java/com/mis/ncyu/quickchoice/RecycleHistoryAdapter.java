@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.mis.ncyu.quickchoice.recommend.activity_history;
+
 import java.util.List;
 
 /**
@@ -30,17 +32,12 @@ public class RecycleHistoryAdapter extends RecyclerView.Adapter<RecycleHistoryAd
             cardView = (CardView) v.findViewById(R.id.card_view);
             v.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
-//                    Intent intent = new Intent(v.getContext(), content_result.class);
-//                    Bundle context = new Bundle();
-//                    TextView bank = (TextView) v.findViewById(R.id.card_bank);
-//                    TextView card_name = (TextView) v.findViewById(R.id.card_name);
-//                    TextView key_word =  (TextView) v.findViewById(R.id.keyword);
-//                    TextView compute_value =  (TextView) v.findViewById(R.id.rank);
-//                    context.putString("card",card_name.getText().toString());
-//                    context.putString("bank",bank.getText().toString());
-//                    context.putString("key_word",key_word.getText().toString());
-//                    intent.putExtras(context);
-//                    v.getContext().startActivity(intent);
+                    Intent intent = new Intent(v.getContext(), activity_history.class);
+                    Bundle context = new Bundle();
+                    TextView card_name = (TextView) v.findViewById(R.id.card_name);
+                    context.putString("card",card_name.getText().toString());
+                    intent.putExtras(context);
+                    v.getContext().startActivity(intent);
                 }
             });
         }

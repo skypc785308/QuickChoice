@@ -25,6 +25,8 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 
+import static java.lang.Math.floor;
+
 public class content_result extends AppCompatActivity {
 
     List<Total_data> mTotal_data;
@@ -32,6 +34,7 @@ public class content_result extends AppCompatActivity {
     String card_name,bank_name,key,value;
     Button submit;
     private PackageInfo packageInfo;
+    Double compute_value;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +71,7 @@ public class content_result extends AppCompatActivity {
                 postData.put("card_name",card_name);
                 postData.put("cost_price",String.valueOf(compute_recommend.money));
                 postData.put("type",type.getText().toString());
+                postData.put("compute_value", String.valueOf(floor(compute_value)));
                 PostResponseAsyncTask readTask = new PostResponseAsyncTask(content_result.this, postData, new AsyncResponse() {
                     @Override
                     public void processFinish(String s) {
@@ -126,7 +130,7 @@ public class content_result extends AppCompatActivity {
             key = context.getString("key_word");
             value = context.getString("value");
         }
-        Double compute_value = compute_recommend.money*Double.valueOf(value)/100;
+        compute_value = compute_recommend.money*Double.valueOf(value)/100;
         compute.setText(String.valueOf(compute_recommend.money) + "*" + value + "=" + String.valueOf(compute_value));
         String type ="";
         switch (compute_recommend.fragment_pos){
@@ -134,6 +138,8 @@ public class content_result extends AppCompatActivity {
                 break;
             case 1:
                 type="綜合優惠";
+                compute_value = 0.0;
+                compute.setText("");
                 break;
             case 2:
                 type="現金回饋";

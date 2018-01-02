@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.mis.ncyu.quickchoice.recommend.activity_recommend;
+import com.mis.ncyu.quickchoice.recommend.compute_recommend;
 import com.mis.ncyu.quickchoice.recommend.content_result;
 
 import java.util.List;
@@ -37,16 +39,26 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
             value = (TextView) v.findViewById(R.id.value);
             v.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
+                    String detial = "";
+
                     Intent intent = new Intent(v.getContext(), content_result.class);
                     Bundle context = new Bundle();
                     TextView bank = (TextView) v.findViewById(R.id.card_bank);
                     TextView card_name = (TextView) v.findViewById(R.id.card_name);
                     TextView key_word =  (TextView) v.findViewById(R.id.keyword);
                     TextView value =  (TextView) v.findViewById(R.id.value);
+
                     context.putString("card",card_name.getText().toString());
                     context.putString("bank",bank.getText().toString());
                     context.putString("key_word",key_word.getText().toString());
                     context.putString("value",value.getText().toString());
+                    for(StoreInfo json : compute_recommend.tmp) {
+                        if(card_name.getText().toString().equals(json.getStoreName())){
+                            detial = json.getStoreDetial();
+                            context.remove("key_word");
+                            context.putString("key_word",detial);
+                        }
+                    }
                     intent.putExtras(context);
                     v.getContext().startActivity(intent);
                 }
@@ -67,15 +79,15 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         card_datatype row = card_list.get(position);
+
         holder.bank.setText(row.getBank());
         holder.card_name.setText(row.getname());
         holder.key_word.setText(row.getkey());
         holder.rank.setText(String.valueOf(rank_id));
         holder.value.setText(String.valueOf(row.getValue()));
-        if (row.getStore() !=null ){
-            holder.rank_name.setText("在"+row.getStore()+"有合作優惠");
-            holder.cardView.setBackgroundColor(Color.CYAN);
+        if (row.getBank().equals("優惠地點：")){
 
+            holder.cardView.setBackgroundColor(Color.CYAN);
         }
         if (row.getValue()!=0.0){
             rank_id++;

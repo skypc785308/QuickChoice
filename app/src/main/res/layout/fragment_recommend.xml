@@ -5,38 +5,23 @@
     android:layout_height="match_parent"
     tools:context="com.mis.ncyu.quickchoice.home.map_fragment">
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/find_my_place"
+        android:layout_width="50dp"
+        android:layout_height="51dp"
+        android:layout_marginBottom="96dp"
+        android:layout_marginEnd="32dp"
+        android:clickable="true"
+        android:src="@drawable/places_ic_search"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <com.google.android.gms.maps.MapView
         android:id="@+id/map"
         android:layout_width="0dp"
-        android:layout_height="220dp"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        android:layout_height="513dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/searchbox"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_marginRight="8dp"
-        android:ems="10"
-        android:hint="搜尋你所在的商家"
-        android:inputType="textPersonName"
-        android:maxLines="1"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/map"
-        android:layout_marginEnd="8dp" />
-
-    <ListView
-        android:id="@+id/findpos"
-        android:layout_width="0dp"
-        android:layout_height="293dp"
-        android:fadingEdge="vertical"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchbox" />
 
 </android.support.constraint.ConstraintLayout>
