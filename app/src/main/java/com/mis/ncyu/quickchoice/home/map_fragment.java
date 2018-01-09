@@ -405,10 +405,7 @@ public class map_fragment extends Fragment implements GoogleApiClient.Connection
         mMap.setOnPoiClickListener(new GoogleMap.OnPoiClickListener() {
             @Override
             public void onPoiClick(PointOfInterest poi) {
-                Toast.makeText(getActivity(), "Clicked: " +
-                        poi.name + "\nPlace ID:" + poi.placeId +
-                        "\nLatitude:" + poi.latLng.latitude +
-                        " Longitude:" + poi.latLng.longitude, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), poi.name, Toast.LENGTH_SHORT).show();
 
                 start_recommend(poi.name);
             }
@@ -416,17 +413,17 @@ public class map_fragment extends Fragment implements GoogleApiClient.Connection
         Toast.makeText(getActivity(), "提示：放大可以看見更多商家", Toast.LENGTH_SHORT).show();
 
 
-        // 客製化地圖
-//        try {
-//            boolean success = googleMap.setMapStyle(
-//                    MapStyleOptions.loadRawResourceStyle(
-//                            getActivity(), R.raw.map_style));
-//
-//            if (!success) {
-//                Log.e(TAG, "Style parsing failed.");
-//            }
-//        } catch (Resources.NotFoundException e) {
-//            Log.e(TAG, "Can't find style. Error: ", e);
-//        }
+         // 客製化地圖
+        try {
+            boolean success = googleMap.setMapStyle(
+                    MapStyleOptions.loadRawResourceStyle(
+                            getActivity(), R.raw.map_style));
+
+            if (!success) {
+                Log.e(TAG, "Style parsing failed.");
+            }
+        } catch (Resources.NotFoundException e) {
+            Log.e(TAG, "Can't find style. Error: ", e);
+        }
     }
 }
