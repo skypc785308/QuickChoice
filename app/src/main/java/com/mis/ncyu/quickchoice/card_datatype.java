@@ -15,6 +15,24 @@ public class card_datatype {
     private Double value;
     private String store;
     private int red_value;
+    private int coperation_num;
+    private String coperation_text;
+
+    public String getCoperation_text() {
+        return coperation_text;
+    }
+
+    public void setCoperation_text(String coperation_text) {
+        this.coperation_text = coperation_text;
+    }
+
+    public int getCoperation_num() {
+        return coperation_num;
+    }
+
+    public void setCoperation_num(int coperation_num) {
+        this.coperation_num = coperation_num;
+    }
 
     public int getRed_value() {
         return red_value;
@@ -33,6 +51,7 @@ public class card_datatype {
         this.name = name;
         this.key = key;
         this.value = value;
+        this.coperation_text="";
     }
 
     public void setStore(String store) {

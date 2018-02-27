@@ -71,6 +71,7 @@ public class activity_recommend extends AppCompatActivity {
     private static String[] historydata;
     private static Integer[] historycount;
     private String loginame,email;
+    public static List<card_datatype> ranking_data;
     MyDBHelper helper;
     SQLiteDatabase db;
 
@@ -169,7 +170,7 @@ public class activity_recommend extends AppCompatActivity {
         PostResponseAsyncTask readTask = new PostResponseAsyncTask(activity_recommend.this, postData, new AsyncResponse() {
             @Override
             public void processFinish(String s) {
-                Log.e("取得點及次數",s);
+                Log.e("取得點擊次數",s);
                 jccard_user_index++;
                 int my_index = jccard_user_index;
                 try{
@@ -206,7 +207,7 @@ public class activity_recommend extends AppCompatActivity {
                     for(int j=0;j<6;j++){
                         log.append(String.valueOf(jccard_user[i][j])+"  ");
                     }
-                    Log.e("最像三人優惠典籍次數",log.toString());
+                    Log.e("最像三人優惠點擊次數",log.toString());
 
                 }
             }
@@ -332,7 +333,7 @@ public class activity_recommend extends AppCompatActivity {
         });
         readTask.execute(url);
     }
-
+    // 取得持有卡片的所有店家資料
     public void http3() {
         RequestBody formBody = new FormBody.Builder()
                 .add("userid", username)

@@ -88,7 +88,7 @@ public class compute_all extends Fragment {
 //        else if (x>100){
 //            compute = y/6;
 //        }
-        Log.e("攻勢計算結果",String.valueOf(compute));
+        Log.e("公式計算結果",String.valueOf(compute));
         return compute;
     }
     public void get_wanted_data(){
@@ -174,19 +174,37 @@ public class compute_all extends Fragment {
 
         for(StoreInfo json : store_info) {
             Levenshtein lt = new Levenshtein();
-            if(lt.getSimilarityRatio(pos, json.getStoreName())>0.14){
-                card_datatype record = new card_datatype("優惠地點：", json.getStoreName(), "", 0.0);
-                ranking.add(record);
+            if(lt.getSimilarityRatio(pos, json.getStoreName())>0.3){
+                for(int i=0;i<card_list.size();i++){
+                    card_datatype row = card_list.get(i);
+                    if(row.getBank().equals(json.getBank_name())){
+                        int temp = row.getCoperation_num();
+                        row.setCoperation_num(++temp);
+                        StringBuilder context = new StringBuilder();
+                        context.append(row.getCoperation_text());
+                        context.append("\n");
+                        context.append(json.getStoreName());
+                        context.append("\n");
+                        context.append(json.getStoreDetial());
+                        row.setCoperation_text(context.toString());
+                    }
+                }
             }
 
         }
-
-        for(int i=0;i<card_list.size();i++){
+        int new_size = card_list.size();
+        for(int i=0;i<new_size;i++){
             card_datatype row = card_list.get(i);
-            if(row.getStore() !=null){
+            if (row.getCoperation_num()>0){
                 ranking.add(row);
+                card_list.remove(i);
+                i--;
+                new_size--;
             }
         }
+
+
+        // 進行排序
         for(int i=0;i<card_list.size();i++){
             for(int j=0;j<card_list.size()-1;j++){
                 if (card_list.get(j).getValue() < card_list.get(j+1).getValue()){
@@ -194,13 +212,8 @@ public class compute_all extends Fragment {
                 }
             }
         }
-        for(int i=0;i<card_list.size();i++){
-            card_datatype row = card_list.get(i);
-            if (row.getStore() ==null) {
-                ranking.add(row);
-            }
-
-        }
-
+        // 將排序好的結果加到ranking_list
+        ranking.addAll(card_list);
+        activity_recommend.ranking_data = ranking;
     }
 }

@@ -52,13 +52,10 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
                     context.putString("bank",bank.getText().toString());
                     context.putString("key_word",key_word.getText().toString());
                     context.putString("value",value.getText().toString());
-                    for(StoreInfo json : compute_recommend.tmp) {
-                        if(card_name.getText().toString().equals(json.getStoreName())){
-                            detial = json.getStoreDetial();
-                            context.remove("key_word");
-                            context.putString("key_word",detial);
-                        }
-                    }
+                    card_datatype row = activity_recommend.ranking_data.get(Integer.parseInt(rank.getText().toString())-1);
+                    detial = row.getCoperation_text();
+                    context.remove("key_word");
+                    context.putString("key_word",detial);
                     intent.putExtras(context);
                     v.getContext().startActivity(intent);
                 }
@@ -85,7 +82,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         holder.key_word.setText(row.getkey());
         holder.rank.setText(String.valueOf(rank_id));
         holder.value.setText(String.valueOf(row.getValue()));
-        if (row.getBank().equals("優惠地點：")){
+        if (row.getCoperation_num()>0){
 
             holder.cardView.setBackgroundColor(Color.CYAN);
         }
